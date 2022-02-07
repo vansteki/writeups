@@ -14,6 +14,6 @@ dvwaSession: 2
 dvwaSession: 3
 ```
 
-可以很明顯地看出 dvwaSession 是遞增的
+可以很明顯地看出 `dvwaSession` 是遞增的
 
 這邊我暫時不知道要幹嘛，可能難度高一點的等級要分析 session ID 隨機性或 pattern 之類的

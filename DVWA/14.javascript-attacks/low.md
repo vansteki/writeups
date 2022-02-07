@@ -26,7 +26,7 @@ function generate_token () {
 generate_token();
 ```
 
-可以發現在頁面載入時． `generate_token()` 這個 function 會被執行一次，它將 `#phrase` 的 value 餵給 md5 和 rot13，產生一組 token，此時 `phrase` 是預設的 `ChangeMe` ，因此不論你送出什麼，都會得到 invalid token 這樣的回傳訊息，因為 token 是由 `ChangeMe` 這個字串的值運算而來 也就是`8b479aefbd90795395b3e7089ae0dc09`．
+可以發現在頁面載入時． `generate_token()` 這個 function 會被執行一次，它將 `#phrase` 的 value 餵給 md5 和 rot13，產生一組 token，此時 `phrase` 是預設的 `ChangeMe` ，因此不論你送出什麼，都會得到 invalid token 這樣的回傳訊息，因為 token 是由 `ChangeMe` 這個字串的值運算而來 也就是`8b479aefbd90795395b3e7089ae0dc09`
 
 因此簡單的解法就是在 input 填入 `success` 後，於 console 再執行一次，這樣 token 的值就會改變成**`38581812b435834ebf84ebcc2c6424d6`**
 

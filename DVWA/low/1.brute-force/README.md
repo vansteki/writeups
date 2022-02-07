@@ -24,7 +24,7 @@ http://localhost:8086/vulnerabilities/brute/?username=qwe&password=123&Login=Log
 
 ### module: http-form-get
 
-### 可以用 `hydra -U http-get-form` 閱讀一下 module 用法
+可以用 `hydra -U http-get-form` 閱讀一下 module 用法
 
 ```
 hydra -U http-get-form

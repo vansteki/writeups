@@ -14,6 +14,8 @@ docker run -d -p 8086:80 vulnerables/web-dvwa
 ```
 ### Change configs of DVWA
 
+install deps (optional)
+
 ```
 docker exec -it app-training-dvwa /bin/bash
 ```
@@ -23,16 +25,28 @@ apt update -y && apt install vim -y
 
 Enable allow_url_include and add your reCAPTCHA key 
 
+### allow_url_include
 in `/etc/php/7.0/apache2/php.ini`:
 ```
 allow_url_include = on
 ```
+or
+```
+docker cp ./DVWA/configs/php.ini <container_id>:/etc/php/7.0/apache2/
+```
+### reCAPTCHA
 
 in `/var/www/html/config/config.inc.php`
 ```
 $_DVWA[ 'recaptcha_public_key' ] = '<your reCAPTCHA public key>';
 $_DVWA[ 'recaptcha_private_key' ] = '<your reCAPTCHA private key>';
 ```
+or
+```
+docker cp ./DVWA/configs/php.ini <container_id>:/var/www/html/config/
+```
+
+### restart service
 
 ```
 service apache2 restart

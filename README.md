@@ -3,8 +3,14 @@
 ## DVWA
 
 ### DVWA security:low
+精簡版的筆記:
 ```
-./DVWA/low
+./DVWA/**/low.md
+```
+
+完整版的筆記:
+```
+./DVWA/notion-export/index.md
 ```
 
 ### Run DVWA

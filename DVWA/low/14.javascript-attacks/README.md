@@ -1,5 +1,9 @@
 # JavaScript Attacks
 
+### Objective
+
+Simply submit the phrase "success" to win the level. Obviously, it isn't quite that easy, each level implements different protection mechanisms, the JavaScript included in the pages has to be analysed and then manipulated to bypass the protections.
+
 ### 1.查看表單細節
 ### 2.檢查送出前 javascript 有做哪些處理
 ```jsx

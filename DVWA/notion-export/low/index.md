@@ -1570,47 +1570,21 @@ vim /var/www/html/config/config.inc.php
 
 ### Other links
 
-Web Security Testing Cookbook
-[https://learning.oreilly.com/library/view/web-security-testing/9780596514839/](https://learning.oreilly.com/library/view/web-security-testing/9780596514839/)
-
-MySQL SQL Injection Cheat Sheet | pentestmonkey
-[https://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet](https://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet)
-
-我們與 OSCP 的距離
-[https://tech-blog.cymetrics.io/posts/crystal/oscp-review/](https://tech-blog.cymetrics.io/posts/crystal/oscp-review/)
-
-資安這條路 04 - [Injection] SQL injection - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天
-[https://ithelp.ithome.com.tw/articles/10240102](https://ithelp.ithome.com.tw/articles/10240102)
-[Day30] Pentesting CheatSheet Meow Meow - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天
-[https://ithelp.ithome.com.tw/articles/10281813](https://ithelp.ithome.com.tw/articles/10281813)
-
-從 PicoCTF 中跨領域學資訊安全 :: 2021 iThome 鐵人賽
-[https://ithelp.ithome.com.tw/users/20134305/ironman/4222](https://ithelp.ithome.com.tw/users/20134305/ironman/4222)
-
-SQL Tutorial
-[https://www.w3schools.com/sql/default.asp](https://www.w3schools.com/sql/default.asp)
-SQL Server IF ELSE Statement By Examples
-[https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/](https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/)
-Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium
-[https://medium.com/jimmy-wang/oracle基本修練-pl-sql-if-else-case-statements-5399d6631307](https://medium.com/jimmy-wang/oracle%E5%9F%BA%E6%9C%AC%E4%BF%AE%E7%B7%B4-pl-sql-if-else-case-statements-5399d6631307)
-
-OWASP Top Ten Web Application Security Risks | OWASP
-[https://owasp.org/www-project-top-ten/](https://owasp.org/www-project-top-ten/)
-網路安全-靶機dvwa之sql注入Low到High詳解（含程式碼分析）_osc_0qnrwmy3 - MdEditor
-[https://www.gushiciku.cn/pl/pFNg/zh-tw](https://www.gushiciku.cn/pl/pFNg/zh-tw)
-
-Types of XSS | OWASP Foundation
-[https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29](https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29)
-
-SQL Server IF ELSE Statement By Examples
-[https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/](https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/)
-Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium
-[https://medium.com/jimmy-wang/oracle基本修練-pl-sql-if-else-case-statements-5399d6631307](https://medium.com/jimmy-wang/oracle%E5%9F%BA%E6%9C%AC%E4%BF%AE%E7%B7%B4-pl-sql-if-else-case-statements-5399d6631307)
-
-Flexible Database Schema + Hybrid Data Model | JSON
-[https://mariadb.com/database-topics/semi-structured-data/](https://mariadb.com/database-topics/semi-structured-data/)
-
-Birds of a Feather 2017: 邀請分享 Light Up The Korean DarkWeb - Dasom Kim
-[https://www.slideshare.net/HITCONGIRLS/birds-of-a-feather-2017-light-up-the-korean-darkweb-dasom-kim](https://www.slideshare.net/HITCONGIRLS/birds-of-a-feather-2017-light-up-the-korean-darkweb-dasom-kim)
-The Malware Museum : Free Software : Free Download, Borrow and Streaming : Internet Archive
-[https://archive.org/details/malwaremuseum](https://archive.org/details/malwaremuseum)
+* [HackTricks - HackTricks](https://book.hacktricks.xyz/ "HackTricks - HackTricks")
+* [The Malware Museum : Free Software : Free Download, Borrow and Streaming : Internet Archive](https://archive.org/details/malwaremuseum "The Malware Museum : Free Software : Free Download, Borrow and Streaming : Internet Archive")
+* [Birds of a Feather 2017: 邀請分享 Light Up The Korean DarkWeb - Dasom Kim](https://www.slideshare.net/HITCONGIRLS/birds-of-a-feather-2017-light-up-the-korean-darkweb-dasom-kim "Birds of a Feather 2017: 邀請分享 Light Up The Korean DarkWeb - Dasom Kim")
+* [Flexible Database Schema + Hybrid Data Model | JSON](https://mariadb.com/database-topics/semi-structured-data/ "Flexible Database Schema + Hybrid Data Model | JSON")
+* [Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium](https://medium.com/jimmy-wang/oracle%E5%9F%BA%E6%9C%AC%E4%BF%AE%E7%B7%B4-pl-sql-if-else-case-statements-5399d6631307 "Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium")
+* [SQL Server IF ELSE Statement By Examples](https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/ "SQL Server IF ELSE Statement By Examples")
+* [Types of XSS | OWASP Foundation](https://owasp.org/www-community/Types_of_Cross-Site_Scripting#DOM_Based_XSS_.28AKA_Type-0.29 "Types of XSS | OWASP Foundation")
+* [網路安全-靶機dvwa之sql注入Low到High詳解（含程式碼分析）_osc_0qnrwmy3 - MdEditor](https://www.gushiciku.cn/pl/pFNg/zh-tw "網路安全-靶機dvwa之sql注入Low到High詳解（含程式碼分析）_osc_0qnrwmy3 - MdEditor")
+* [OWASP Top Ten Web Application Security Risks | OWASP](https://owasp.org/www-project-top-ten/ "OWASP Top Ten Web Application Security Risks | OWASP")
+* [Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium](https://medium.com/jimmy-wang/oracle%E5%9F%BA%E6%9C%AC%E4%BF%AE%E7%B7%B4-pl-sql-if-else-case-statements-5399d6631307 "Oracle基本修練: PL/SQL if-else, case statements | by ChunJen Wang | jimmy-wang | Medium")
+* [SQL Server IF ELSE Statement By Examples](https://www.sqlservertutorial.net/sql-server-stored-procedures/sql-server-if-else/ "SQL Server IF ELSE Statement By Examples")
+* [SQL Tutorial](https://www.w3schools.com/sql/default.asp "SQL Tutorial")
+* [從 PicoCTF 中跨領域學資訊安全 :: 2021 iThome 鐵人賽](https://ithelp.ithome.com.tw/users/20134305/ironman/4222 "從 PicoCTF 中跨領域學資訊安全 :: 2021 iThome 鐵人賽")
+* [[Day30] Pentesting CheatSheet Meow Meow - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10281813 "[Day30] Pentesting CheatSheet Meow Meow - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天")
+* [資安這條路 04 - [Injection] SQL injection - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10240102 "資安這條路 04 - [Injection] SQL injection - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天")
+* [我們與 OSCP 的距離](https://tech-blog.cymetrics.io/posts/crystal/oscp-review/ "我們與 OSCP 的距離")
+* [MySQL SQL Injection Cheat Sheet | pentestmonkey](https://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet "MySQL SQL Injection Cheat Sheet | pentestmonkey")
+* [Web Security Testing Cookbook [Book]](https://www.oreilly.com/library/view/web-security-testing/9780596514839/ "Web Security Testing Cookbook [Book]")

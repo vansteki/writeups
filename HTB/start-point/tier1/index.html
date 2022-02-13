@@ -1,0 +1,754 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HTB writeup - Starting Point tier0</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5396e569-55e5-485f-a410-c660c9a99ce9" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">0️⃣</span></div><h1 class="page-title">HTB writeup - Starting Point tier0</h1><table class="properties"><tbody><tr class="property-row property-row-created_by"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedBy"><path d="M13.125,10.0354 C12.5536,9.48588 10.801,8.53125 9.625,7.875 L9.625,7.04112 C9.849,6.71912 10.045,6.37 10.1911,5.98588 C10.5849,5.7435 10.9375,5.28412 10.9375,4.8125 C10.9375,4.35488 10.9323,3.94275 10.4668,3.605 C10.3049,1.5575 9.436,0 7,0 C4.564,0 3.69513,1.5575 3.53325,3.605 C3.06775,3.94275 3.0625,4.35488 3.0625,4.8125 C3.0625,5.28412 3.41513,5.7435 3.80888,5.98588 C3.955,6.37 4.151,6.71912 4.375,7.04112 L4.375,7.875 C3.199,8.53125 1.44638,9.48588 0.875,10.0354 C0.1645,10.7188 0,11.8125 0,14 L14,14 C14,11.8125 13.8364,10.7188 13.125,10.0354 Z"></path></svg></span>Created By</th><td></td></tr><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Created time</th><td><time>@February 10, 2022 2:13 PM</time></td></tr><tr class="property-row property-row-last_edited_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Last Edited</th><td><time>@February 13, 2022 9:46 PM</time></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Tags</th><td><span class="selected-value select-value-color-default">HTB</span><span class="selected-value select-value-color-pink">Sec</span><span class="selected-value select-value-color-blue">tier0</span><span class="selected-value select-value-color-blue">writeup</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Author</th><td></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesUrl"><path d="M3.73333,3.86667 L7.46667,3.86667 C8.49613,3.86667 9.33333,4.70387 9.33333,5.73333 C9.33333,6.7628 8.49613,7.6 7.46667,7.6 L6.53333,7.6 C6.01813,7.6 5.6,8.0186 5.6,8.53333 C5.6,9.04807 6.01813,9.46667 6.53333,9.46667 L7.46667,9.46667 C9.5284,9.46667 11.2,7.79507 11.2,5.73333 C11.2,3.6716 9.5284,2 7.46667,2 L3.73333,2 C1.6716,2 0,3.6716 0,5.73333 C0,7.124 0.762067,8.33453 1.88953,8.97713 C1.87553,8.83107 1.86667,8.6836 1.86667,8.53333 C1.86667,7.92013 1.98753,7.33447 2.2036,6.7978 C1.99267,6.4954 1.86667,6.12953 1.86667,5.73333 C1.86667,4.70387 2.70387,3.86667 3.73333,3.86667 Z M12.1095,5.28907 C12.1231,5.4356 12.1333,5.58307 12.1333,5.73333 C12.1333,6.34607 12.0101,6.9294 11.7931,7.46513 C12.0059,7.768 12.1333,8.13573 12.1333,8.53333 C12.1333,9.5628 11.2961,10.4 10.2667,10.4 L6.53333,10.4 C5.50387,10.4 4.66667,9.5628 4.66667,8.53333 C4.66667,7.50387 5.50387,6.66667 6.53333,6.66667 L7.46667,6.66667 C7.98187,6.66667 8.4,6.24807 8.4,5.73333 C8.4,5.2186 7.98187,4.8 7.46667,4.8 L6.53333,4.8 C4.4716,4.8 2.8,6.4716 2.8,8.53333 C2.8,10.59507 4.4716,12.2667 6.53333,12.2667 L10.2667,12.2667 C12.3284,12.2667 14,10.59507 14,8.53333 C14,7.14267 13.2375,5.93167 12.1095,5.28907 Z"></path></svg></span>URL</th><td><a href="https://app.hackthebox.com/starting-point" class="url-value">https://app.hackthebox.com/starting-point</a></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Topic</th><td></td></tr><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Property</th><td><time>@February 10, 2022 2:13 PM</time></td></tr></tbody></table></header><div class="page-body"><p id="3bd5ad77-edcc-494e-9f6d-c6bb3cc7d77b" class="">
+</p><hr id="fc7b9039-c36d-4de0-8185-e6fd9bc818fa"/><nav id="953a39b0-5ac1-4995-b13b-d12f291942d8" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2513039f-d289-41f2-96c4-009ee2b3ae3f">::Starting Point</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#45f5f73e-f026-42ae-b31f-91c42485dc31">Setting</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#883468e2-1b35-49fb-9304-52fbd3d293af">use pwnbox</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2d0773ec-2e33-4b8c-9524-dbc1808f4239">VPN</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3f459f5a-c87f-42fb-a6c4-3d98e66dc6b3">SSH</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ae218212-9748-497a-8326-d9ea8cf66119">Meow - Account Misconfiguration (FTP)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ca8b5c69-2e87-4d57-aa60-93ed9db00e3a">use nmap -Pn to ping it</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d9fa98c6-081b-4ef5-ba56-ca3326d99fb1">靶機有時候會不正常</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2b937d3b-3791-47d2-a11c-d8a7c2bca2b0">port 23 is open</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3b69cfa0-81c7-422f-9181-89eb6189467c">get flag</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cc68349b-68f4-4f76-aa6e-bc342db388a8">Fawn - Account Misconfiguration (FTP)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51f5f382-0da0-4c1d-affc-d88aa2c90acf">-F 會址掃描 100個 port</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#982d60a5-87b1-48ef-9ca7-1ac1a9e1a4cd">-Pn assume target is alive</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#61dd3378-49cd-43ff-a714-31c5a48e3d40">-T5 最快速度</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#19d4bdf3-50d4-4208-a691-d558b793f958">get flag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c311f6ee-bf51-455d-a445-3214bfaf52ed">Dancing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5d6133ff-de32-4250-a1b4-8fa4fdefaaf6">Tasks</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3d1059e7-52c6-4476-8031-e41b75f8f21c">What does the 3-letter acronym SMB stand for? → <code>Server Message Block</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f14c3202-7a34-40b3-9542-518d7668aae7">What port does SMB use to operate at? → <code>445</code> , <code>137 138 UDP, 139 TCP</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0d32b6a3-1fbd-4113-9681-313849b5fc67">What is the service name for port 445 that came up in our nmap scan → <code>microsoft-ds</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8be37cfe-ff53-4f43-97fd-cdd30fe6477e">What is the tool we use to connect to SMB shares from our Linux distribution? → <code>smbclient</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5da83198-88aa-4f69-b395-b81919c2f5a7">flag</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#23b4942f-9b65-4328-88e2-3b10667a1cb3">Explosion (RDP)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e64f8655-4d06-49d2-906c-f85280893364">Tasks</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b6f9cb8f-29cd-4ba2-afdb-ef8cecee7bb6">What is the concept used to verify the identity of the remote host with SSH connections?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#72fa40e3-0440-43b0-a797-3ea695ddac21">What is the name of the tool that we can use to initiate a desktop projection to our host using the terminal?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#57470ee1-27b7-42f0-bc2f-c2057f6f078d">What is the name of the service running on port 3389 TCP?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c9b8b0f7-231c-41b8-8561-5174a2ca3cdf">What is the switch used to specify the target host&#x27;s IP address when using xfreerdp? → <code>/v:</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#40ba1af4-7038-4c2a-854e-2c503e0ac6a8">Preignition (dir busting)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1bfae3f8-c7b9-4329-9a9d-a135ecb5b07d">Tasks</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2bba9044-6467-4596-b2b4-81de3e13b4d7">What switch do we use to specify to gobuster we want to perform dir busting specifically? → <code>dir</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f2e7c2e3-3d3a-4abb-8cca-89e9ca6859ae">shared wordlist</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#02940cdf-d912-41b2-9b5a-46fd1df12ca1">Ref</a></div></nav><hr id="b3fe29a3-fc26-4c43-9580-c48d122e1553"/><h1 id="2513039f-d289-41f2-96c4-009ee2b3ae3f" class="">::Starting Point</h1><p id="ae8ceef4-848e-4767-867f-f6eef621e5ad" class="">基本上這篇比較像是熟悉 HTB 的使用方式，難度是 very easy，就是基本知識的等級</p><p id="74ca871e-3af3-4c9f-bb66-5e58b8fcd4a9" class="">官方也有附上 writeup</p><h2 id="45f5f73e-f026-42ae-b31f-91c42485dc31" class="">Setting</h2><h3 id="883468e2-1b35-49fb-9304-52fbd3d293af" class="">use pwnbox</h3><p id="3e8c9f83-05c5-48f1-bfc1-6fe1ac7ca2f3" class="">不用設定，直接用瀏覽器連到測試環境</p><p id="4601bb9a-455b-4420-82c8-bb17ccc6c09c" class="">也可以在 pwnbox instance 產生後再從 host 用 VNC (or xRDP) 連到到 pwnbox</p><p id="5954eab9-5421-4483-9bad-8af3ff5c3bb2" class="">
+</p><h3 id="2d0773ec-2e33-4b8c-9524-dbc1808f4239" class="">VPN</h3><p id="4feded5e-8341-4009-83ee-4f3917ed9f8f" class="">use openvpn in your VM or host machine to connect to HTB network</p><p id="d45869d9-8304-47c1-968e-0a3ee5ea224a" class="">記得用 <code>sudo</code></p><pre id="e2123da4-e37f-493f-b429-c7b3fce78f5a" class="code"><code>sudo openvpn &lt;your-downloaded-openvpn-pack&gt;.ovpn</code></pre><p id="7edd4513-a05d-4d9a-ab53-ea0c8f91ec69" class="">
+</p><h3 id="3f459f5a-c87f-42fb-a6c4-3d98e66dc6b3" class="">SSH</h3><p id="1424d6d8-9f01-4fcb-9fa2-82590ec69686" class="">用他們提供的密碼登入</p><p id="d704a8f4-13ff-4bec-878b-56a8a05feb76" class="">GS: Introduction to Pwnbox | Hack The Box Help Center
+<a href="https://help.hackthebox.com/en/articles/5185608-gs-introduction-to-pwnbox">https://help.hackthebox.com/en/articles/5185608-gs-introduction-to-pwnbox</a></p><p id="72612bdd-a7d9-441a-8e8f-8344ce08f5c7" class="">
+</p><hr id="ac1698ad-e582-413a-94a3-80818020e4e2"/><p id="a0e03e46-9619-47e8-b454-c4fe64f16522" class="">
+</p><h1 id="ae218212-9748-497a-8326-d9ea8cf66119" class="">Meow - Account Misconfiguration (FTP)</h1><figure id="c34b0f3b-6dc4-41bb-9ff2-2450fd9886c2" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled.png"><img style="width:480px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled.png"/></a></figure><figure id="d59f7e1b-e75c-451e-a560-246d57ee6138"><a href="https://app.hackthebox.com/starting-point" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hack The Box</div></div><div class="bookmark-href"><img src="https://app.hackthebox.com/images/HTB-favicon/favicon.ico" class="icon bookmark-icon"/>https://app.hackthebox.com/starting-point</div></div></a></figure><p id="5d51ec44-beaf-4f31-aac2-ad31486c49c4" class="">
+</p><hr id="52313112-ef7c-4c88-837b-2557f76d8601"/><p id="cc05dea9-2630-4dbc-a01e-e11d2098438c" class="">
+</p><figure id="83eb40dd-727b-454f-83d1-8ee5d92947f7" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%201.png"><img style="width:3072px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%201.png"/></a></figure><figure id="ed676045-79fa-4b6d-8d8e-3ebabebb62e1" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%202.png"><img style="width:3072px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%202.png"/></a></figure><figure id="84fe7bf5-6e1e-4d69-b77e-aa1ea8299b04" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%203.png"><img style="width:1696px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%203.png"/></a></figure><figure id="1980ad63-1ed9-44a6-84f9-3aaad5f633eb" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%204.png"><img style="width:3072px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%204.png"/></a></figure><p id="094ff865-ac70-4299-9124-31cd7ab7b94b" class="">
+</p><p id="92c57272-4ffc-4b91-8994-1bcebd1f4b67" class="">好像出了些問題，無法繼續下一關，所以重來一次．就可以繼續回答接下來的問題了，這關只是確認你會用 openvpn or pwnbox 連線，還有回答一些基本問題而已</p><figure id="bd507d73-47b9-41e1-b379-92a5c943c156" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%205.png"><img style="width:1744px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%205.png"/></a></figure><pre id="d85166c5-2052-41d0-8738-0256630d5e7f" class="code"><code>10.129.24.43</code></pre><p id="f55123b6-9d2c-404e-9135-9443b1b121cd" class="">
+</p><figure id="9b43aece-ac02-4884-a4e5-c46ee3d2dae2" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%206.png"><img style="width:1732px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%206.png"/></a></figure><figure id="5a92a2e8-1ff7-4408-849c-293ff0e114c0" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%207.png"><img style="width:1738px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%207.png"/></a></figure><figure id="021bbce7-fbc0-4c11-919f-3cd27175c597" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%208.png"><img style="width:1678px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%208.png"/></a></figure><p id="0fa8e12d-338b-4aa6-bca8-07597532ed54" class="">
+</p><p id="21069e86-a27b-4a4b-ae46-89e1eb766aa6" class="">openvpn network interface 通常都是 tun開頭，e.g <code>tun0</code>, <code>tun1</code></p><pre id="bfe04b7c-f7f7-4934-a2c6-040d924e7a77" class="code"><code>tun</code></pre><figure id="bb6a5021-d99f-4949-aee1-47a2d7053290" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%209.png"><img style="width:2442px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%209.png"/></a></figure><p id="38d96b93-8986-41cf-8bc8-ff61682fdae0" class="">
+</p><p id="2f2a9d7d-2eee-46ea-a74e-0aecb5beeb5d" class="">接下來是一連串的小 task，這邊都是常識題</p><figure id="d32ff658-284c-4b84-9f68-eb53e46e01b5" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2010.png"><img style="width:1692px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2010.png"/></a></figure><pre id="68b84e55-6379-42b6-997a-6e3dbdfc87e3" class="code"><code>ping</code></pre><p id="46b2d46a-05a3-4881-8b0c-fc426bbc12d0" class="">
+</p><figure id="310d2aa2-6a67-4057-809f-28bbad16213d" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2011.png"><img style="width:1716px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2011.png"/></a></figure><pre id="fbad5a1c-0626-449c-ac81-ddf11f01e9fc" class="code"><code>nmap</code></pre><p id="0d9d43dc-7962-4088-aa62-7a350269b738" class="">
+</p><figure id="a489ff6d-c475-4e8b-af5c-ddcf6aa8ee78" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2012.png"><img style="width:1768px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2012.png"/></a></figure><pre id="4ca84780-dee2-4014-8a4c-ba0388578003" class="code"><code>telnet</code></pre><p id="3a80cfad-e718-423f-89ed-cb75a6892914" class="">
+</p><figure id="9ad1821d-61ec-48f1-8f70-9c0361c0d52b" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2013.png"><img style="width:1724px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2013.png"/></a></figure><pre id="d95da917-243e-43d1-b97e-7429cea801bf" class="code"><code>root</code></pre><p id="e567cd00-5e41-4210-a69b-52c7aea28c09" class="">
+</p><p id="f2537d7c-789e-4797-92cc-f2f3b47a7998" class="">最後一個 task 就是暗示你用 telnet 連進靶機，取得 flag</p><figure id="4e87a160-decf-487b-96fc-a006c408cd87" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2014.png"><img style="width:1746px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2014.png"/></a></figure><h3 id="ca8b5c69-2e87-4d57-aa60-93ed9db00e3a" class="">use nmap -Pn to ping it</h3><pre id="4a3c2059-cf17-4436-b832-f8ca11857257" class="code"><code>nmap -Pn 10.129.24.43</code></pre><figure id="f4224452-af13-417e-9924-4ef2c542ea8e" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2015.png"><img style="width:1936px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2015.png"/></a></figure><p id="52bde8e1-d5e0-45f2-8934-3333d8581f2a" class="">看起來機器活著，那接下來是著 test port 23</p><p id="9c1f0291-cdbd-4c13-95fc-d66cc95bed19" class="">
+</p><pre id="ea90b7ea-feb8-47e5-9203-518e42670a4f" class="code"><code>nmap -v -Pn -p 23 10.129.24.43</code></pre><figure id="5218d7d4-a63d-4cbb-9f31-edca13647695" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2016.png"><img style="width:2188px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2016.png"/></a></figure><p id="5814b996-3d02-472a-abe9-093b14b09c31" class="">
+</p><h3 id="d9fa98c6-081b-4ef5-ba56-ca3326d99fb1" class="">靶機有時候會不正常</h3><p id="fcc70aff-569c-403f-a406-d0850043f361" class="">不過後來發現怪怪的，因為所有 port 都是 filterd，reset 靶機和重新連線也無效，最後切換成歐洲的線路，靶機才正常運作 QQ </p><p id="f608b369-1dc9-40f1-85d5-0709936420d8" class="">
+</p><p id="3f18f7c4-2c79-45b3-8cc1-8b97e498e490" class="">現在恢復正常了...</p><p id="40250a84-179d-4c95-89eb-fda297e0bb1b" class="">疑 等等 有點奇怪，我忘了加 <code>-</code> 在 <code>Pn</code> 前面，所以 nmap 掃描的主機是一台叫 <code>Pn</code> 的 server @@</p><pre id="feb019f1-917d-476e-95f1-9683a64aa943" class="code"><code>nmap -v Pn 10.129.14.224</code></pre><figure id="038471a3-8827-4a8d-ba8b-86bcbde0fdb8" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2017.png"><img style="width:2170px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2017.png"/></a></figure><p id="15aa9436-81b9-4d21-832d-99b9e95d4e32" class="">拍照留念一下</p><p id="2b3d406d-1b70-412e-82d8-6664792f4247" class="">
+</p><p id="44022599-a312-436d-b82c-15e5fcd2584b" class="">繼續回來練習</p><pre id="532f4cef-8435-46c9-84b3-fd6acd17f018" class="code"><code>nmap -v -Pn 10.129.14.224</code></pre><figure id="2900330c-6e5a-4b18-9a2d-5588553d51c7" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2018.png"><img style="width:2254px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2018.png"/></a></figure><h3 id="2b937d3b-3791-47d2-a11c-d8a7c2bca2b0" class="">port 23 is open</h3><pre id="bd94b6db-67a7-4f68-bf11-188cb1f7adac" class="code"><code>nmap -sV 10.129.14.224</code></pre><figure id="89d202be-15ed-4203-a73d-f3dfc796bf1d" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2019.png"><img style="width:2310px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2019.png"/></a></figure><p id="c7323bc7-6f22-4938-a8ac-61a4c462642a" class="">
+</p><pre id="188eb63a-b5e6-4360-9764-f020da0c66ee" class="code"><code>telnet 10.129.14.224</code></pre><p id="34037c4f-7e94-4a92-ab0a-d2ace13cbf0a" class="">用 telenet 連線，直接用 root 登入不用密碼</p><figure id="1c555b37-da02-457a-ad3d-762f1e88ecb3" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2020.png"><img style="width:638px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2020.png"/></a></figure><figure id="b5e8c826-5cbb-4bcd-b28f-d8e3a4d2fd30" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2021.png"><img style="width:859px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2021.png"/></a></figure><figure id="2eff7bbd-9b1c-465f-9830-72b57f183285" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2022.png"><img style="width:2064px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2022.png"/></a></figure><figure id="bfc6a1f6-7b53-4c13-8b63-0eda77fcef43" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2023.png"><img style="width:829px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2023.png"/></a></figure><h3 id="3b69cfa0-81c7-422f-9181-89eb6189467c" class="">get flag</h3><pre id="267a7343-83b8-47ce-918a-7afbe675c98c" class="code"><code>b40abdfe23665f766f9c61ecba8a4c19</code></pre><p id="ce4875f2-f911-4056-b6cf-5c741be4c170" class="">
+</p><p id="5bcb7a3b-a837-498a-a99f-36b47e0be035" class="">提交時要用加上 <code>HTB{...}</code> 在外面</p><pre id="db44bdf1-7dca-4725-9411-9754f3e76f4f" class="code"><code>HTB{b40abdfe23665f766f9c61ecba8a4c19}</code></pre><figure id="ee1e49ef-8f72-46a1-8be9-6948a7286f75" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2024.png"><img style="width:336px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2024.png"/></a><figcaption><a href="https://www.hackthebox.com/achievement/machine/929350/394">https://www.hackthebox.com/achievement/machine/929350/394</a></figcaption></figure><p id="1a98fca6-a5a0-40d6-822e-35a1ddb0f009" class="">
+</p><h1 id="cc68349b-68f4-4f76-aa6e-bc342db388a8" class="">Fawn - Account Misconfiguration (FTP)</h1><p id="141ad36a-085e-4f37-9d1b-d3b4aa0aaf4b" class="">這題單純讓你練習 FTP</p><pre id="6300a061-f0dc-416b-b90b-a5f252982a4c" class="code"><code>10.129.200.227</code></pre><p id="8dc67b64-e387-4661-9d16-4ee11e124810" class="">
+</p><p id="e9dc16ea-7c09-4a31-adcf-5e77014a8f55" class="">有一些常識題，可以幫你複習一些知識，因為太基礎，有些 task 就不做紀錄</p><figure id="f4550fbd-39c3-4983-a21f-cdb6ae8218f7" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2025.png"><img style="width:1258px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2025.png"/></a></figure><p id="791a67f5-5aad-44e0-af68-08e46655cd17" class="">
+</p><p id="bd60422d-bcf3-469e-83fb-60eee6a84ec7" class="">確認靶機 FTP version，用 <code>-sV</code> (scan port and service) scan 就可以看出來</p><p id="f681415f-1de4-4f6d-be11-e3cdebdb2c7f" class="">答案是 <code>ftp vsftpd 3.0.3</code></p><figure id="3ef84532-9f29-4c7f-81b7-e2a3665b4f2f" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2026.png"><img style="width:1750px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2026.png"/></a></figure><pre id="bc90a4af-4839-40bd-b11f-072cab0793ad" class="code"><code>nmap -Pn -T5 -F -sV 10.129.200.227</code></pre><pre id="29970cb2-180f-4e60-94ff-d3fd70d9ef12" class="code"><code>nmap -Pn -T5 -p21 -sV 10.129.200.227</code></pre><figure id="b7848ec1-bad2-407f-ab30-030f9b3eac86" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2027.png"><img style="width:1140px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2027.png"/></a></figure><pre id="b25e0d4b-7cd1-4679-9be4-fa20c716a00c" class="code"><code>21/tcp open  ftp vsftpd 3.0.3
+Service Info: OS: Unix</code></pre><p id="559faa43-f7e9-46de-a598-722a4e70dae7" class="">
+</p><p id="7bfa9942-f17a-472a-a7cb-8dee69bfc2a8" class="">
+</p><p id="24125dcc-9932-44c8-be0f-8e4d03dbbddd" class="">找出 OS type，用 nmap scan 即可</p><p id="fba0c418-b8cd-491b-8988-b37c66291ebf" class="">答案是 <code>Unix</code></p><figure id="0544fe14-8439-4743-a316-caa3fda50d2b" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2028.png"><img style="width:1712px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2028.png"/></a></figure><pre id="264f6bc2-1e84-4f9f-b2d5-4a49ee091fef" class="code"><code>sudo nmap -T4 -A 10.129.200.227</code></pre><pre id="e67f58a4-5944-45d2-8076-a3491410d9b9" class="code"><code>sudo nmap -T5 -O 10.129.200.227</code></pre><figure id="a4895ebd-8897-4520-9e31-569ff1e8514b" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2029.png"><img style="width:1519px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2029.png"/></a></figure><p id="b49a1271-6ae0-4896-822d-9242d61e8f1b" class="">可以看出是 Linux</p><p id="5c893ff8-7df5-480a-a38d-f71c53d4c9a1" class="">可以趁機熟悉一下 nmap 預設的行為，例如 我只想 fingerprint OS，但不想掃 port</p><p id="2d2c68c1-6eb7-46cc-bc84-46cee46b9008" class="">但沒辦法，因為 port scan 是它用來判斷 OS 的方式之一</p><figure id="c1ea3bd9-1a60-47c0-bc18-6f5500f59978" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2030.png"><img style="width:1523px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2030.png"/></a></figure><p id="3d59b9ae-7bfd-438a-8a30-6e14077fe354" class="">
+</p><p id="fcb560aa-20f4-4f04-829c-522a208ebad3" class="">在你很了解環境的情況下，可以用 <code>-F -Pn -T5</code> 來減少不必要的掃描和加快速度</p><h3 id="51f5f382-0da0-4c1d-affc-d88aa2c90acf" class="">-F 會址掃描 100個 port</h3><h3 id="982d60a5-87b1-48ef-9ca7-1ac1a9e1a4cd" class="">-Pn assume target is alive</h3><h3 id="61dd3378-49cd-43ff-a714-31c5a48e3d40" class="">-T5 最快速度</h3><figure id="d82d694c-a0a5-400b-a506-bc5cbc4ceb3d" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2031.png"><img style="width:1866px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2031.png"/></a></figure><p id="d122e03d-fda7-4fa0-8056-25c343bd8a49" class="">
+</p><p id="43f0d815-b7a4-4dc8-b983-8ccdb0723e54" class="">不猜測 OS 的話，scan 100 ports 約 2~2 秒</p><pre id="10fb495a-208c-4706-b1fe-9012a82de22d" class="code"><code>nmap -Pn -T5 -F 10.129.200.227</code></pre><figure id="d3af91e2-055e-445a-b7e3-e153b5943776" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2032.png"><img style="width:819px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2032.png"/></a></figure><p id="38f2b3f2-4388-4f4e-8bbb-24a3428581f3" class="">
+</p><p id="2bbb3436-fa37-4ab5-a2ef-e80cecfa4c21" class="">加上 guess OS 約 9~15 秒</p><pre id="f0939612-e0ab-4163-a3e5-1fe06d6af20c" class="code"><code>nmap -Pn -T5 -F -O 10.129.200.227</code></pre><figure id="63fc8d73-39ef-4bb4-a3d1-aebd0496b1a6" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2033.png"><img style="width:3026px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2033.png"/></a></figure><p id="ee3d33a9-d2c2-4010-a69f-af9eb28f560d" class="">
+</p><h3 id="19d4bdf3-50d4-4208-a691-d558b793f958" class="">get flag</h3><pre id="929ed2aa-64f1-4740-9330-19dafc7ee434" class="code"><code>sudo apt install ftp -y
+ftp $target</code></pre><p id="4791d8a4-f123-4e7d-a9a4-3260624a9ab2" class="">用 ftp 指令需要輸入帳密，沒什麼頭緒，後來改用 filezilla 就順定進去了 @@，因為前面有暗示 filezilla 這套 ftp app</p><pre id="59650992-8640-41d4-9230-42f27b9e882a" class="code"><code>sudo apt install filezilla -y</code></pre><pre id="3b905a65-7aef-41a0-a116-6d15275d53ea" class="code"><code>ftp -v -p -n 10.129.187.227</code></pre><figure id="a902b518-aaa8-40c4-b2ff-fe5a756d439e" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2034.png"><img style="width:465px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2034.png"/></a></figure><p id="4c83d91e-4bd5-4ce2-a4f3-4d5cd13ef859" class="">
+</p><p id="94746b7a-c9e7-4760-86e4-5eaaee0aa718" class="">
+</p><figure id="ee74ea21-91ca-43ba-8269-064655bc3981" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2035.png"><img style="width:3072px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2035.png"/></a></figure><pre id="215cae8c-18ca-41cd-bf64-945ae7961797" class="code"><code>Status:	Connecting to 10.129.200.227:21...
+Status:	Connection established, waiting for welcome message...
+Status:	Insecure server, it does not support FTP over TLS.
+Status:	Server does not support non-ASCII characters.
+Status:	Logged in
+Status:	Retrieving directory listing...
+Status:	Directory listing of &quot;/&quot; successful
+Status:	Connecting to 10.129.200.227:21...
+Status:	Connection established, waiting for welcome message...
+Status:	Insecure server, it does not support FTP over TLS.
+Status:	Server does not support non-ASCII characters.
+Status:	Logged in
+Status:	Starting download of /flag.txt
+Status:	File transfer successful, transferred 32 bytes in 1 second
+Status:	Disconnected from server
+Status:	Connection closed by server</code></pre><figure id="de8712c4-9456-444f-9bc1-7c2044718813" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2036.png"><img style="width:1456px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2036.png"/></a></figure><pre id="103db186-fed9-4778-937f-23002c970983" class="code"><code>035db21c881520061c53e0536e44f815</code></pre><figure id="9331975a-e66c-4eec-9472-e580037d8292" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2037.png"><img style="width:336px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2037.png"/></a><figcaption><a href="https://www.hackthebox.com/achievement/machine/929350/393">https://www.hackthebox.com/achievement/machine/929350/393</a></figcaption></figure><hr id="2368f683-58bb-410e-93ea-309c4e014c74"/><p id="75e24961-8356-4acb-9878-a87fddbeea0f" class="">
+</p><h2 id="c311f6ee-bf51-455d-a445-3214bfaf52ed" class="">Dancing</h2><p id="81dba7e1-a9f8-4bc4-8ce9-8dd949afca0c" class="">Windows SMB 題</p><p id="9e3723ec-e94e-42b1-b14e-e4f87c5694cf" class="">SMB runs at the Application or Presentation layers of the OSI model,</p><p id="10875f03-1990-4876-9e32-ba518b805135" class="">The Transport layer protocol that Microsoft SMB Protocol is most often used with is NetBIOS over TCP/IP (NBT). This is why, during scans, we will most likely see both protocols with open ports running on the target.</p><p id="d1bbc441-5e30-4bfb-99c9-6c8de6ff75c9" class="">
+</p><pre id="7ab5e387-aa5d-4e19-b317-8d29a2bb6f92" class="code"><code>10.129.112.127</code></pre><h2 id="5d6133ff-de32-4250-a1b4-8fa4fdefaaf6" class="">Tasks</h2><h3 id="3d1059e7-52c6-4476-8031-e41b75f8f21c" class="">What does the 3-letter acronym SMB stand for? → <code>Server Message Block</code></h3><p id="ef4afa5e-0226-447f-a890-5808193ecbf4" class="">
+</p><h3 id="f14c3202-7a34-40b3-9542-518d7668aae7" class="">What port does SMB use to operate at? → <code>445</code> , <code>137 138 UDP, 139 TCP</code></h3><p id="e94efaa7-0fe8-4a9a-a177-8cf85478883e" class="">Windows:<code>445</code></p><p id="8ef16851-2c92-4de5-997a-96e22a775f18" class="">for communicate with Non-Windows (NetBIOS Name Service):  <code>137 138 UDP, 139 TCP</code></p><p id="d3d9d301-5351-499f-b920-4dbc8d1cae27" class="">
+</p><h3 id="0d32b6a3-1fbd-4113-9681-313849b5fc67" class="">What is the service name for port 445 that came up in our nmap scan → <code>microsoft-ds</code></h3><pre id="c4fcc16d-d6dd-4b55-8ee4-b720fb6e90c9" class="code"><code>nmap -T5 -Pn -sV 10.129.112.127</code></pre><figure id="e990bb6d-2a7c-4070-b81d-a5c9fd17f8ac" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2038.png"><img style="width:1138px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2038.png"/></a></figure><p id="f1de4512-1381-4b95-b70d-cbeb16820033" class="">
+</p><h3 id="8be37cfe-ff53-4f43-97fd-cdd30fe6477e" class="">What is the tool we use to connect to SMB shares from our Linux distribution? → <code>smbclient</code></h3><pre id="8b83dc31-0aa6-47cf-9bdd-3feecd9a1e79" class="code"><code>smbclient -L 10.129.112.127</code></pre><figure id="8cc485a2-ff54-4220-9e0c-8510625d2fe5" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2039.png"><img style="width:2796px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2039.png"/></a></figure><p id="0b37cf20-d4f5-4360-81cd-1e792ee29dc6" class="">列出 server 分享的資源，有些需要帳密進不去</p><figure id="25202ce3-a943-4f93-befe-da218f1d6541" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2040.png"><img style="width:672px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2040.png"/></a></figure><pre id="e6b66a9b-5f76-48da-9ec8-8df3c8c43071" class="code"><code>Enter WORKGROUP\root&#x27;s password: 
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	WorkShares      Disk      
+SMB1 disabled -- no workgroup available</code></pre><p id="0ce2bcc9-e286-4feb-a96b-0d2c79ead6a8" class="">
+</p><p id="4fb1f0c0-e3d1-412a-bd01-0fcf63c077d8" class="">try to connect to  ADMIN$ but failed</p><figure id="cc3c28a5-9009-48fc-aaf1-e08a34dfc43c" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2041.png"><img style="width:546px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2041.png"/></a></figure><figure id="7522db7c-83c6-4433-80e9-fe567ba799ec" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2042.png"><img style="width:1142px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2042.png"/></a></figure><p id="5b9da4bb-9f3c-46fc-a133-0a34aba24ae5" class="">試著瀏覽 <code>WorkSpace$</code></p><figure id="5d9c72f0-2afc-46ad-8843-b48c20207e27" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2043.png"><img style="width:1758px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2043.png"/></a></figure><figure id="80af83b0-c6ae-4d33-8f08-b8364760e632" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2044.png"><img style="width:905px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2044.png"/></a></figure><p id="4499f044-d4e4-44e7-a6d4-d86241b24da4" class="">D 代表資料夾，所以可以進去裡面逛逛</p><p id="441353c5-951f-435c-ab83-5d1e754da3bd" class="">
+</p><figure id="8a2de7ca-ca61-4f2c-86d0-441a3003b7d0" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2045.png"><img style="width:1798px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2045.png"/></a></figure><figure id="f332c711-52be-4800-8dd7-2791a4467811" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2046.png"><img style="width:1228px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2046.png"/></a></figure><h3 id="5da83198-88aa-4f69-b395-b81919c2f5a7" class="">flag</h3><p id="a13cca6a-a638-4687-8f4c-fb743aa2345c" class="">Use <code>get</code> to download a file from remote or <code>mget</code> to download multiple files</p><pre id="d492baa4-b8e3-47a9-a77f-043707c0fa18" class="code"><code>get Amy.J</code></pre><figure id="09b224cf-2fc5-4628-aaa9-11b08b40c4ff" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2047.png"><img style="width:1137px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2047.png"/></a></figure><pre id="fd597be9-97c8-47ae-a7b7-3c05da758f5e" class="code"><code>5f61c10dffbc77a704d76016a22f1664</code></pre><figure id="eb9fc313-4b41-4583-ae4a-ed075190c18e" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2048.png"><img style="width:384px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2048.png"/></a><figcaption><a href="https://www.hackthebox.com/achievement/machine/929350/395">https://www.hackthebox.com/achievement/machine/929350/395</a></figcaption></figure><hr id="d4d48686-08c8-488b-9cd7-37e071802e22"/><h1 id="23b4942f-9b65-4328-88e2-3b10667a1cb3" class="">Explosion (RDP)</h1><p id="3ef41dfb-6485-48b4-8fc5-dd8966c2774e" class="">
+</p><pre id="7620f8bd-0103-464f-959d-dd938498d7db" class="code"><code>10.129.197.50</code></pre><h2 id="e64f8655-4d06-49d2-906c-f85280893364" class="">Tasks</h2><h3 id="b6f9cb8f-29cd-4ba2-afdb-ef8cecee7bb6" class="">What is the concept used to verify the identity of the remote host with SSH connections?</h3><p id="bfbdf7df-fa99-42e7-bf06-a9a28a08cbc8" class=""><code>public-key cryptography</code> aka Asymmetric cryptography</p><h3 id="72fa40e3-0440-43b0-a797-3ea695ddac21" class="">What is the name of the tool that we can use to initiate a desktop projection to our host using the terminal?</h3><p id="17e080e4-1a54-4a22-8d9e-3b8bd7ac0d4a" class=""><code>xfreerdp</code></p><h3 id="57470ee1-27b7-42f0-bc2f-c2057f6f078d" class="">What is the name of the service running on port 3389 TCP?</h3><p id="e5b7b190-b87e-4a0f-ba97-0164ba95936a" class=""><code>ms-wbt-server</code></p><figure id="fce57f1b-d029-4f2b-badc-71339f858ed1" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2049.png"><img style="width:878px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2049.png"/></a></figure><pre id="58bcbb4b-cf16-4717-aadf-c883c94050da" class="code"><code>Starting Nmap 7.92 ( https://nmap.org ) at 2022-02-12 23:24 CST
+Nmap scan report for 10.129.10.224
+Host is up (0.21s latency).
+
+PORT     STATE SERVICE       VERSION
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.45 seconds</code></pre><p id="ac6da08e-436a-4904-9017-292609743346" class="">
+</p><h3 id="c9b8b0f7-231c-41b8-8561-5174a2ca3cdf" class="">What is the switch used to specify the target host&#x27;s IP address when using xfreerdp? → <code>/v:</code></h3><figure id="461b8977-903a-4197-bf58-ccbb38895c99" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2050.png"><img style="width:1490px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2050.png"/></a></figure><p id="099633c3-c6c0-472e-96a2-5ac92a3d720b" class="">
+</p><p id="f66148e8-176e-4994-9442-4a06294bf6ca" class="">嘗試失敗</p><figure id="2844db6b-2761-4ef3-a481-9962bcea7c69" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2051.png"><img style="width:576px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2051.png"/></a></figure><figure id="cd5818a0-db5a-440f-9d39-d65a509ea857" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2052.png"><img style="width:576px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2052.png"/></a></figure><figure id="61c04f20-b4bf-469b-aad3-70f03b6ce642" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2053.png"><img style="width:576px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2053.png"/></a></figure><p id="f5bbff8d-9900-46cf-b8b4-ad48619b8620" class="">
+</p><p id="e8f611cd-d735-4468-9e0e-f3b1741c052f" class="">看 writeup 是使用 <code>/u:</code> 指定 user，可以先 try <code>user</code> <code>admin</code> <code>Administrator</code>  這類預設的帳號</p><p id="e66bc9ab-796c-421d-be02-1ba50ec33a82" class="">使用 Administrator，password 直接 enter 不輸入</p><pre id="57976715-63ea-4f2f-aac4-f84eb5d53bb1" class="code"><code>xfreerdp /v:10.129.197.50 /u:Administrator</code></pre><figure id="78ffa339-9a7c-49b1-887e-c79dbd65410e" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2054.png"><img style="width:1308px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2054.png"/></a></figure><figure id="d5a4ac34-211b-4714-8079-db0b2211438d" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2055.png"><img style="width:3072px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2055.png"/></a></figure><figure id="a5e3c12a-52ec-4472-9822-ac1dbbef218a" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2056.png"><img style="width:2284px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2056.png"/></a></figure><pre id="57a8b1b2-c41c-4a0b-842c-e26afbc930d5" class="code"><code>951fa96d7830c451b536be5a6be008a0</code></pre><figure id="ccf33a91-aaaf-4b29-be20-335d97af24d1" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2057.png"><img style="width:528px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2057.png"/></a><figcaption><a href="https://www.hackthebox.com/achievement/machine/929350/396">https://www.hackthebox.com/achievement/machine/929350/396</a></figcaption></figure><hr id="af307149-c477-4ad6-b244-3fb415678e73"/><p id="54567a44-89db-42f3-9aaa-05a924f549da" class="">
+</p><h1 id="40ba1af4-7038-4c2a-854e-2c503e0ac6a8" class="">Preignition (dir busting)</h1><p id="701dcc39-0a9b-49d5-9271-ea7a28480cd4" class="">這關主要是體驗 dir busting，使用 gobuster</p><pre id="da8894fc-e7f6-4099-8d88-839239c15f79" class="code"><code>10.129.109.218</code></pre><p id="87aa18f0-a51c-4643-9960-c6d2c270c13b" class="">
+</p><p id="56b14e06-982d-4fb7-9007-81917abb2c1a" class="">gobuster</p><p id="a07c25a9-1267-4ab9-8d8a-31fc6770a460" class="">OJ/gobuster: Directory/File, DNS and VHost busting tool written in Go
+<a href="https://github.com/OJ/gobuster">https://github.com/OJ/gobuster</a></p><p id="7e7a6b15-f9ba-468a-97f9-975af335beb2" class="">
+</p><h2 id="1bfae3f8-c7b9-4329-9a9d-a135ecb5b07d" class="">Tasks</h2><p id="5fe79466-0ad3-4dbb-8e4c-2a006ca2b663" class="">
+</p><p id="93201f66-795e-4a7d-9771-5447c05637da" class="">用 nmap scan 基本資訊</p><pre id="cfec8af3-f4fb-45dd-a1b5-492930925beb" class="code"><code>80/tcp http nginx 1.14.2</code></pre><p id="9d1c4dd7-cd1d-4708-8c5b-23de2e757f87" class="">
+</p><pre id="787b9a7b-2423-4d2d-ae02-8c26d32de53c" class="code"><code>curl 10.129.109.218</code></pre><figure id="e38d1dbf-20e2-47cf-baaa-bb91da291901" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2058.png"><img style="width:716px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2058.png"/></a></figure><p id="903f1bf5-0a54-4142-a947-a71f62e76231" class="">
+</p><pre id="2b2bebc3-df60-4f09-8a4c-507d6e49956a" class="code"><code>nmap -Pn -sV -T5 10.129.109.218</code></pre><figure id="04cfeede-1692-4f65-8450-37952b14e2d1" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2059.png"><img style="width:896px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2059.png"/></a></figure><p id="ee0a9615-a093-456f-a179-9a59a1c8b59a" class="">
+</p><pre id="54291005-135c-472c-889c-c887f273eb54" class="code"><code>gobuster</code></pre><figure id="66f5de34-d04a-43ee-bb28-249d80dcc6dc" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2060.png"><img style="width:742px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2060.png"/></a></figure><h3 id="2bba9044-6467-4596-b2b4-81de3e13b4d7" class="">What switch do we use to specify to gobuster we want to perform dir busting specifically? → <code>dir</code></h3><p id="3a803af7-d2a6-4bb2-8fdc-027fbc7815a6" class="">
+</p><pre id="f20ee10e-7f40-4cc1-8d43-187dda55c6f8" class="code"><code>gobuster dir --help</code></pre><p id="0b9aa639-28e0-44e2-8c73-5379e6338ebb" class="">基本上用到的就這是個 options</p><pre id="5fc8daf6-6e69-4b20-96f4-5f7f4bd64f52" class="code"><code>dir : specify we are using the directory busting mode of the tool
+-w : specify a wordlist, a collection of common directory names that are typically used
+for sites
+-u : specify the target&#x27;s IP address</code></pre><p id="92e3aeeb-45ab-48ee-a7f0-e7145f09ba08" class="">
+</p><h3 id="f2e7c2e3-3d3a-4abb-8cca-89e9ca6859ae" class="">shared wordlist</h3><pre id="46314182-4c93-4c8e-b65f-6a764fae42d0" class="code"><code>/usr/share/wordlists</code></pre><pre id="1f09f3ba-bd38-482b-9d49-4ea0c3974a13" class="code"><code>/usr/share/wordlists/dirb/common.txt</code></pre><figure id="599a033d-e385-4b74-8294-d144550b8a50" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2061.png"><img style="width:936px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2061.png"/></a></figure><p id="84b2801c-d05a-46d8-a87b-1c324148b6f3" class="">
+</p><pre id="51ee7204-eb07-4b6d-87dc-b3765526082d" class="code"><code>gobuster dir / -u 10.129.109.218 -w /usr/share/wordlists/dirb/common.txt</code></pre><figure id="b14d1396-0c69-4590-8d93-4f4b2290530b" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2062.png"><img style="width:764px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2062.png"/></a></figure><p id="c5022396-8c16-42a3-84af-6cf2b1cb206b" class="">
+</p><p id="adc3e85a-54a1-4225-bb05-1eba4281d002" class="">found a path</p><pre id="01e85638-cac5-4ccf-b4d0-5160a7d60fe3" class="code"><code>/admin.php            (Status: 200) [Size: 999]</code></pre><figure id="fc92b0a3-4bd3-47e0-9174-0d3f6cf36a51" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2063.png"><img style="width:752px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2063.png"/></a></figure><p id="03d66cf9-4a7a-47b0-997d-2e8f534b20fa" class="">
+</p><figure id="60d4e8b8-1911-432e-acd8-8722fcebf000" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2064.png"><img style="width:1860px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2064.png"/></a></figure><p id="096ececc-65a7-47e3-8976-dfcb79125edd" class="">
+</p><p id="ab3e2ba7-024d-41a8-8d96-9ffed7f6bcc7" class="">用 admin:admin try try 看就登入了</p><figure id="43ebf925-6274-401c-b186-7c4caee93028" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2065.png"><img style="width:1852px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2065.png"/></a></figure><p id="444b8cb1-52e8-4d4c-bf49-40f3dcb509fd" class="">
+</p><figure id="8805941c-9b10-4f6a-8cd1-6d2c7516e8f5" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2066.png"><img style="width:480px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2066.png"/></a><figcaption><a href="https://www.hackthebox.com/achievement/machine/929350/397">https://www.hackthebox.com/achievement/machine/929350/397</a></figcaption></figure><p id="298beaf9-63ed-473c-b104-094e2eed1396" class="">
+</p><figure id="a8d5387c-ce13-4e10-9fa2-96b3ca20327e" class="image"><a href="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2067.png"><img style="width:432px" src="HTB%20writeup%20-%20Starting%20Point%20tier0%20c34b0f3b6dc441bb9ff22450fd9886c2/Untitled%2067.png"/></a></figure><hr id="1b297706-40a8-4361-8eee-00cf88873cfd"/><h1 id="02940cdf-d912-41b2-9b5a-46fd1df12ca1" class="">Ref</h1><ul id="0380802a-fdc9-4179-872e-b4f611edf3de" class="bulleted-list"><li style="list-style-type:disc"><a href="https://app.hackthebox.com/login">Hack The Box :: Login</a></li></ul><ul id="d1aa2be1-1613-48b3-b942-7a272a1ed2dc" class="bulleted-list"><li style="list-style-type:disc"><a href="https://help.hackthebox.com/en/articles/5185608-gs-introduction-to-pwnbox">GS: Introduction to Pwnbox | Hack The Box Help Center</a></li></ul><ul id="b557d280-0619-4323-8601-f2aaaa677958" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/OJ/gobuster">OJ/gobuster: Directory/File, DNS and VHost busting tool written in Go</a></li></ul></div></article></body></html>

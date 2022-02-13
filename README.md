@@ -19,8 +19,6 @@ HTML:
 
 ## HTB
 
-### start-point tier 0
-
 Notion:
 
 [HTB writeup - Starting Point tier0](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier0-5396e56955e5485fa410c660c9a99ce9)

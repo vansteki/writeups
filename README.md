@@ -6,7 +6,7 @@ Notion:
 
 [DVWA Writeup](https://dogev0x.notion.site/DVWA-7ed9db8c64ed4531a35a5f585e5a205f "DVWA")
 
-Markdown
+Markdown:
 ```
 ./DVWA/**/low.md
 ```

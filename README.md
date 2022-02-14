@@ -8,13 +8,18 @@ Notion:
 
 Markdown:
 ```
-./DVWA/**/low.md
+./DVWA/notion-export/**/low.md
 ```
 
 HTML:
 ```
-./DVWA/notion-export/index.html
-./DVWA/notion-export/index.md
+./DVWA/notion-export/**/index.html
+./DVWA/notion-export/**/index.md
+```
+
+PDF:
+```
+./DVWA/notion-export/**/*.pdf
 ```
 
 ## HTB
@@ -31,4 +36,9 @@ Markdown:
 HTML:
 ```
 ./HTB/**/index.html
+```
+
+PDF:
+```
+./HTB/**/*.pdf
 ```

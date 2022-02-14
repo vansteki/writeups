@@ -9,6 +9,7 @@ Notion:
 Markdown:
 ```
 ./DVWA/notion-export/**/low.md
+./DVWA/notion-export/**/medium.md
 ```
 
 HTML:

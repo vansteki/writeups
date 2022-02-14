@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# DVWA host
+HOST=http://localhost:8086/login.php
 # create cookie and save csrf token
 CSRF=`curl -s -L -c cookies.txt -b cookies.txt "http://localhost:8086/login.php" | grep user_token  | grep -oE \[a-z0-9\]+ | awk 'length >= 10'`
 # save session id
@@ -17,5 +20,5 @@ curl -v -L -c cookies.txt -b cookies.txt \
 RES=`curl -L -v -c cookies.txt -b cookies.txt "http://localhost:8086/vulnerabilities/brute/?username=${USER}&password=${LOGIN_PASSWORD}&Login=Login#"`
 
 if [[ $RES == *"Welcome to the password protected area admin"* ]]; then
-  echo "\n PASS!✅ \n"
+  printf "\n PASS!✅ \n"
 fi

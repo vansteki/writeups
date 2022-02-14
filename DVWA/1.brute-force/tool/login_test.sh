@@ -16,8 +16,6 @@ curl -v -L -c cookies.txt -b cookies.txt \
 # enter username and password in brute force page: /vulnerabilities/brute/
 RES=`curl -L -v -c cookies.txt -b cookies.txt "http://localhost:8086/vulnerabilities/brute/?username=${USER}&password=${LOGIN_PASSWORD}&Login=Login#"`
 
-#echo $RES | grep admin
-
 if [[ $RES == *"Welcome to the password protected area admin"* ]]; then
   echo "\n PASS!✅ \n"
 fi

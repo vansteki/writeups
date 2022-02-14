@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
-# new password where
+# usage: ./change-password.sh <old password> <new password>
 
 if [ -z "$1" ]
   then
-    echo "No argument supplied, usage: change-password.sh <new password>"
+    echo "No argument supplied, use default password instead"
+    LOGIN_PASSWORD=password
+fi
+
+if [ -z "$2" ]
+  then
+    echo "Need new password, usage: change-password.sh <current password> <new password>"
     exit 1
 fi
 
-NEW_PASSWORD=$1
+NEW_PASSWORD=$2
 
 # DVWA host
 HOST=http://localhost:8086
@@ -18,7 +24,7 @@ SESSIONID=$(grep PHPSESSID cookies.txt | cut -d $'\t' -f7)
 
 # user & password for login to start tasks
 USER=admin
-LOGIN_PASSWORD=password
+LOGIN_PASSWORD=$1
 
 # login at login page
 curl -v -L -c cookies.txt -b cookies.txt \
@@ -28,7 +34,7 @@ curl -v -L -c cookies.txt -b cookies.txt \
 
 # update password
 RES=`curl -v -c cookies.txt -b cookies.txt \
-"http://localhost:8086/vulnerabilities/csrf/?password_new=${NEW_PASSWORD}&password_conf=${NEW_PASSWORD}&Change=Change#"`
+"${HOST}/vulnerabilities/csrf/?password_new=${NEW_PASSWORD}&password_conf=${NEW_PASSWORD}&Change=Change#"`
 
 if [[ $RES == *"Password Changed."* ]]; then
   printf "\n ✅ password changed to ${NEW_PASSWORD}  \n"

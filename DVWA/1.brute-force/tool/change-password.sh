@@ -4,7 +4,7 @@
 if [ -z "$1" ]
   then
     echo "No argument supplied, usage: change-password.sh <new password>"
-    exit 0
+    exit 1
 fi
 
 NEW_PASSWORD=$1

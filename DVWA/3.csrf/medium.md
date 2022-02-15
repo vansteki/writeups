@@ -137,3 +137,24 @@ After
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1018f2c6-3b16-4d66-84e5-7431140aaf78/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220215%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220215T043716Z&X-Amz-Expires=86400&X-Amz-Signature=7b849c91ad9ea168a1d0fbdb163113c3f5e600892a57557875363878306a9b14&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4fbf987c-624b-4db2-9ed7-75667d4ab672/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220215%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220215T043725Z&X-Amz-Expires=86400&X-Amz-Signature=a086b6e7d76a207395be244386fc8f2b29f47f102fab47fd0c63c724fc655ce4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+
+---
+
+### memo:
+
+一些心得和未經過驗證的想法，先記錄一下
+
+若要做到自動串改的話，也許可以從這些地方下手
+
+- 惡意瀏覽器套件
+- MITM
+- 濫用目標網站的跳轉功能 (可能可以搭配 XSS)
+- 對付 Referer 用竄改，對付 token 用擷取
+
+如果從目標網站再進行間接跳轉不知道可不可行 ? 也就是
+
+```html
+惡意頁面 -> DVWA page A -> DVWA page B
+```
+
+但在這之前要先確認 DVWA page A 上是否有能夠有 XSS 的地方或能濫用的功能

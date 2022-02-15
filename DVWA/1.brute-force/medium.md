@@ -63,7 +63,7 @@ done < $filename
 ```
 
 ```bash
-./script/brute-force-walkthrough.sh
+./scripts/brute-force-walkthrough.sh
 ```
 
 ```

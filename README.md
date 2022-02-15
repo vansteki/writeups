@@ -23,6 +23,11 @@ PDF:
 ./DVWA/notion-export/**/*.pdf
 ```
 
+environments:
+```
+./DVWA/README.md
+```
+
 ## HTB
 
 Notion:

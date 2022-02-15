@@ -1,22 +1,15 @@
-# writeups
+# DVWA writeups
 
-## DVWA
-
-### DVWA security:low
-精簡版筆記:
+精簡版:
 ```
-./DVWA/**/low.md
+./DVWA/**/*.md
 ```
 
-完整版筆記:
+完整版:
 ```
-./DVWA/notion-export/index.html
-./DVWA/notion-export/index.md
+./DVWA/**//index.html
+./DVWA/**/index.md
 ```
-
-Notion:
-
-[DVWA Writeup](https://dogev0x.notion.site/DVWA-7ed9db8c64ed4531a35a5f585e5a205f "DVWA")
 
 ### Run DVWA
 

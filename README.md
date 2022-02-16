@@ -4,7 +4,10 @@
 
 Notion:
 
-[DVWA Writeup](https://dogev0x.notion.site/DVWA-7ed9db8c64ed4531a35a5f585e5a205f "DVWA")
+[DVWA - low](https://dogev0x.notion.site/DVWA-7ed9db8c64ed4531a35a5f585e5a205f)
+
+[DVWA - medium](https://dogev0x.notion.site/DVWA-medium-85550fc2a9da428ea22d2c5aeb562b00)
+
 
 Markdown:
 ```

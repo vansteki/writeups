@@ -29,3 +29,5 @@ if [[ $RES == *"Welcome to Damn Vulnerable Web Application!"* ]]; then
 else
   printf "\n LOGIN FAILED❌ \n"
 fi
+
+

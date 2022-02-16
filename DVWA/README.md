@@ -1,16 +1,3 @@
-# DVWA writeups
-
-精簡版:
-```
-./DVWA/**/*.md
-```
-
-完整版:
-```
-./DVWA/**//index.html
-./DVWA/**/index.md
-```
-
 ### Run DVWA
 
 ```

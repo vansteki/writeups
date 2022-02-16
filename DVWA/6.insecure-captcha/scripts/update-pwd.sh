@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# usage: ./update-pwd.sh <new password> <session-id>
+# usage: ./update-pwd.sh <new password> [<session-id>]
 
 HOST=http://dvwa.localtest
 NEW_PASSWORD=$1

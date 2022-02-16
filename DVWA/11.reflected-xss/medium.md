@@ -24,3 +24,10 @@
 ```
 PHPSESSID=ov64qqshkod7693old2kdk59e3; security=medium
 ```
+### memo
+
+參考提示後，才發現大小寫也要考慮進去 XD
+
+```
+<sCript>alert(1)</sCript>
+```

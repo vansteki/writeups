@@ -19,5 +19,8 @@
     "js-yaml": "^4.1.0",
     "puppeteer": "^13.3.2",
     "puppeteer-core": "^13.3.2"
+  },
+  "volta": {
+    "node": "16.13.2"
   }
 }

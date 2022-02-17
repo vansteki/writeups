@@ -13,6 +13,7 @@ Markdown:
 ```
 ./DVWA/notion-export/**/low.md
 ./DVWA/notion-export/**/medium.md
+./DVWA/notion-export/**/high.md
 ```
 
 HTML:

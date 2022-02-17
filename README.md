@@ -8,6 +8,7 @@ Notion:
 
 [DVWA - medium](https://dogev0x.notion.site/DVWA-medium-85550fc2a9da428ea22d2c5aeb562b00)
 
+[DVWA - High](https://dogev0x.notion.site/DVWA-High-0f6b699ecbcd4ea4b527a49a69376501) (WIP)
 
 Markdown:
 ```

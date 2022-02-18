@@ -41,7 +41,7 @@ default=English&<script>alert(document.cookie)</script>
 ```
 可以發現它先透過 `indexOf` 來擷取 URL 上字串 `default=` 的字串開頭位置 (45)
 
-將它傳給 `location.href.substring` 就可以切除字串取想要的部分，也就是指定語言的部分
+將它 +8 個字元的長度 (就是 ‘default=’ 的長度 ) 後傳給 location.href.substring 就可以切除字串取想要的部分，也就是指定語言的部分
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/68aec075-de28-4bd1-8c0b-6f1cf09e5234/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220218T051803Z&X-Amz-Expires=86400&X-Amz-Signature=61e8f23b61705cb0cda96927ccd37ace93fcf4c8ecf999d3b921d3ca981f949d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 

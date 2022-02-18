@@ -4,8 +4,8 @@ medium 難度換成使用選單 POST 送出
 
 ```json
 {
-	"id": "3",
-	"Submit": "Submit"
+  "id": "3",
+  "Submit": "Submit"
 }
 ```
 

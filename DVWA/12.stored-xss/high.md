@@ -15,13 +15,13 @@ http://dvwa.localtest/vulnerabilities/xss_r/?name=<img src='https://picsum.photo
 
 ### Done
 
-第一個欄位可以用 `img tag` + `onLoad` @@
+第一個欄位可以用 img tag + onLoad @@ (一樣從前端修改長度限制)
 
 ```html
 <img src='https://picsum.photos/200/300' onLoad="eval(alert(document.cookie))">
 ```
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/722737d7-ab33-4127-9209-7d97b8929a59/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220218T132552Z&X-Amz-Expires=86400&X-Amz-Signature=a658fce6d86138cf00e673a760d207348c05ba6479e443f57a7001129509ca82&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/634fc04c-b395-46a9-9999-1b091626078b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220218T133231Z&X-Amz-Expires=86400&X-Amz-Signature=a3d6bd9657e24b4a9c126f853d4ceeaaf8dfd59eed58de8cb44171abe30a24fc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 運氣好有 try 到
 

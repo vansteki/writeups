@@ -2,6 +2,8 @@
 
 > The developer now believes they can disable all JavaScript by removing the pattern "<s*c*r*i*p*t".
 
+剛開始 try 了一陣子想要塞 <script> 進去，徒勞無功，就先去休息了
+
 既然封殺了 `script`，那只好找其他活路
 
 原本是想試試看載入外部 js file 的方向，但還沒試成功 

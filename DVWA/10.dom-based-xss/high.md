@@ -61,7 +61,18 @@ http://dvwa.localtest/vulnerabilities/xss_d/?default=English2&default=English
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/44d2d4d6-1c24-4671-b6f4-daad8bd605ab/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220218T051829Z&X-Amz-Expires=86400&X-Amz-Signature=db6440f5782ac8c6df2533a5dbaabc5b0c24886d4646c61f1247ffad4cc15a27&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-👉 成功，代表後端會檢查最後一個參數，而前端的 indexOf 則是指擷取碰到的第一個參數
+👉 成功執行惡意了 javascript，它沒有被經過任何處理，就輸出到頁面上了
+
+前面那段 `?default=English2` 是我們故 `document.location.href.indexOf` 的，它會將 `English2&default=English` 視為原本應該被擷取的 `English` 這組字串
+
+從 console 觀察可以看出表單 js 如何處理 URL 參數，以及如何利用它注入惡意 js
+```
+document.location.href.substring(
+  document.location.href.indexOf("default=") + 8
+);
+
+//"English2%3Cscript%3Ealert(1)%3C/script%3E&default=English"
+```
 
 ```
 ?default=English<script>alert(document.cookie)</script>&default=English

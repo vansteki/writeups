@@ -87,3 +87,6 @@ mv demo-upload.jpg demo-upload.jpg.php
 http://dvwa.localtest/hackable/uploads/demo-upload.jpg.php
 ```
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/300dad9f-b7b3-4615-a49c-a1dc9d6f1283/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220219%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220219T084448Z&X-Amz-Expires=86400&X-Amz-Signature=09d70488a1a19106326372efe8f66ae540e8507f5ff0e5648b8816ddd43dd2d1&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+
+- Injecting executable PHP code to a JPG image file - One Step! Code
+[https://onestepcode.com/injecting-php-code-to-jpg/](https://onestepcode.com/injecting-php-code-to-jpg/)

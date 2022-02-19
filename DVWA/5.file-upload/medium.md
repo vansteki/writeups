@@ -72,7 +72,7 @@ http://localhost:8086/hackable/uploads/yo.php
 ---
 ## Update:
 
-### 修正1: 欺騙檔案型態檢查
+### 修正1: 上傳時更改 Content-Type欺騙檔案型態檢查
 
 之前使用的方法不符合題目義，不應該透過 command injection 改檔名
 

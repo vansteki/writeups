@@ -1,4 +1,4 @@
-# Cross Site Request Forgery (CSRF)
+# Content Security Policy (CSP) Bypass
 
 > The page makes a JSONP call to source/jsonp.php passing the name of the function to callback to, you need to modify the jsonp.php script to change the callback function.
 >

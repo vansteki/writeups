@@ -120,3 +120,12 @@ id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 52); &Submit=Submit
 ```
 5.7.34
 ```
+
+---
+# Ref
+
+- DVWA 通关指南：SQL Injection-Blind(SQL 盲注) - 乌漆WhiteMoon - 博客园
+[https://www.cnblogs.com/linfangnan/p/13694057.html](https://www.cnblogs.com/linfangnan/p/13694057.html)
+
+- SQL CAST and SQL CONVERT function overview
+[https://www.sqlshack.com/overview-of-the-sql-cast-and-sql-convert-functions-in-sql-server/](https://www.sqlshack.com/overview-of-the-sql-cast-and-sql-convert-functions-in-sql-server/)

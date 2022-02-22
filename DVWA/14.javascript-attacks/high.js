@@ -95,7 +95,6 @@
     }
     return method
   };
-
   function Sha256(is224, sharedMemory) {
     if (sharedMemory) {
       blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] = blocks[4] = blocks[5] = blocks[6] = blocks[7] = blocks[8] = blocks[9] = blocks[10] = blocks[11] = blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
@@ -351,7 +350,6 @@
     }
     return buffer
   };
-
   function HmacSha256(key, is224, sharedMemory) {
     var i, type = typeof key;
     if (type === 'string') {
@@ -439,20 +437,16 @@
     }
   }
 })();
-
 function do_something(e) {
   for (var t = "", n = e.length - 1; n >= 0; n--) t += e[n];
   return t
 }
-
 function token_part_3(t, y = "ZZ") {
   document.getElementById("token").value = sha256(document.getElementById("token").value + y)
 }
-
 function token_part_2(e = "YY") {
   document.getElementById("token").value = sha256(e + document.getElementById("token").value)
 }
-
 function token_part_1(a, b) {
   document.getElementById("token").value = do_something(document.getElementById("phrase").value)
 }

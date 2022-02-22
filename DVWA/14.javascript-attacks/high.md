@@ -87,7 +87,7 @@ token_part_1 的參數只是障眼法，並沒有任何作用
 ```jsx
 function do_something (e) {
   // e is phrase value
-  for (var t = '', n = e.length - 1; n >= 0; n--) t += e[n] // reverse the token
+  for (var t = '', n = e.length - 1; n >= 0; n--) t += e[n] // reverse the phrase
   return t
 }
 ```

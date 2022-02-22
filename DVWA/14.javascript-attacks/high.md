@@ -14,7 +14,7 @@ high.js 被混淆過，應該就是這關的主要障礙了吧 🤔
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8da0278c-d778-4568-aece-7a764f193a26/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220222%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220222T073423Z&X-Amz-Expires=86400&X-Amz-Signature=20368db7ab9184d90596535b4205d9b3f82bd2202579a63e8af20ae7284e6f4a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-### use  ****de4js to decode
+### use  de4js to decode
 
 先 google 看看有沒有反混淆的工具可以用，找到 de4js 就先試試看了
 

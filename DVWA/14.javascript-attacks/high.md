@@ -55,7 +55,7 @@ token_part_1('ABCD', 44)
 
 直接拉到最下面可以看到 3 個可能的進入點， `token_part_3` 要等到送出 button 後才會被執行， `token_part_1` 會先被執行， `token_part_2` 因為有被延遲的關係，會在 `token_part_1` 後面執行，所以執行順序應該就是跟名稱一樣:
 
-```jsx
+```
 token_part_1 → token_part_2 → token_part3 
 ```
 
@@ -133,9 +133,11 @@ sha256( token + 'ZZ')
 
 ### 總結流程
 
-```jsx
+```
 reverse the phrase value to token value -> sha256('XX' + token) -> sha256(token + 'ZZ')
 ```
+
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b92129a7-88d9-4c5e-ad1b-910af6841b9e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220222%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220222T090932Z&X-Amz-Expires=86400&X-Amz-Signature=19d68ff123e65b7fa3956d582b0f94e9fc1a321c43a3afd96245b495c5d7dfa6&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 ```jsx
 token = do_something('success') // "sseccus"

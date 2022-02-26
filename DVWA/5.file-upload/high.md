@@ -4,22 +4,20 @@
 
 > Once the file has been received from the client, the server will try to resize any image that was included in the request.
 
-改檔案名無效了
+我大概會往這幾個個方思考:
 
-我大概會往這幾個個方向思考:
-
-1. 在檔案內動手腳 ([executable image file](https://www.vijayan.in/create-executable-images/) or metadata)
+1. 對檔案動手腳 ([executable image file](https://www.vijayan.in/create-executable-images/) or metadata or binary data)
 2. 測試看看上傳多個檔案
 3. 也許處理檔案的部分的程式或 function, lib 有什麼缺陷
 
-如果要在檔案內動手腳或者找底層缺陷的話，我不太熟所以先跳過 QQ
+如果要在檔案內動手腳 (binary) 或者找底層缺陷的話，我不太熟所以先跳過 QQ
 
-先挑簡單一點的方式，就是沿用在 medium 時透過 coomand injection 改上傳圖片檔名的方式，之後再來試試擷取 metadata 的方式
+先挑簡單一點的方式，就是沿用在 medium 時透過 coomand injection 改上傳圖片檔名的方式 (只是這次改成上傳可執行的圖檔)，之後再來試試擷取 metadata 的方式
 
-修改 metadata 的話有兩個前提要成立:
+修改 metadata 則是要有兩個前提要成立:
 
 1. 上傳後 metadata 沒有損壞
-2. 上傳後有辦法取出 metadata 的內容並執行它們
+2. 上傳後有辦法取出 (或不取出直接執行) metadata 的內容並執行它們
 
 想好策略後就可以開始了
 
@@ -28,9 +26,21 @@
 ```markdown
 1. use exiftool to add metadata
 2. upload file
-3. command injection (for renaming file)
+3. command injection (for renaming file eg, image.jpg -> image.php)
 ```
 
+### use exiftool to add metadata
+
+剛開始是想說往隱寫術的方向去找，但後來覺得要反過來讀取藏匿在圖片中的的資料會比較麻煩，所以才選擇找找看有沒有人試過 metadata + executable 這兩個關鍵字去搜尋，因為讀取圖片 metadata 比讀取隱寫術寫入的資料還容易．
+
+結果真的有人這麼做，就借用他的寫法了
+
+Create Executable Images – Vijayan’s Blog
+[https://www.vijayan.in/create-executable-images/](https://www.vijayan.in/create-executable-images/)
+
+```php
+<?php phpinfo(); __halt_compiler(); ?>
+```
 ### use exiftool to add metadata
 
 ```bash
@@ -48,8 +58,8 @@ exiftool -Comment="<?php phpinfo(); __halt_compiler(); ?>" demo.jpg
 觀察上傳後 (位於 DVWA uploads 資料夾內) 的檔案，它的 metadata 也沒有被損毀
 
 目前為止已經上傳惡意檔案，接下來就是想辦法執行這個檔案
-
-可以利用 command line injection 來下指令，這樣就能夠再把上傳的 jpg 檔改成 php 檔 metadata
+可以利用 command line injection 來下指令，這樣就能夠再把上傳的 .jpg 檔改成 .php
+這樣就可以讓它被執行，因為 metadata 裡有可執行的內容
 
 ### command injection (for renaming file)
 
@@ -62,6 +72,17 @@ Go to http://dvwa.localtest/hackable/uploads/demo.php
 ```
 
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a1b56a4c-6866-47dc-b751-4c19d245f451/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220220%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220220T042142Z&X-Amz-Expires=86400&X-Amz-Signature=53b76340b3bc6dcd2f633d39445b9147552a4829403cbba909227beadb550b95&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+
+### 心得
+
+- 學到在 metadata 塞入可執行內容的技巧，也就是這段:
+
+```php
+<?php phpinfo(); __halt_compiler(); ?>
+```
+
+- 思路有點類似在機場要偷渡危險物品通關一樣，我們可以把要偷渡的物品分解或改變特徵，以躲避掃描或探測器，之後再將危險物品重組恢復成原樣
+- 無法繞路的話只好包裝成合法的方式通關了
 
 ## 失敗紀錄
 

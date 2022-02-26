@@ -10,7 +10,11 @@ Notion:
 
 [DVWA - High](https://dogev0x.notion.site/DVWA-High-0f6b699ecbcd4ea4b527a49a69376501)
 
-[Using sqlmap in DVWA](https://dogev0x.notion.site/Using-sqlmap-in-DVWA-d8e708897e7a477986a84e85880829e2)
+Snippets:
+
+[sqlmap](https://dogev0x.notion.site/Using-sqlmap-in-DVWA-d8e708897e7a477986a84e85880829e2)
+
+[curl snippets](DVWA/0.common-tools/curl-snippets.md)
 
 Markdown:
 ```

@@ -45,6 +45,8 @@ Notion:
 
 [HTB writeup - Starting Point tier0](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier0-5396e56955e5485fa410c660c9a99ce9)
 
+[HTB writeup - Starting Point tier1](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier1-b274d48213594f68bc68caaf4322727d) (WIP)
+
 Markdown:
 ```
 ./HTB/**/index.md

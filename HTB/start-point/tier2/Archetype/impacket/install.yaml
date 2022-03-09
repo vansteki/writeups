@@ -1,0 +1,24 @@
+- name: Impacket
+  hosts: localhost
+  connection: local
+
+  tasks:
+    # https://github.com/SecureAuthCorp/impacket
+    - name: install impacket
+      block:
+        - name: reset env - remove folder
+          file:
+            state: absent
+            path: "{{ playbook_dir }}/impacket"
+
+        - name: install impacket by git with examples
+          shell: |
+            git clone https://github.com/SecureAuthCorp/impacket.git
+            cd impacket
+            python3 -m pip install .
+          args:
+            chdir: "{{ playbook_dir }}"
+
+        - name: run install script
+          shell: ./generate-links.sh
+      ignore_errors: true

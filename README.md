@@ -43,9 +43,13 @@ environments:
 
 Notion:
 
-[HTB writeup - Starting Point tier0](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier0-5396e56955e5485fa410c660c9a99ce9)
+### [HTB writeup - Starting Point tier0](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier0-5396e56955e5485fa410c660c9a99ce9)
 
-[HTB writeup - Starting Point tier1](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier1-b274d48213594f68bc68caaf4322727d)
+### [HTB writeup - Starting Point tier1](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier1-b274d48213594f68bc68caaf4322727d)
+
+### HTB writeup - Starting Point tier2:
+
+[Archetype (SMB, SQL, Windows)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier-2-Archetype-SMB-SQL-Windows-e6fc2e8a00dd4a0ebaf2933409084735)
 
 Markdown:
 ```

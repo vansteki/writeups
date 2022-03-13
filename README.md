@@ -51,6 +51,8 @@ Notion:
 
 [Archetype (SMB, SQL, Windows)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier-2-Archetype-SMB-SQL-Windows-e6fc2e8a00dd4a0ebaf2933409084735)
 
+[Oopsie (Linux, PHP, SUID)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier-2-Oopsie-Linux-PHP-SUID-d3a84862e97a4bc09445482b3383783f)
+
 Markdown:
 ```
 ./HTB/**/index.md

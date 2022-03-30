@@ -53,6 +53,8 @@ HTB writeup / Starting Point tier2:
 
 - [Oopsie (Linux, PHP, SUID)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier-2-Oopsie-Linux-PHP-SUID-d3a84862e97a4bc09445482b3383783f)
 
+- [Vaccine (FTP, SQL, SUID)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier-2-Vaccine-FTP-SQL-SUID-6a085408825c4ce6940ffe16362aa8a9)
+
 Markdown:
 ```
 ./HTB/**/index.md

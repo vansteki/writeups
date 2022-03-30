@@ -35,8 +35,7 @@
 
 結果真的有人這麼做，就借用他的寫法了
 
-Create Executable Images – Vijayan’s Blog
-[https://www.vijayan.in/create-executable-images/](https://www.vijayan.in/create-executable-images/)
+[Injecting executable PHP code to a JPG image file - One Step! Code](https://onestepcode.com/injecting-php-code-to-jpg/)
 
 ```php
 <?php phpinfo(); __halt_compiler(); ?>
@@ -83,6 +82,14 @@ Go to http://dvwa.localtest/hackable/uploads/demo.php
 
 - 思路有點類似在機場要偷渡危險物品通關一樣，我們可以把要偷渡的物品分解或改變特徵，以躲避掃描或探測器，之後再將危險物品重組恢復成原樣
 - 無法繞路的話只好包裝成合法的方式通關了
+
+### Ref
+
+Create Executable Images – Vijayan’s Blog
+[https://www.vijayan.in/create-executable-images/](https://www.vijayan.in/create-executable-images/)
+
+Injecting executable PHP code to a JPG image file - One Step! Code
+[https://onestepcode.com/injecting-php-code-to-jpg/](https://onestepcode.com/injecting-php-code-to-jpg/)
 
 ## 失敗紀錄
 

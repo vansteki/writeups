@@ -14,6 +14,8 @@ Snippets:
 
 [sqlmap](https://dogev0x.notion.site/Using-sqlmap-in-DVWA-d8e708897e7a477986a84e85880829e2)
 
+[sqlmap common snippets](https://dogev0x.notion.site/sqlmap-common-snippets-493cf243632e436ab5e8b53ada5f32b0)
+
 [curl snippets](DVWA/0.common-tools/curl-snippets.md)
 
 Markdown:

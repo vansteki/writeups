@@ -47,6 +47,8 @@ environments:
 
 [HTB writeup / Starting Point tier1](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier1-b274d48213594f68bc68caaf4322727d)
 
+- New: [Responder (NTLM, Responder, WinRM)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier1-Responder-Windows-NTLM-WinRM-f058b51d668a452e8a06dfbd9146b818)
+
 HTB writeup / Starting Point tier2:
 
 - [Archetype (SMB, SQL, Windows)](https://dogev0x.notion.site/HTB-writeup-Starting-Point-tier-2-Archetype-SMB-SQL-Windows-e6fc2e8a00dd4a0ebaf2933409084735)
